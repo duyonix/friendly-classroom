@@ -1,7 +1,8 @@
 import DashBoard from "../containers/AdminTemplate/DashBoard";
-import Auth from "../containers/HomeTemplate/Auth";
+import Login from "../containers/HomeTemplate/Login";
 import Home from "../containers/HomeTemplate/Home";
 import Intro from "../containers/HomeTemplate/Intro";
+import Register from "../containers/HomeTemplate/Register";
 
 
 const routeHome = [
@@ -17,9 +18,14 @@ const routeHome = [
     },
     {
         exact: false,
-        path: "/auth",
-        component: Auth
-    }
+        path: "/login",
+        component: Login
+    },
+    {
+        exact: false,
+        path: "/register",
+        component: Register
+    },
 ]
 
 const routeAdmin = [
