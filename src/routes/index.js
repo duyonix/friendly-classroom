@@ -1,25 +1,31 @@
 import DashBoard from "../containers/AdminTemplate/DashBoard";
-import Auth from "../containers/HomeTemplate/Auth";
+import Login from "../containers/HomeTemplate/Login";
 import Home from "../containers/HomeTemplate/Home";
 import Intro from "../containers/HomeTemplate/Intro";
-
+import Register from "../containers/HomeTemplate/Register";
 
 const routeHome = [
     {
         exact: true,   // disable the partial comparison
         path: "/",
+        component: Intro
+    },
+    {
+        exact: false,
+        path: "/home",
         component: Home
     },
     {
         exact: false,
-        path: "/auth",
-        component: Auth
+        path: "/login",
+        component: Login
     },
     {
         exact: false,
-        path: "/intro",
-        component: Intro
-    }
+        path: "/register",
+        component: Register
+    },
+
 ]
 
 const routeAdmin = [
