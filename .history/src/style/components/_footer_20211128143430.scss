@@ -1,0 +1,27 @@
+.footer {
+  //background-color: #e8fbff;
+
+  .content {
+    padding: 30px;
+    .logo {
+      img {
+        height: 70px;
+        width: auto;
+      }
+    }
+    li {
+      list-style: none;
+    }
+    .general {
+      padding-left: 40px;
+      h3 {
+        font-size: 20px;
+      }
+      p {
+      }
+    }
+    .address {
+      @include flex(column, center, null, null);
+    }
+  }
+}

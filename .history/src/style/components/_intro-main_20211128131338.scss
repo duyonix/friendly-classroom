@@ -1,0 +1,31 @@
+.intro-main {
+  @include flex();
+  .left {
+    padding-left: 50px;
+    @include flex(column, center, flex-start);
+    width: 50%;
+    .title {
+      font-weight: $fw-bold-2;
+    }
+    .des {
+      color: $color-se
+    }
+    .btn-join {
+      @include button(white, $color-pr-2, white, $color-pr-1);
+      .fa-hand-pointer {
+        font-size: $fs-md;
+        margin-right: 2px;
+      }
+    }
+  }
+
+  .right {
+    width: 50%;
+    .img-study {
+      width: 80%;
+      display: block;
+      margin: 30px auto;
+    }
+    //background-image: url("assets/img/intro_study.png");
+  }
+}

@@ -1,0 +1,21 @@
+.intro-main {
+  .left {
+    width: 55%;
+    .title {
+    }
+    .des {
+    }
+    .btn-join {
+      @include button(white, $color-pr-3, white, $color-pr-1);
+      .fa-hand-pointer {
+        font-size: $fs-md;
+        margin-right: 2px;
+      }
+    }
+  }
+
+  .right {
+    width: 35%;
+    background: url(./asss);
+  }
+}

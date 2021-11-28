@@ -1,0 +1,20 @@
+.intro-main {
+  .left {
+    width: 60%;
+    .title {
+    }
+    .des {
+    }
+    .btn-join {
+      @include button(white, $color-pr-3, white, $color-pr-1);
+      .fa-hand-pointer {
+        font-size: $fs-md;
+        margin-right: 2px;
+      }
+    }
+  }
+
+  .right {
+    width: 40%;
+  }
+}

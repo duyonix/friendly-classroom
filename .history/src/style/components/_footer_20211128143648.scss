@@ -1,0 +1,33 @@
+.footer {
+  //background-color: #e8fbff;
+
+  .content {
+    padding: 30px;
+    .logo {
+      img {
+        height: 70px;
+        width: auto;
+      }
+    }
+    li {
+      list-style: none;
+    }
+    .general {
+      padding-left: 40px;
+      h3 {
+        font-size: 20px;
+        margin: 10px 0;
+      }
+      p {
+      }
+    }
+    .address {
+      @include flex(column, center, center, null);
+    }
+    .contact {
+      ul {
+        @include flex(row, center, center);
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.intro-main {
+  .left {
+    .title {
+    }
+    .des {
+    }
+    .btn-join {
+      @include button(white, $color-pr-3, white, $color-pr-1);
+      .fa-hand-pointer {
+        font-size: $fs-md;
+        margin-right: ;
+      }
+    }
+  }
+
+  .right {
+  }
+}
