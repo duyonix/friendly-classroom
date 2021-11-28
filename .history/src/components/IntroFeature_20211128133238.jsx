@@ -1,0 +1,10 @@
+import React from "react";
+
+export default function IntroFeature() {
+  return (
+    <section className="intro-feature">
+    <div className="container"></div>
+     
+    </section>
+  );
+}

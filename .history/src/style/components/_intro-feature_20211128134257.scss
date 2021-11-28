@@ -1,0 +1,26 @@
+.intro-feature {
+  background-color: #e8fbff;
+  .content {
+    padding
+    .title {
+      //padding-left: 50px;
+      font-weight: $fw-bold-2;
+      margin-bottom: 30px;
+      color: $color-pr-2;
+    }
+    .row {
+      .feature-box {
+        background-color: white;
+        @include flex(null, space-evenly, center);
+        border-radius: 15px;
+        .img-illus {
+          width: 125px;
+          height: auto;
+        }
+        h3 {
+          font-size: $fs-md;
+        }
+      }
+    }
+  }
+}

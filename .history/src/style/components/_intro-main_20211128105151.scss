@@ -1,0 +1,14 @@
+.intro-main {
+  .left {
+    .title {
+    }
+    .des {
+    }
+    .btn-join {
+      @include button(white, $color-pr-2, white, $color-pr-1);
+    }
+  }
+
+  .right {
+  }
+}

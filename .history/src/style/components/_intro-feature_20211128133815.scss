@@ -1,0 +1,15 @@
+.intro-feature {
+  background-color: #e8fbff;
+  .title {
+    padding-left: 50px;
+    font-weight: $fw-bold-2;
+    margin-bottom: 30px;
+    color: $color-pr-3;
+  }
+  .row {
+    .feature-box {
+      background-color: white;
+      @include flex(null, null, center);
+    }
+  }
+}
