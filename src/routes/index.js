@@ -4,10 +4,9 @@ import Home from "../containers/HomeTemplate/Home";
 import Intro from "../containers/HomeTemplate/Intro";
 import Register from "../containers/HomeTemplate/Register";
 
-
 const routeHome = [
     {
-        exact: true,
+        exact: true,   // disable the partial comparison
         path: "/",
         component: Intro
     },
@@ -26,6 +25,7 @@ const routeHome = [
         path: "/register",
         component: Register
     },
+
 ]
 
 const routeAdmin = [
