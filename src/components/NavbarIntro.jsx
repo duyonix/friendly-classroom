@@ -41,8 +41,13 @@ export default function NavbarIntro() {
         </nav>
         <div className="navbar-right">
           <div className="account">
-            <button className="btn btn-signin">Đăng nhập</button>
-            <button className="btn btn-signup">Đăng ký</button>
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <button className="btn btn-signin">Đăng nhập</button>
+            </Link>
+
+            <Link to="/register" style={{ textDecoration: "none" }}>
+              <button className="btn btn-signup">Đăng ký</button>
+            </Link>
           </div>
         </div>
       </div>

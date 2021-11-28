@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import { loginReducer, registerReducer } from '../modules/Auth/reducer';
+import { loginReducer } from '../modules/Login/reducer';
+import { registerReducer } from '../modules/Register/reducer';
 
 const reducer = combineReducers([
     // Add reducers here
