@@ -2,7 +2,7 @@ import './App.scss';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HomeTemplate from './containers/HomeTemplate';
 import AdminTemplate from './containers/AdminTemplate';
-import PageNotFound from "./containers/PageNotFound";
+import PageNotFound from "./containers/PageNotFound.jsx";
 import { routeHome, routeAdmin } from "./routes";
 
 function App() {

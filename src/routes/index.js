@@ -1,8 +1,8 @@
-import DashBoard from "../containers/AdminTemplate/DashBoard";
-import Login from "../containers/HomeTemplate/Login";
-import Home from "../containers/HomeTemplate/Home";
+import Dashboard from "../containers/AdminTemplate/Dashboard.jsx";
+import Login from "../containers/HomeTemplate/Login.jsx";
+import Home from "../containers/HomeTemplate/Home.jsx";
 import Intro from "../containers/HomeTemplate/Intro.jsx";
-import Register from "../containers/HomeTemplate/Register";
+import Register from "../containers/HomeTemplate/Register.jsx";
 
 const routeHome = [
     {
@@ -32,7 +32,7 @@ const routeAdmin = [
     {
         exact: false,
         path: "/dashboard",
-        component: DashBoard
+        component: Dashboard
     },
 ];
 
