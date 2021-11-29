@@ -1,0 +1,23 @@
+.about-us {
+  .about-title {
+    padding: 30px 0;
+    @include flex(column, center, center, null);
+    h1 {
+      margin-bottom: 20px;
+      .group-name {
+        color: $color-pr-3;
+      }
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
+  .about-member {
+    width: 100%;
+    @include flex(row, null, null, null);
+  }
+  .about-thank {
+    text-transform: uppercase;
+    color: #
+  }
+}
