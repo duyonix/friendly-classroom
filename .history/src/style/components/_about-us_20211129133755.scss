@@ -1,0 +1,11 @@
+.about-us {
+  .about-title {
+    padding: 30px 0;
+    @include flex(column, center, center, null);
+    h1 {
+        .group-name{
+            color: $color
+        }
+    }
+  }
+}

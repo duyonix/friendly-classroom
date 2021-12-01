@@ -1,0 +1,7 @@
+.about-us {
+  .about-title {
+    @include flex(row, center, center);
+    h1 {
+    }
+  }
+}

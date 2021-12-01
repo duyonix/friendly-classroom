@@ -1,0 +1,14 @@
+.card-member {
+  width: 20%;
+  margin: 10px;
+  overflow: visible !important;
+  .MuiAvatar-circular {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+  }
+  .content {
+    padding-top: 60px;
+  }
+}
