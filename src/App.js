@@ -1,9 +1,9 @@
 import './App.scss';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HomeTemplate from './containers/HomeTemplate';
-import AdminTemplate from './containers/AdminTemplate';
+import ClassroomTemplate from './containers/ClassroomTemplate';
 import PageNotFound from "./containers/PageNotFound.jsx";
-import { routeHome, routeAdmin } from "./routes";
+import { routeHome, routeClassroom } from "./routes";
 
 function App() {
   const showLayoutHome = (routes) => {
@@ -21,11 +21,11 @@ function App() {
     }
   };
 
-  const showLayoutAdmin = (routes) => {
+  const showLayoutClassroom = (routes) => {
     if (routes && routes.length > 0) {
       return routes.map((item, index) => {
         return (
-          <AdminTemplate
+          <ClassroomTemplate
             key={index}
             exact={item.exact}
             path={item.path}
@@ -40,7 +40,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         {showLayoutHome(routeHome)}
-        {showLayoutAdmin(routeAdmin)}
+        {showLayoutClassroom(routeClassroom)}
         <Route path="" component={PageNotFound} />
       </Switch>
     </BrowserRouter>

@@ -5,7 +5,7 @@ function LayoutAdmin(props) {
   return <>{props.children}</>;
 }
 
-export default function AdminTemplate({ Component, ...props }) {
+export default function ClassroomTemplate({ Component, ...props }) {
   return (
     <Route
       {...props}
