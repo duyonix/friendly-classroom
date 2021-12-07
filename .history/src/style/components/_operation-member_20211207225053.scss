@@ -1,0 +1,9 @@
+.operation-member {
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    //padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .btn-add {
+    @include button(white, #0857f5#0341b9, white, );
+  }
+}

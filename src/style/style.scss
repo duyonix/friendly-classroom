@@ -9,5 +9,9 @@
 @import "./components/about-us";
 @import "./components/card-member";
 @import "./components/footer";
+@import "./components/operation-member";
+@import "./components/list-member";
+
 // containers
-@import "./components/page-not-found"; 
+@import "./containers/page-not-found"; 
+@import "./containers/ClassroomTemplate/member"; 

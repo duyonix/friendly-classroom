@@ -1,0 +1,17 @@
+.list-member {
+  margin-top: 50px;
+  .container {
+    .area {
+        @in
+      .img-header {
+        width: 50px;
+      }
+      .header-name {
+        font-size: $fs-md;
+        color: $color-pr-3;
+        font-weight: bold;
+        margin-left: 20px;
+      }
+    }
+  }
+}
