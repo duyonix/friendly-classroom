@@ -1,7 +1,7 @@
 import React from "react";
 
-function Dashboard() {
+function Classwork() {
   return <div>DashBoard Page</div>;
 }
 
-export default Dashboard;
+export default Classwork;

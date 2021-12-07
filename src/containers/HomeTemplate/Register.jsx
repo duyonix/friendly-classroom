@@ -41,6 +41,12 @@ function Register() {
     setEmptyFullNameNotice(false);
   };
 
+  // regex for tel
+  const vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+  // regex cho email
+  const mailFormat =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
   // hàm bắt sự kiện Onchange của các trường đăng ký
   const handleChange = (e) => {
     const name = e.target.name;
@@ -58,6 +64,14 @@ function Register() {
     if (state.fullName !== "") {
       setEmptyFullNameNotice(false);
     }
+    if (state.email.match(mailFormat) && state.email !== "") {
+      setIsEmailFormatNotice(false);
+      setValidEmail(true);
+    }
+    if (vnf_regex.test(state.tel) && state.tel !== "") {
+      setIsValidTelNumber(false);
+      setValidTel(true);
+    }
     if (
       state.username !== "" &&
       state.password !== "" &&
@@ -71,8 +85,7 @@ function Register() {
 
   // hàm kiểm tra điều kiện đúng của tel bằng regex
   const validationTelNumber = () => {
-    let vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    if (vnf_regex.test(state.tel)) {
+    if (vnf_regex.test(state.tel) && state.tel !== "") {
       setIsValidTelNumber(false);
       setValidTel(true);
     } else {
@@ -102,10 +115,7 @@ function Register() {
   };
 
   const handleValidationEmail = () => {
-    // regex cho email
-    const mailFormat =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (state.email.match(mailFormat)) {
+    if (state.email.match(mailFormat) && state.email !== "") {
       setIsEmailFormatNotice(false);
       setValidEmail(true);
     } else {
@@ -114,6 +124,19 @@ function Register() {
       setIsDisable(true);
     }
   };
+
+  useEffect(() => {
+    if (
+      state.username !== "" &&
+      state.password !== "" &&
+      state.fullName !== "" &&
+      validEmail === true &&
+      validTel === true
+    ) {
+      setIsDisable(false);
+    }
+    //eslint-disable-next-line
+  }, [validTel, validEmail]);
 
   // hàm in ra thông báo lỗi validate tương ứng của các trường khi nhập sai
   const handleValidationNotice = () => {
@@ -138,19 +161,6 @@ function Register() {
       return <Alert severity="error">Không đúng định dạng email</Alert>;
     }
   };
-
-  //   useEffect(() => {
-  //     if (
-  //       state.username !== "" &&
-  //       state.password !== "" &&
-  //       state.fullName !== "" &&
-  //       validEmail === true &&
-  //       validTel === true
-  //     ) {
-  //       setIsDisable(false);
-  //     }
-  //     //eslint-disable-next-line
-  //   }, [validTel, validEmail]);
 
   // hàm Submit đăng ký và truyền dữ liệu lên server
   const handleSubmit = (event) => {

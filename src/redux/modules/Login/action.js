@@ -5,7 +5,7 @@ export const loginUser = (user, history) => {
     return (dispatch) => {
         dispatch(actLoginRequest());
         axios({
-            url: ``,
+            url: "",
             method: "POST",
             data: user,
         })
