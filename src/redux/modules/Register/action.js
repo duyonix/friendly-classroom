@@ -1,11 +1,12 @@
 import axios from "axios";
+import { pathAPI } from "../../../utils/constants";
 import * as actionTypes from "./constants";
 
 export const registerUser = (user) => {
     return (dispatch) => {
         dispatch(actRegisterRequest())
         axios({
-            url: ``,
+            url: pathAPI + "/authorize/signup",
             method: "POST",
             data: user
         })

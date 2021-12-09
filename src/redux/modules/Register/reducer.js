@@ -6,7 +6,7 @@ const initialState = {
     error: null
 }
 
-export const registerReducer = (state = initialState, { type, payload }) => {
+const registerReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case actionTypes.REGISTER_REQUEST:
             state.loading = true;
@@ -32,5 +32,7 @@ export const registerReducer = (state = initialState, { type, payload }) => {
             return { ...state }
     }
 }
+
+export default registerReducer;
 
 

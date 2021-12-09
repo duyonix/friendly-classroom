@@ -1,13 +1,13 @@
 import React from "react";
 import NavbarHome from "../../components/NavbarHome";
 
-function Home() {
+function TodoList() {
   return (
     <div>
       <NavbarHome />
-      Home Page
+      Todo List Page
     </div>
   );
 }
 
-export default Home;
+export default TodoList;

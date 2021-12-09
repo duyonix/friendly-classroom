@@ -6,7 +6,7 @@ const initialState = {
     error: null
 }
 
-export const loginReducer = (state = initialState, { type, payload }) => {
+const loginReducer = (state = initialState, { type, payload }) => {
     switch (type) {
 
         case actionTypes.LOGIN_REQUEST:
@@ -33,3 +33,5 @@ export const loginReducer = (state = initialState, { type, payload }) => {
             return { ...state };
     }
 }
+
+export default loginReducer;

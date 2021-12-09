@@ -125,14 +125,17 @@ function Login() {
               alignItems: "center",
             }}
           >
-            <img
-              src="/assets/img/Friendly_logo.png"
-              alt="Friendly"
-              style={{
-                height: "70px",
-                width: "auto",
-              }}
-            />
+            <Link to="/">
+              <img
+                src="/assets/img/Friendly_logo.png"
+                alt="Friendly"
+                style={{
+                  height: "70px",
+                  width: "auto",
+                }}
+              />
+            </Link>
+
             <Typography component="h1" variant="h5">
               Đăng nhập
             </Typography>
