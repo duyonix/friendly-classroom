@@ -1,13 +1,13 @@
 import React from "react";
 import NavbarHome from "../../components/NavbarHome";
 
-function Home() {
+function Calendar() {
   return (
     <div>
       <NavbarHome />
-      Home Page
+      Calendar Page
     </div>
   );
 }
 
-export default Home;
+export default Calendar;

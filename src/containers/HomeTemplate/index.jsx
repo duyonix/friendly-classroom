@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Route } from "react-router";
 
 function LayoutHome(props) {
-  return <>{props.children}</>;
+  return <Fragment>{props.children}</Fragment>;
 }
 
 export default function HomeTemplate({ Component, ...props }) {

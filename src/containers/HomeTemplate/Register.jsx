@@ -9,6 +9,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Alert } from "@mui/material";
+import { useDispatch } from "react-redux";
+import {
+  registerUser,
+  resetRegister,
+} from "../../redux/modules/Register/action";
+import { useSelector } from "react-redux";
+import Loading from "../../components/Loading";
 
 const theme = createTheme();
 
@@ -29,9 +36,14 @@ function Register() {
     password: "",
     fullName: "",
     email: "",
-    tel: "",
+    phoneNumber: "",
   });
 
+  const dispatch = useDispatch();
+
+  const registerErr = useSelector((state) => state.registerReducer.err);
+  const registerSuccess = useSelector((state) => state.registerReducer.success);
+  const registerLoading = useSelector((state) => state.registerReducer.loading);
   // hàm để khởi tạo mặc định các state từng trường thành false
   const handleDisableNotice = () => {
     setEmptyUsernameNotice(false);
@@ -41,7 +53,7 @@ function Register() {
     setEmptyFullNameNotice(false);
   };
 
-  // regex for tel
+  // regex for phoneNumber
   const vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
   // regex cho email
   const mailFormat =
@@ -68,7 +80,7 @@ function Register() {
       setIsEmailFormatNotice(false);
       setValidEmail(true);
     }
-    if (vnf_regex.test(state.tel) && state.tel !== "") {
+    if (vnf_regex.test(state.phoneNumber) && state.phoneNumber !== "") {
       setIsValidTelNumber(false);
       setValidTel(true);
     }
@@ -83,9 +95,9 @@ function Register() {
     }
   };
 
-  // hàm kiểm tra điều kiện đúng của tel bằng regex
+  // hàm kiểm tra điều kiện đúng của phoneNumber bằng regex
   const validationTelNumber = () => {
-    if (vnf_regex.test(state.tel) && state.tel !== "") {
+    if (vnf_regex.test(state.phoneNumber) && state.phoneNumber !== "") {
       setIsValidTelNumber(false);
       setValidTel(true);
     } else {
@@ -162,19 +174,26 @@ function Register() {
     }
   };
 
+  const handleResetReducer = () => {
+    dispatch(resetRegister());
+  };
+
+  if (registerLoading) {
+    return <Loading />;
+  }
+
+  if (registerSuccess) {
+    // modal success
+  }
+
+  if (registerErr) {
+    setTimeout(handleResetReducer, 1500);
+  }
+
   // hàm Submit đăng ký và truyền dữ liệu lên server
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // dispatch(registerUser(state));
-    // eslint-disable-next-line no-console
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-      fullName: data.get("fullName"),
-      email: data.get("email"),
-      tel: data.get("tel"),
-    });
+    dispatch(registerUser(state));
   };
 
   return (
@@ -189,18 +208,25 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <img
-            src="/assets/img/Friendly_logo.png"
-            alt="Friendly"
-            style={{
-              height: "70px",
-              width: "auto",
-            }}
-          />
+          <Link to="/">
+            <img
+              src="/assets/img/Friendly_logo.png"
+              alt="Friendly"
+              style={{
+                height: "70px",
+                width: "auto",
+              }}
+            />
+          </Link>
+
           <Typography component="h1" variant="h5">
             Đăng ký
           </Typography>
-
+          {registerErr ? (
+            <Alert severity="error">{registerErr?.response.data}</Alert>
+          ) : (
+            ""
+          )}
           {handleValidationNotice()}
 
           <Box
@@ -292,11 +318,11 @@ function Register() {
                 <TextField
                   required
                   fullWidth
-                  name="tel"
+                  name="phoneNumber"
                   label="Số điện thoại"
-                  type="tel"
-                  id="tel"
-                  autoComplete="tel"
+                  type="phoneNumber"
+                  id="phoneNumber"
+                  autoComplete="phoneNumber"
                   onChange={handleChange}
                   onBlur={validationTelNumber}
                 />

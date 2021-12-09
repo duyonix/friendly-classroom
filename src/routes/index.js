@@ -5,6 +5,10 @@ import Intro from "../containers/HomeTemplate/Intro.jsx";
 import Register from "../containers/HomeTemplate/Register.jsx";
 import Stream from "../containers/ClassroomTemplate/Stream.jsx";
 import Member from "../containers/ClassroomTemplate/Member.jsx";
+import Calendar from "../containers/HomeTemplate/Calendar.jsx";
+import TodoList from "../containers/HomeTemplate/TodoList.jsx";
+import UserAccount from "../containers/HomeTemplate/UserAccount.jsx";
+import Grade from "../containers/ClassroomTemplate/Grade.jsx";
 
 const routeHome = [
     {
@@ -27,7 +31,21 @@ const routeHome = [
         path: "/register",
         component: Register
     },
-
+    {
+        exact: false,
+        path: "/calendar",
+        component: Calendar
+    },
+    {
+        exact: false,
+        path: "/todo-list",
+        component: TodoList
+    },
+    {
+        exact: false,
+        path: "/user-account",
+        component: UserAccount
+    },
 ]
 
 const routeClassroom = [
@@ -45,6 +63,11 @@ const routeClassroom = [
         exact: false,
         path: "/member",
         component: Member
+    },
+    {
+        exact: false,
+        path: "/grade",
+        component: Grade
     },
 ];
 

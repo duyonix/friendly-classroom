@@ -4,7 +4,7 @@ export default function NavbarIntro() {
   return (
     <nav id="navbar-intro">
       <div className="container">
-        <Link to="/home" className="logo">
+        <Link to="/" className="logo">
           <img src="../assets/img/Friendly_logo.png" alt="Our Logo" />
         </Link>
         <nav className="navbar navbar-expand-lg navbar-light">
