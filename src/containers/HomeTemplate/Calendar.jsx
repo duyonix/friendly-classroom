@@ -6,6 +6,7 @@ function Calendar() {
     <div>
       <NavbarHome />
       Calendar Page
+      <div style={{ height: "1000px" }}></div>
     </div>
   );
 }

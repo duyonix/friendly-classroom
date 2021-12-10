@@ -1,11 +1,12 @@
 import axios from "axios";
+import { pathAPI } from "../../../utils/constants";
 import * as actionTypes from "./constants";
 
-export const loginUser = (user, history) => {
+export const loginUser = (user) => {
     return (dispatch) => {
         dispatch(actLoginRequest());
         axios({
-            url: "",
+            url: pathAPI + "authorize/login",
             method: "POST",
             data: user,
         })

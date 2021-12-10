@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -29,26 +29,30 @@ function Register() {
   const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
   const [isEmailFormatNotice, setIsEmailFormatNotice] = useState(false);
   const [emptyFullNameNotice, setEmptyFullNameNotice] = useState(false);
+  const [isConfirmPasswordNotice, setIsConfirmPasswordNotice] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // state để dispatch lên action Register
   const [state, setState] = useState({
     username: "",
     password: "",
-    fullName: "",
     email: "",
+    fullName: "",
     phoneNumber: "",
   });
 
   const dispatch = useDispatch();
 
-  const registerErr = useSelector((state) => state.registerReducer.err);
-  const registerSuccess = useSelector((state) => state.registerReducer.success);
-  const registerLoading = useSelector((state) => state.registerReducer.loading);
+  const err = useSelector((state) => state.registerReducer.err);
+  const data = useSelector((state) => state.registerReducer.data);
+  const loading = useSelector((state) => state.registerReducer.loading);
+
   // hàm để khởi tạo mặc định các state từng trường thành false
   const handleDisableNotice = () => {
     setEmptyUsernameNotice(false);
     setIsValidTelNumber(false);
     setEmptyPasswordNotice(false);
+    setIsConfirmPasswordNotice(false);
     setIsEmailFormatNotice(false);
     setEmptyFullNameNotice(false);
   };
@@ -63,10 +67,14 @@ function Register() {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+
     setState({
       ...state,
       [name]: value,
     });
+
+    // console.log("password", state.password);
+
     if (state.username !== "") {
       setEmptyUsernameNotice(false);
     }
@@ -95,6 +103,20 @@ function Register() {
     }
   };
 
+  const handleChangeConfirmPassword = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+
+    // console.log("value", value);
+    // console.log("confirmPassword", confirmPassword);
+
+    if (value !== "" && value === state.password) {
+      setIsConfirmPasswordNotice(false);
+    } else {
+      setIsDisable(true);
+    }
+  };
+
   // hàm kiểm tra điều kiện đúng của phoneNumber bằng regex
   const validationTelNumber = () => {
     if (vnf_regex.test(state.phoneNumber) && state.phoneNumber !== "") {
@@ -115,8 +137,17 @@ function Register() {
   };
 
   const handleValidationEmptyPassword = () => {
+    // console.log("password out", state.password);
     if (state.password === "") {
       setEmptyPasswordNotice(true);
+    }
+  };
+
+  const handleValidationsConfirmPassword = () => {
+    if (confirmPassword === "" || confirmPassword !== state.password) {
+      setIsConfirmPasswordNotice(true);
+    } else {
+      setIsDisable(true);
     }
   };
 
@@ -141,6 +172,8 @@ function Register() {
     if (
       state.username !== "" &&
       state.password !== "" &&
+      confirmPassword !== "" &&
+      confirmPassword === state.password &&
       state.fullName !== "" &&
       validEmail === true &&
       validTel === true
@@ -168,6 +201,10 @@ function Register() {
       setTimeout(handleDisableNotice, 1500);
       return <Alert severity="error">Mật Khẩu không được để trống</Alert>;
     }
+    if (isConfirmPasswordNotice) {
+      setTimeout(handleDisableNotice, 1500);
+      return <Alert severity="error">Mật khẩu không trùng khớp</Alert>;
+    }
     if (isEmailFormatNotice) {
       setTimeout(handleDisableNotice, 1500);
       return <Alert severity="error">Không đúng định dạng email</Alert>;
@@ -178,20 +215,52 @@ function Register() {
     dispatch(resetRegister());
   };
 
-  if (registerLoading) {
+  if (loading) {
     return <Loading />;
   }
 
-  if (registerSuccess) {
-    // modal success
+  if (data) {
+    return (
+      <div id="card" className="animated fadeIn">
+        <div id="upper-side">
+          {/*?xml version="1.0" encoding="utf-8"?*/}
+          {/* Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  */}
+          {/* {handleResetReducer()} */}
+          <div className="success-checkmark">
+            <div className="check-icon">
+              <span className="icon-line line-tip"></span>
+              <span className="icon-line line-long"></span>
+              <div className="icon-circle"></div>
+              <div className="icon-fix"></div>
+            </div>
+          </div>
+          <h3 id="status">THÀNH CÔNG</h3>
+        </div>
+        <div id="lower-side">
+          <p id="message">
+            Chúc mừng, tài khoản của ban đã được tạo thành công.
+          </p>
+          <NavLink to={`/login`} id="contBtn">
+            <Button style={{ color: "white" }} onClick={handleResetReducer}>
+              Đăng nhập ngay
+            </Button>
+          </NavLink>
+        </div>
+      </div>
+    );
   }
 
-  if (registerErr) {
+  if (err) {
     setTimeout(handleResetReducer, 1500);
+    // setIsDisable(true);
   }
 
   // hàm Submit đăng ký và truyền dữ liệu lên server
   const handleSubmit = (event) => {
+    // console.log("err", err);
+    // console.log("data", data);
+    // console.log("loading", loading);
+
     event.preventDefault();
     dispatch(registerUser(state));
   };
@@ -222,8 +291,8 @@ function Register() {
           <Typography component="h1" variant="h5">
             Đăng ký
           </Typography>
-          {registerErr ? (
-            <Alert severity="error">{registerErr?.response.data}</Alert>
+          {err ? (
+            <Alert severity="error">{err?.response.data.message}</Alert>
           ) : (
             ""
           )}
@@ -276,6 +345,8 @@ function Register() {
                   label="Xác nhận mật khẩu"
                   type="password"
                   id="confirmPassword"
+                  onChange={handleChangeConfirmPassword}
+                  onBlur={handleValidationsConfirmPassword}
                 />
               </Grid>
 

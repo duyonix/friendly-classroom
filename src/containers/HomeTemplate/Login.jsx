@@ -2,22 +2,31 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Alert, Checkbox, FormControlLabel } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, resetLogin } from "../../redux/modules/Login/action";
+import Loading from "../../components/Loading";
 
 const theme = createTheme();
 
 function Login() {
   // kiểm tra điều kiện các trường đăng nhập với mỗi dữ kiện tương ứng
-  //   const [render, setRender] = useState(false);
 
   const [isDisable, setIsDisable] = useState(true);
   const [emptyUsernameNotice, setEmptyUsernameNotice] = useState(false);
   const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
+
+  const data = useSelector((state) => state.loginReducer.data);
+  const loading = useSelector((state) => state.loginReducer.loading);
+  const err = useSelector((state) => state.loginReducer.err);
+
+  const [render, setRender] = useState(false);
+  const dispatch = useDispatch();
 
   // state để dispatch tới action Login
   const [state, setState] = useState({
@@ -25,14 +34,20 @@ function Login() {
     password: "",
   });
 
-  //   useEffect(() => {
-  //     // setTimeout(handleReset, 2000);
-  //     setState({
-  //       username: "",
-  //       password: "",
-  //     });
-  //     // eslint-disable-next-line
-  //   }, [render]);
+  useEffect(() => {
+    setTimeout(handleReset, 2000);
+    setState({
+      username: "",
+      password: "",
+    });
+    // eslint-disable-next-line
+  }, [render]);
+
+  const handleReset = () => {
+    return (dispatch) => {
+      dispatch(resetLogin());
+    };
+  };
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
   const handleChange = (e) => {
@@ -75,7 +90,8 @@ function Login() {
 
   // hàm render thông báo lỗi khi nhập sai giá trị ở các trường đăng nhập tương ứng
   const renderNotice = () => {
-    // if (err) return <Alert severity="error">{err.response.data}</Alert>;
+    if (err)
+      return <Alert severity="error">{err?.response.data.message}</Alert>;
     if (emptyUsernameNotice) {
       setTimeout(handleNotice, 1500);
       return <Alert severity="error">Tên đăng nhập không được để trống</Alert>;
@@ -86,17 +102,20 @@ function Login() {
     }
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (data) {
+    return <Redirect to="/home" />;
+  }
+
   // sự kiện submit form đăng nhập
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    // dispatch(fetchLogin(state, props.history));
-    // setRender(!render);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
+
+    dispatch(loginUser(state));
+    setRender(!render);
   };
 
   return (

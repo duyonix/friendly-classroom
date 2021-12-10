@@ -3,7 +3,7 @@ import * as actionTypes from "./constants";
 const initialState = {
     loading: false,
     data: null,
-    error: null
+    err: null
 }
 
 const registerReducer = (state = initialState, { type, payload }) => {
