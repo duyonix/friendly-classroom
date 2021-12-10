@@ -1,2 +1,2 @@
 export const pathImgFromIndex = "assets/img/";
-export const pathAPI = "localhost:5000/api/";
+export const pathAPI = "http://localhost:5000/api/";
