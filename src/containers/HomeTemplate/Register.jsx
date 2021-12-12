@@ -217,7 +217,6 @@ function Register() {
   }
 
   if (data) {
-    alert("Đăng ký tài khoản thành công");
     return <Redirect to="/login" />;
   }
 

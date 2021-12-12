@@ -11,6 +11,7 @@ export const registerUser = (user) => {
             data: user
         })
             .then((res) => {
+                alert("Đăng ký tài khoản thành công");
                 dispatch(actRegisterSuccess(res.data))
             })
             .catch((err) => {
