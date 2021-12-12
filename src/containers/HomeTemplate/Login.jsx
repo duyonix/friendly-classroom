@@ -17,9 +17,9 @@ const theme = createTheme();
 function Login() {
   // kiểm tra điều kiện các trường đăng nhập với mỗi dữ kiện tương ứng
 
-  const [isDisable, setIsDisable] = useState(true);
   const [emptyUsernameNotice, setEmptyUsernameNotice] = useState(false);
   const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
+  const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
 
   const data = useSelector((state) => state.loginReducer.data);
   const loading = useSelector((state) => state.loginReducer.loading);
@@ -35,7 +35,7 @@ function Login() {
   });
 
   useEffect(() => {
-    setTimeout(handleReset, 2000);
+    setTimeout(handleReset, 1500);
     setState({
       username: "",
       password: "",
@@ -44,9 +44,7 @@ function Login() {
   }, [render]);
 
   const handleReset = () => {
-    return (dispatch) => {
-      dispatch(resetLogin());
-    };
+    dispatch(resetLogin());
   };
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
@@ -57,6 +55,7 @@ function Login() {
       ...state,
       [name]: value,
     });
+
     if (state.username !== "") {
       setEmptyUsernameNotice(false);
     }
@@ -64,41 +63,38 @@ function Login() {
       setEmptyPasswordNotice(false);
     }
     if (state.username !== "" && state.password !== "") {
-      setIsDisable(false);
+      setEmptyFieldNotice(false);
     }
-  };
-
-  // các hàm handle notice và validate tương ứng cho từng trường
-  const handleNotice = () => {
-    setEmptyUsernameNotice(false);
-    setEmptyPasswordNotice(false);
   };
 
   const handleValidationUsername = () => {
     if (state.username === "") {
       setEmptyUsernameNotice(true);
-      setIsDisable(true);
     }
   };
 
   const handleValidationPassword = () => {
     if (state.password === "") {
       setEmptyPasswordNotice(true);
-      setIsDisable(true);
     }
   };
 
-  // hàm render thông báo lỗi khi nhập sai giá trị ở các trường đăng nhập tương ứng
+  // hàm thông báo lỗi khi nhập sai giá trị ở các trường đăng nhập tương ứng
   const renderNotice = () => {
-    if (err)
-      return <Alert severity="error">{err?.response.data.message}</Alert>;
+    if (emptyFieldNotice) {
+      setTimeout(() => setEmptyFieldNotice(false), 1500);
+      return <Alert severity="error">Vui lòng nhập đầy đủ thông tin</Alert>;
+    }
     if (emptyUsernameNotice) {
-      setTimeout(handleNotice, 1500);
+      setTimeout(() => setEmptyUsernameNotice(false), 1500);
       return <Alert severity="error">Tên đăng nhập không được để trống</Alert>;
     }
     if (emptyPasswordNotice) {
-      setTimeout(handleNotice, 1500);
+      setTimeout(() => setEmptyPasswordNotice(false), 1500);
       return <Alert severity="error">Mật khẩu không được để trống</Alert>;
+    }
+    if (err) {
+      return <Alert severity="error">{err?.response.data.message}</Alert>;
     }
   };
 
@@ -113,6 +109,11 @@ function Login() {
   // sự kiện submit form đăng nhập
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (state.username === "" || state.password === "") {
+      setEmptyFieldNotice(true);
+      return;
+    }
 
     dispatch(loginUser(state));
     setRender(!render);
@@ -200,7 +201,6 @@ function Login() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                disabled={isDisable}
               >
                 Đăng nhập
               </Button>
