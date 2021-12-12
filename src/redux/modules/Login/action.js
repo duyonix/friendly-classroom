@@ -11,6 +11,7 @@ export const loginUser = (user) => {
             data: user,
         })
             .then((res) => {
+                // alert("Đăng nhập thành công");
                 localStorage.setItem("User", JSON.stringify(res.data));
                 dispatch(actLoginSuccess(res.data));
             })

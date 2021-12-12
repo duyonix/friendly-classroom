@@ -12,10 +12,21 @@ import Button from "@mui/material/Button";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Link, NavLink } from "react-router-dom";
-import { Badge, CssBaseline, Fab, useScrollTrigger, Zoom } from "@mui/material";
+import { Link, NavLink, useHistory } from "react-router-dom";
+import {
+  Badge,
+  CssBaseline,
+  Fab,
+  Stack,
+  useScrollTrigger,
+  Zoom,
+} from "@mui/material";
 import PropTypes from "prop-types";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Modal from "@mui/material/Modal";
+import { useState } from "react";
+import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
+import { useEffect } from "react";
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -46,7 +57,7 @@ function ScrollTop(props) {
       <Box
         onClick={handleClick}
         role="presentation"
-        sx={{ position: "fixed", bottom: 16, right: 16 }}
+        sx={{ position: "fixed", bottom: 16, right: 16, zIndex: 999 }}
       >
         {children}
       </Box>
@@ -56,15 +67,42 @@ function ScrollTop(props) {
 
 ScrollTop.propTypes = {
   children: PropTypes.element.isRequired,
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
+};
+
+// Modal Confirm Logout
+const style = {
+  position: "absolute",
+  borderRadius: "10px",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  p: 3,
 };
 
 const Navbar = (props) => {
   const { pages, settings } = props;
+  const history = useHistory();
+
+  const [avatar, setAvatar] = useState(null);
+
+  useEffect(() => {
+    if (localStorage.getItem("avatar")) {
+      setAvatar(localStorage.getItem("avatar"));
+      // console.log(localStorage.getItem("avatar"));
+    }
+    // eslint-disable-next-line
+  }, [avatar]);
+
+  console.log("avatar", avatar);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -82,6 +120,68 @@ const Navbar = (props) => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const [openModalLogout, setOpenModalLogout] = useState(false);
+  const handleOpenModalLogout = (name) => {
+    if (name === "Đăng xuất") {
+      handleCloseUserMenu();
+      setOpenModalLogout(true);
+    }
+  };
+  const handleCloseModalLogout = () => setOpenModalLogout(false);
+
+  const handleLogout = () => {
+    handleCloseModalLogout();
+    localStorage.clear();
+    history.replace("/");
+  };
+
+  const ModalLogout = () => {
+    return (
+      <Modal
+        open={openModalLogout}
+        onClose={handleCloseModalLogout}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <HelpOutlinedIcon
+            sx={{
+              color: "#979797",
+              fontSize: 100,
+              margin: "0 auto",
+              textAlign: "center",
+            }}
+          />
+          <Typography
+            id="modal-modal-description"
+            sx={{
+              my: 2,
+              textAlign: "center",
+              fontSize: "25px",
+              fontWeight: "bold",
+            }}
+          >
+            Bạn có chắc chắn muốn đăng xuất ?
+          </Typography>
+          <Stack direction="row" spacing={3}>
+            <Button
+              variant="contained"
+              size="large"
+              color="error"
+              onClick={handleCloseModalLogout}
+            >
+              Hủy bỏ
+            </Button>
+
+            <Button variant="contained" size="large" onClick={handleLogout}>
+              Đồng ý
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
+    );
   };
 
   return (
@@ -187,15 +287,15 @@ const Navbar = (props) => {
                 </Badge>
               </IconButton>
 
-              <Tooltip title="Open settings">
+              <Tooltip title="Tùy chọn">
                 <IconButton
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0, color: "black" }}
                 >
                   <Avatar
-                    sx={{ width: "48px", height: "48px" }}
-                    alt="User"
-                    src="./assets/img/avatar.png"
+                    style={{ width: "48px", height: "48px" }}
+                    alt="avatar"
+                    src={avatar}
                   />
                 </IconButton>
               </Tooltip>
@@ -217,7 +317,10 @@ const Navbar = (props) => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseNavMenu}>
+                  <MenuItem
+                    key={setting}
+                    onClick={() => handleOpenModalLogout(setting)}
+                  >
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
@@ -233,6 +336,7 @@ const Navbar = (props) => {
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
+      {ModalLogout()}
     </React.Fragment>
   );
 };

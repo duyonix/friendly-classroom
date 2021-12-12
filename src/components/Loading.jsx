@@ -1,15 +1,18 @@
+import { Box, CircularProgress } from "@mui/material";
 import React from "react";
 
 function Loading() {
   return (
-    <div className="loadingRoot">
-      <div className="wrap">
-        <div className="loading">
-          <div className="bounceball" />
-          <div className="text">NOW LOADING</div>
-        </div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <CircularProgress size={60} />
+    </Box>
   );
 }
 

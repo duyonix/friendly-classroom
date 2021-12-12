@@ -12,13 +12,13 @@
           background: linear-gradient(
             to right,
             rgba(0, 0, 0, 0.6),
-            transparent
+            rgba(0, 0, 0, 0.2)
           );
           height: 4px;
           width: 100%;
           display: inline-block;
           vertical-align: middle;
-          margin-left: 5px;
+          // margin-left: 5px;
         }
       }
       .header {
