@@ -11,7 +11,10 @@
 @import "./components/footer";
 @import "./components/operation-member";
 @import "./components/list-member";
+@import "./components/navbar";
 
 // containers
-@import "./containers/page-not-found"; 
-@import "./containers/ClassroomTemplate/member"; 
+@import "./containers/HomeTemplate/register";
+@import "./containers/page-not-found";
+@import "./containers/ClassroomTemplate/member";
+@import "./containers/HomeTemplate/home";

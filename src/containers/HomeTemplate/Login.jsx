@@ -2,22 +2,31 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Alert, Checkbox, FormControlLabel } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, resetLogin } from "../../redux/modules/Login/action";
+import Loading from "../../components/Loading";
 
 const theme = createTheme();
 
 function Login() {
   // kiểm tra điều kiện các trường đăng nhập với mỗi dữ kiện tương ứng
-  //   const [render, setRender] = useState(false);
 
-  const [isDisable, setIsDisable] = useState(true);
   const [emptyUsernameNotice, setEmptyUsernameNotice] = useState(false);
   const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
+  const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
+
+  const data = useSelector((state) => state.loginReducer.data);
+  const loading = useSelector((state) => state.loginReducer.loading);
+  const err = useSelector((state) => state.loginReducer.err);
+
+  const [render, setRender] = useState(false);
+  const dispatch = useDispatch();
 
   // state để dispatch tới action Login
   const [state, setState] = useState({
@@ -25,14 +34,18 @@ function Login() {
     password: "",
   });
 
-  //   useEffect(() => {
-  //     // setTimeout(handleReset, 2000);
-  //     setState({
-  //       username: "",
-  //       password: "",
-  //     });
-  //     // eslint-disable-next-line
-  //   }, [render]);
+  useEffect(() => {
+    setTimeout(handleReset, 1500);
+    setState({
+      username: "",
+      password: "",
+    });
+    // eslint-disable-next-line
+  }, [render]);
+
+  const handleReset = () => {
+    dispatch(resetLogin());
+  };
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
   const handleChange = (e) => {
@@ -42,6 +55,7 @@ function Login() {
       ...state,
       [name]: value,
     });
+
     if (state.username !== "") {
       setEmptyUsernameNotice(false);
     }
@@ -49,54 +63,60 @@ function Login() {
       setEmptyPasswordNotice(false);
     }
     if (state.username !== "" && state.password !== "") {
-      setIsDisable(false);
+      setEmptyFieldNotice(false);
     }
-  };
-
-  // các hàm handle notice và validate tương ứng cho từng trường
-  const handleNotice = () => {
-    setEmptyUsernameNotice(false);
-    setEmptyPasswordNotice(false);
   };
 
   const handleValidationUsername = () => {
     if (state.username === "") {
       setEmptyUsernameNotice(true);
-      setIsDisable(true);
     }
   };
 
   const handleValidationPassword = () => {
     if (state.password === "") {
       setEmptyPasswordNotice(true);
-      setIsDisable(true);
     }
   };
 
-  // hàm render thông báo lỗi khi nhập sai giá trị ở các trường đăng nhập tương ứng
+  // hàm thông báo lỗi khi nhập sai giá trị ở các trường đăng nhập tương ứng
   const renderNotice = () => {
-    // if (err) return <Alert severity="error">{err.response.data}</Alert>;
+    if (emptyFieldNotice) {
+      setTimeout(() => setEmptyFieldNotice(false), 1500);
+      return <Alert severity="error">Vui lòng nhập đầy đủ thông tin</Alert>;
+    }
     if (emptyUsernameNotice) {
-      setTimeout(handleNotice, 1500);
+      setTimeout(() => setEmptyUsernameNotice(false), 1500);
       return <Alert severity="error">Tên đăng nhập không được để trống</Alert>;
     }
     if (emptyPasswordNotice) {
-      setTimeout(handleNotice, 1500);
+      setTimeout(() => setEmptyPasswordNotice(false), 1500);
       return <Alert severity="error">Mật khẩu không được để trống</Alert>;
     }
+    if (err) {
+      return <Alert severity="error">{err?.response.data.message}</Alert>;
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (data) {
+    return <Redirect to="/home" />;
+  }
 
   // sự kiện submit form đăng nhập
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    // dispatch(fetchLogin(state, props.history));
-    // setRender(!render);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
+
+    if (state.username === "" || state.password === "") {
+      setEmptyFieldNotice(true);
+      return;
+    }
+
+    dispatch(loginUser(state));
+    setRender(!render);
   };
 
   return (
@@ -125,14 +145,17 @@ function Login() {
               alignItems: "center",
             }}
           >
-            <img
-              src="/assets/img/Friendly_logo.png"
-              alt="Friendly"
-              style={{
-                height: "70px",
-                width: "auto",
-              }}
-            />
+            <Link to="/">
+              <img
+                src="/assets/img/Friendly_logo.png"
+                alt="Friendly"
+                style={{
+                  height: "70px",
+                  width: "auto",
+                }}
+              />
+            </Link>
+
             <Typography component="h1" variant="h5">
               Đăng nhập
             </Typography>
@@ -178,7 +201,6 @@ function Login() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                disabled={isDisable}
               >
                 Đăng nhập
               </Button>

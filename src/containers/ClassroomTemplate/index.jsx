@@ -1,8 +1,14 @@
 import React from "react";
 import { Route } from "react-router";
+import NavbarClassroom from "../../components/NavbarClassroom";
 
 function LayoutAdmin(props) {
-  return <>{props.children}</>;
+  return (
+    <React.Fragment>
+      <NavbarClassroom />
+      {props.children}
+    </React.Fragment>
+  );
 }
 
 export default function ClassroomTemplate({ Component, ...props }) {
