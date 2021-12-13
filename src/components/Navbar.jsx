@@ -27,6 +27,7 @@ import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
 import { useEffect } from "react";
+import { pathImgFromIndex } from "../utils/constants";
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -102,7 +103,7 @@ const Navbar = (props) => {
     // eslint-disable-next-line
   }, [avatar]);
 
-  console.log("avatar", avatar);
+  // console.log("avatar", avatar);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -201,7 +202,10 @@ const Navbar = (props) => {
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
             >
               <Link to="/home" className="logo">
-                <img src="./assets/img/Friendly_logo.png" alt="Our Logo" />
+                <img
+                  src={pathImgFromIndex + "Friendly_logo.png"}
+                  alt="Our Logo"
+                />
               </Link>
             </Typography>
 
@@ -255,7 +259,10 @@ const Navbar = (props) => {
               sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
             >
               <Link to="/home" className="logo">
-                <img src="./assets/img/Friendly_logo.png" alt="Our Logo" />
+                <img
+                  src={pathImgFromIndex + "Friendly_logo.png"}
+                  alt="Our Logo"
+                />
               </Link>
             </Typography>
             <Box

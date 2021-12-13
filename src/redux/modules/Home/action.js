@@ -72,7 +72,7 @@ export const createClassroom = (data) => {
                 dispatch(createClassroomSuccess(res.data));
             })
             .catch(err => {
-                alert(err.response.data.message);
+                // alert(err.response.data.message);
                 dispatch(createClassroomFailed(err));
             }
             )
@@ -134,7 +134,7 @@ export const joinClassroom = (data) => {
                 dispatch(joinClassroomSuccess(res.data));
             })
             .catch(err => {
-                alert(err.response.data.message);
+                // alert(err.response.data.message);
                 dispatch(joinClassroomFailed(err));
             }
             )
