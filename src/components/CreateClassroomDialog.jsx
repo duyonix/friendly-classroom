@@ -10,6 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createClassroom,
@@ -25,6 +26,7 @@ function CreateClassroomDialog(props) {
   const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
 
   const dispatch = useDispatch();
+  const [renderCreate, setRenderCreate] = useState(false);
 
   const data = useSelector((state) => state.createClassroomReducer.data);
   const loading = useSelector((state) => state.createClassroomReducer.loading);
@@ -35,6 +37,14 @@ function CreateClassroomDialog(props) {
     name: "",
     description: "",
   });
+
+  useEffect(() => {
+    setState({
+      name: "",
+      description: "",
+    });
+    // eslint-disable-next-line
+  }, [renderCreate]);
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
   const handleChange = (e) => {
@@ -82,9 +92,10 @@ function CreateClassroomDialog(props) {
       setTimeout(() => setEmptyDescriptionNotice(false), 1000);
       return <Alert severity="error">Mô tả không được để trống</Alert>;
     }
-    // if (err) {
-    //   return <Alert severity="error">{err?.response.data.message}</Alert>;
-    // }
+    if (err) {
+      setTimeout(handleReset, 1500);
+      return <Alert severity="error">{err?.response.data.message}</Alert>;
+    }
   };
 
   // sự kiện submit form đăng nhập
@@ -98,14 +109,14 @@ function CreateClassroomDialog(props) {
 
     dispatch(createClassroom(state));
     // console.log("state", state);
-    handleCloseCreateDialog();
+    // handleCloseCreateDialog();
+    setRenderCreate(!renderCreate);
     // setRender(!render);
   };
 
-  async function handleReset() {
-    await dispatch(resetCreateClassroom());
-    setRender(!render);
-  }
+  const handleReset = () => {
+    dispatch(resetCreateClassroom());
+  };
 
   if (loading) {
     return (
@@ -119,9 +130,11 @@ function CreateClassroomDialog(props) {
     // console.log("dataCreate", data);
     // alert(data.message);
     handleReset();
+    handleCloseCreateDialog();
+    setRender(!render);
   }
 
-  if (err) console.log("error", err.response.data);
+  // if (err) console.log("error", err.response.data);
 
   return (
     <div>

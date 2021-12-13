@@ -9,7 +9,7 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   joinClassroom,
@@ -22,6 +22,7 @@ function JoinClassroomDialog(props) {
   const [emptyCodeNotice, setEmptyCodeNotice] = useState(false);
 
   const dispatch = useDispatch();
+  const [renderJoin, setRenderJoin] = useState(false);
 
   const data = useSelector((state) => state.joinClassroomReducer.data);
   const loading = useSelector((state) => state.joinClassroomReducer.loading);
@@ -31,6 +32,13 @@ function JoinClassroomDialog(props) {
   const [state, setState] = useState({
     code: "",
   });
+
+  useEffect(() => {
+    setState({
+      code: "",
+    });
+    // eslint-disable-next-line
+  }, [renderJoin]);
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
   const handleChange = (e) => {
@@ -58,9 +66,10 @@ function JoinClassroomDialog(props) {
       setTimeout(() => setEmptyCodeNotice(false), 1000);
       return <Alert severity="error">Mã môn học không được để trống</Alert>;
     }
-    // if (err) {
-    //   return <Alert severity="error">{err?.response.data.message}</Alert>;
-    // }
+    if (err) {
+      setTimeout(handleReset, 1500);
+      return <Alert severity="error">{err?.response.data.message}</Alert>;
+    }
   };
 
   // sự kiện submit form đăng nhập
@@ -77,14 +86,14 @@ function JoinClassroomDialog(props) {
 
     dispatch(joinClassroom(state));
     // console.log("state", state);
-    handleCloseJoinDialog();
+    // handleCloseJoinDialog();
+    setRenderJoin(!renderJoin);
     // setRender(!render);
   };
 
-  async function handleReset() {
-    await dispatch(resetJoinClassroom());
-    setRender(!render);
-  }
+  const handleReset = () => {
+    dispatch(resetJoinClassroom());
+  };
 
   if (loading) {
     return (
@@ -98,9 +107,11 @@ function JoinClassroomDialog(props) {
     // console.log("dataJoin", data);
     // alert(data.message);
     handleReset();
+    handleCloseJoinDialog();
+    setRender(!render);
   }
 
-  if (err) console.log("error", err.response.data);
+  // if (err) console.log("error", err.response.data);
 
   return (
     <div>
