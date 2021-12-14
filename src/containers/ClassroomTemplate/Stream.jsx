@@ -1,11 +1,11 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
-function Stream(props) {
-  let { classroomId } = useParams();
-  // console.log(classroomId);
-  console.log(props);
+function Stream() {
+  const { classroomId } = useParams();
+  const { role } = useLocation();
   localStorage.setItem("classroomId", classroomId);
+  if (role) localStorage.setItem("role", role);
 
   return <div>Stream Page</div>;
 }

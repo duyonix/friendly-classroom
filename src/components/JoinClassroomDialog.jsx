@@ -17,7 +17,7 @@ import {
 } from "../redux/modules/Home/action";
 
 function JoinClassroomDialog(props) {
-  const { openJoinDialog, handleCloseJoinDialog, render, setRender } = props;
+  const { openJoinDialog, handleCloseJoinDialog, handleRender } = props;
 
   const [emptyCodeNotice, setEmptyCodeNotice] = useState(false);
 
@@ -108,7 +108,7 @@ function JoinClassroomDialog(props) {
     // alert(data.message);
     handleReset();
     handleCloseJoinDialog();
-    setRender(!render);
+    handleRender();
   }
 
   // if (err) console.log("error", err.response.data);
