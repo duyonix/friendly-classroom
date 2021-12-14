@@ -1,0 +1,8 @@
+.homework-card {
+  .btn-change {
+    @include button(white, #fc5421, white, #fa5320);
+  }
+  .btn-detail {
+    @include button(white, #302df0, white, #4a04ee);
+  }
+}
