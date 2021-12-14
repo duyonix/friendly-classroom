@@ -13,6 +13,10 @@ function Home() {
   const dispatch = useDispatch();
   const [render, setRender] = useState(false);
 
+  const handleRender = () => {
+    setRender(!render);
+  };
+
   useEffect(() => {
     dispatch(fetchUserInfo());
     //eslint-disable-next-line
@@ -27,6 +31,11 @@ function Home() {
   const classTeacher = user?.classTeacher;
 
   localStorage.setItem("avatar", user?.avatarUrl);
+
+  if (localStorage.getItem("role")) localStorage.removeItem("role");
+
+  if (localStorage.getItem("classroomId"))
+    localStorage.removeItem("classroomId");
 
   // console.log(classStudent);
 
@@ -81,15 +90,13 @@ function Home() {
         <CreateClassroomDialog
           openCreateDialog={openCreateDialog}
           handleCloseCreateDialog={handleCloseCreateDialog}
-          render={render}
-          setRender={setRender}
+          handleRender={handleRender}
         />
 
         <JoinClassroomDialog
           openJoinDialog={openJoinDialog}
           handleCloseJoinDialog={handleCloseJoinDialog}
-          render={render}
-          setRender={setRender}
+          handleRender={handleRender}
         />
 
         <div className="student-area area">
