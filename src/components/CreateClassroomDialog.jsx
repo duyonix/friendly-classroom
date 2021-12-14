@@ -18,8 +18,7 @@ import {
 } from "../redux/modules/Home/action";
 
 function CreateClassroomDialog(props) {
-  const { openCreateDialog, handleCloseCreateDialog, render, setRender } =
-    props;
+  const { openCreateDialog, handleCloseCreateDialog, handleRender } = props;
 
   const [emptyNameNotice, setEmptyNameNotice] = useState(false);
   const [emptyDescriptionNotice, setEmptyDescriptionNotice] = useState(false);
@@ -131,7 +130,7 @@ function CreateClassroomDialog(props) {
     // alert(data.message);
     handleReset();
     handleCloseCreateDialog();
-    setRender(!render);
+    handleRender();
   }
 
   // if (err) console.log("error", err.response.data);
