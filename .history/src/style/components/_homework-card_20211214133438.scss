@@ -1,0 +1,16 @@
+.homework-card {
+  .hw-name {
+    position: absolute;
+    top: 0;
+  }
+  .hw-deadline {
+    position: absolute;
+    bo: 0;
+  }
+  .btn-change {
+    @include button(white, #fc5421, white, #fa5320);
+  }
+  .btn-detail {
+    @include button(white, #413ef5, white, #85828d);
+  }
+}

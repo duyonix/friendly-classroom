@@ -1,0 +1,23 @@
+.homework-card {
+  .info {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .hw-name {
+    left: 0;
+
+    top: 0;
+  }
+  .hw-deadline {
+    //position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+  .btn-change {
+    @include button(white, #fc5421, white, #fa5320);
+  }
+  .btn-detail {
+    @include button(white, #413ef5, white, #85828d);
+  }
+}
