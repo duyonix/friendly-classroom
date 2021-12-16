@@ -1,0 +1,109 @@
+.submit-homework {
+  //margin-left: 30px !important;
+  .logo-class {
+    padding: 60px 50px;
+    .classname {
+      @include button(white, #fc5421, white, #fa5320);
+      display: inline-block;
+      padding: 20px 40px;
+      font-size: $fs-xl;
+      cursor: pointer;
+      letter-spacing: 3px;
+      margin-right: 50px;
+      opacity: 90%;
+    }
+  }
+  .content {
+    padding-left: 50px;
+    @include flex(row, space-between, null, null);
+    .homework-detail {
+      width: 40%;
+      @include flex(null, null, center);
+      .name {
+        color: $color-pr-3;
+        font-size: $fs-xl;
+        font-weight: $fw-bold-2;
+        margin-bottom: 40px;
+      }
+      .detail {
+      
+        margin-left: 30px;
+        @include flex(column, space-between, null, null);
+        p {
+          font-size: 22px;
+          
+          margin: 0;
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    .submit {
+      @include flex(column, space-between, null, null);
+      position: relative;
+      height: 250px;
+      font-size: 28px;
+      width: 45%;
+      .header {
+        @include flex(row, space-between, null, null);
+        font-weight: bold;
+
+        .incomplete {
+          color: #fa5320;
+        }
+        .complete {
+          color: rgb(13, 226, 42);
+        }
+      }
+      .btn-add {
+        @include button(rgb(11, 11, 238), #f9f7fd, rgb(11, 11, 238), #f9f7fd);
+        border: 1px solid #54535563;
+        font-size: 22px;
+      }
+      .btn-mark {
+        @include button(white, #0857f5, white, #2063e9);
+        font-size: 22px;
+      }
+      position: relative;
+      z-index: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 2rem;
+      &::before {
+        content: "";
+        position: absolute;
+        z-index: -2;
+        left: -50%;
+        top: -50%;
+        width: 200%;
+        height: 200%;
+        background-color: #399953;
+        background-repeat: no-repeat;
+        background-size: 50% 50%, 50% 50%;
+        background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+        background-image: linear-gradient(#399953, #399953),
+          linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33),
+          linear-gradient(#377af5, #377af5);
+        animation: rotate 3s linear infinite;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        left: 6px;
+        top: 6px;
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
+        background: white;
+        border-radius: 5px;
+      }
+    }
+  }
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(1turn);
+  }
+}

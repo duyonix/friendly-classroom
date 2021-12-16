@@ -1,0 +1,93 @@
+.submit-homework {
+  .logo-class {
+    padding: 60px 0px;
+    .classname {
+      @include button(white, #fc5421, white, #fa5320);
+      display: inline-block;
+      padding: 20px 40px;
+      font-size: $fs-xl;
+      cursor: pointer;
+      letter-spacing: 3px;
+      margin-right: 50px;
+      opacity: 90%;
+    }
+  }
+  .content {
+    padding-left: 30px;
+    @include flex(row, space-between, null, null);
+    .homework-detail {
+      width: 40%;
+      @include flex(null, null, center);
+      .name {
+        color: $color-pr-3;
+        font-size: $fs-xl;
+        font-weight: $fw-bold-2;
+        margin-bottom: 40px;
+      }
+      .detail {
+        margin-left: 30px;
+        @include flex(column, space-between, null, null);
+        p {
+          font-size: 18px;
+          margin: 0;
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    .submit {
+      @include flex(column, space-between, null, null);
+      .header {
+        @include flex(row, space-between, null, null);
+        font-weight: bold;
+
+        .incomplete {
+          color: #fa5320;
+        }
+        .complete {
+          color: rgb(13, 226, 42);
+        }
+      }
+      .btn-add {
+        @include button(rgb(11, 11, 238), #f9f7fd, rgb(11, 11, 238), #f9f7fd);
+        border: 1px solid #54535563;
+      }
+      .btn-mark {
+        @include button(white, #0857f5, white, #2063e9);
+      }
+
+      --border-width: 3px;
+
+      border-radius: var(--border-width);
+
+      &::after {
+        position: absolute;
+        content: "";
+        top: calc(-1 * var(--border-width));
+        left: calc(-1 * var(--border-width));
+        z-index: -1;
+        width: calc(100% + var(--border-width) * 2);
+        height: calc(100% + var(--border-width) * 2);
+        background: linear-gradient(
+          60deg,
+          hsl(224, 85%, 66%),
+          hsl(269, 85%, 66%),
+          hsl(314, 85%, 66%),
+          hsl(359, 85%, 66%),
+          hsl(44, 85%, 66%),
+          hsl(89, 85%, 66%),
+          hsl(134, 85%, 66%),
+          hsl(179, 85%, 66%)
+        );
+        border-radius: calc(2 * var(--border-width));
+        animation: moveGradient 4s alternate infinite;
+      }
+    }
+  }
+}
+@keyframes moveGradient {
+  50% {
+    background-position: 100% 50%;
+  }
+}
