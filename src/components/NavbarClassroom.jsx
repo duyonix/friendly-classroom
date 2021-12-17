@@ -20,7 +20,7 @@ const NavbarClassroom = () => {
     },
     {
       name: "Bài tập",
-      route: `/classroom/${classroomId}/classwork`,
+      route: `/classroom/${classroomId}/homework`,
     },
     {
       name: "Mọi người",
