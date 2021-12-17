@@ -12,17 +12,18 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchUserInfo,
   joinClassroom,
   resetJoinClassroom,
 } from "../redux/modules/Home/action";
 
-function JoinClassroomDialog(props) {
-  const { openJoinDialog, handleCloseJoinDialog, handleRender } = props;
+function DialogJoinClassroom(props) {
+  const { openJoinDialog, handleCloseJoinDialog } = props;
 
   const [emptyCodeNotice, setEmptyCodeNotice] = useState(false);
 
   const dispatch = useDispatch();
-  const [renderJoin, setRenderJoin] = useState(false);
+  const [render, setRender] = useState(false);
 
   const data = useSelector((state) => state.joinClassroomReducer.data);
   const loading = useSelector((state) => state.joinClassroomReducer.loading);
@@ -38,7 +39,7 @@ function JoinClassroomDialog(props) {
       code: "",
     });
     // eslint-disable-next-line
-  }, [renderJoin]);
+  }, [render]);
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
   const handleChange = (e) => {
@@ -87,7 +88,7 @@ function JoinClassroomDialog(props) {
     dispatch(joinClassroom(state));
     // console.log("state", state);
     // handleCloseJoinDialog();
-    setRenderJoin(!renderJoin);
+    setRender(!render);
     // setRender(!render);
   };
 
@@ -108,7 +109,7 @@ function JoinClassroomDialog(props) {
     // alert(data.message);
     handleReset();
     handleCloseJoinDialog();
-    handleRender();
+    dispatch(fetchUserInfo());
   }
 
   // if (err) console.log("error", err.response.data);
@@ -157,4 +158,4 @@ function JoinClassroomDialog(props) {
   );
 }
 
-export default JoinClassroomDialog;
+export default DialogJoinClassroom;

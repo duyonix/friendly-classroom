@@ -14,18 +14,19 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createClassroom,
+  fetchUserInfo,
   resetCreateClassroom,
 } from "../redux/modules/Home/action";
 
-function CreateClassroomDialog(props) {
-  const { openCreateDialog, handleCloseCreateDialog, handleRender } = props;
+function DialogCreateClassroom(props) {
+  const { openCreateDialog, handleCloseCreateDialog } = props;
 
   const [emptyNameNotice, setEmptyNameNotice] = useState(false);
   const [emptyDescriptionNotice, setEmptyDescriptionNotice] = useState(false);
   const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
 
   const dispatch = useDispatch();
-  const [renderCreate, setRenderCreate] = useState(false);
+  const [render, setRender] = useState(false);
 
   const data = useSelector((state) => state.createClassroomReducer.data);
   const loading = useSelector((state) => state.createClassroomReducer.loading);
@@ -43,7 +44,7 @@ function CreateClassroomDialog(props) {
       description: "",
     });
     // eslint-disable-next-line
-  }, [renderCreate]);
+  }, [render]);
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
   const handleChange = (e) => {
@@ -109,7 +110,7 @@ function CreateClassroomDialog(props) {
     dispatch(createClassroom(state));
     // console.log("state", state);
     // handleCloseCreateDialog();
-    setRenderCreate(!renderCreate);
+    setRender(!render);
     // setRender(!render);
   };
 
@@ -130,7 +131,8 @@ function CreateClassroomDialog(props) {
     // alert(data.message);
     handleReset();
     handleCloseCreateDialog();
-    handleRender();
+    dispatch(fetchUserInfo());
+    // handleRender();
   }
 
   // if (err) console.log("error", err.response.data);
@@ -191,4 +193,4 @@ function CreateClassroomDialog(props) {
   );
 }
 
-export default CreateClassroomDialog;
+export default DialogCreateClassroom;

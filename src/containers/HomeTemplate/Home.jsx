@@ -6,21 +6,16 @@ import NavbarHome from "../../components/NavbarHome";
 import { fetchUserInfo } from "../../redux/modules/Home/action";
 import { pathImgFromIndex } from "../../utils/constants";
 import Loading from "../../components/Loading";
-import CreateClassroomDialog from "../../components/CreateClassroomDialog";
-import JoinClassroomDialog from "../../components/JoinClassroomDialog";
+import DialogCreateClassroom from "../../components/DialogCreateClassroom";
+import DialogJoinClassroom from "../../components/DialogJoinClassroom";
 
 function Home() {
   const dispatch = useDispatch();
-  const [render, setRender] = useState(false);
-
-  const handleRender = () => {
-    setRender(!render);
-  };
 
   useEffect(() => {
     dispatch(fetchUserInfo());
     //eslint-disable-next-line
-  }, [render]);
+  }, []);
 
   const loading = useSelector((state) => state.fetchUserInfoReducer.loading);
   const data = useSelector((state) => state.fetchUserInfoReducer.data);
@@ -40,7 +35,7 @@ function Home() {
   // console.log(classStudent);
 
   // Dialog Create Classroom
-  const [openCreateDialog, setOpenCreateDialog] = React.useState(false);
+  const [openCreateDialog, setOpenCreateDialog] = useState(false);
 
   const handleOpenCreateDialog = () => {
     setOpenCreateDialog(true);
@@ -51,7 +46,7 @@ function Home() {
   };
 
   // Dialog Join Classroom
-  const [openJoinDialog, setOpenJoinDialog] = React.useState(false);
+  const [openJoinDialog, setOpenJoinDialog] = useState(false);
 
   const handleOpenJoinDialog = () => {
     setOpenJoinDialog(true);
@@ -60,6 +55,28 @@ function Home() {
   const handleCloseJoinDialog = () => {
     setOpenJoinDialog(false);
   };
+
+  // // Dialog Update Classroom
+  // const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+
+  // const handleOpenUpdateDialog = () => {
+  //   setOpenUpdateDialog(true);
+  // };
+
+  // const handleCloseUpdateDialog = () => {
+  //   setOpenUpdateDialog(false);
+  // };
+
+  // // Dialog Delete Classroom
+  // const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  // const handleOpenDeleteDialog = () => {
+  //   setOpenDeleteDialog(true);
+  // };
+
+  // const handleCloseDeleteDialog = () => {
+  //   setOpenDeleteDialog(false);
+  // };
 
   if (loading) {
     return <Loading />;
@@ -87,16 +104,14 @@ function Home() {
           </Button>
         </Stack>
 
-        <CreateClassroomDialog
+        <DialogCreateClassroom
           openCreateDialog={openCreateDialog}
           handleCloseCreateDialog={handleCloseCreateDialog}
-          handleRender={handleRender}
         />
 
-        <JoinClassroomDialog
+        <DialogJoinClassroom
           openJoinDialog={openJoinDialog}
           handleCloseJoinDialog={handleCloseJoinDialog}
-          handleRender={handleRender}
         />
 
         <div className="student-area area">

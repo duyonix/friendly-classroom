@@ -31,18 +31,12 @@ function ClassroomCard(props) {
     >
       <Card sx={{ borderRadius: 5, backgroundColor: bgColorItem }}>
         <CardActionArea sx={{ height: 200 }}>
-          {/* <CardMedia
-          component="img"
-          height="140"
-          image={pathImgFromIndex + "intro_func_2.png"}
-          alt="classroom"
-        /> */}
           <CardContent>
             <Typography
               gutterBottom
               variant="h5"
               component="h5"
-              sx={{ textTransform: "uppercase", fontWeight: 500 }}
+              sx={{ fontWeight: 500 }}
             >
               {classInfo.name}
             </Typography>

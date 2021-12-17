@@ -1,7 +1,14 @@
 import { combineReducers } from 'redux';
 import loginReducer from '../modules/Login/reducer';
 import registerReducer from '../modules/Register/reducer';
-import { fetchUserInfoReducer, createClassroomReducer, joinClassroomReducer } from '../modules/Home/reducer';
+import {
+    fetchUserInfoReducer,
+    createClassroomReducer,
+    joinClassroomReducer,
+    updateClassroomReducer,
+    deleteClassroomReducer,
+    leaveClassroomReducer
+} from '../modules/Home/reducer';
 
 const reducer = combineReducers({
     // Add reducers here
@@ -9,7 +16,10 @@ const reducer = combineReducers({
     registerReducer,
     fetchUserInfoReducer,
     createClassroomReducer,
-    joinClassroomReducer
+    joinClassroomReducer,
+    updateClassroomReducer,
+    deleteClassroomReducer,
+    leaveClassroomReducer,
 });
 
 export default reducer;
