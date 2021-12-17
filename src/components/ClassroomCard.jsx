@@ -1,35 +1,159 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 // import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Avatar, CardActionArea, Stack } from "@mui/material";
+import {
+  Avatar,
+  CardActionArea,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import { Link } from "react-router-dom";
-// import { pathImgFromIndex } from "../utils/constants";
-
-const bgColor = [
-  "#bbecff",
-  "#caffcc",
-  "#d9caff",
-  "#e8ffca",
-  "#ffe2ca",
-  "#e1e1e1",
-];
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DialogUpdateClassroom from "./DialogUpdateClassroom";
+import DialogDeleteClassroom from "./DialogDeleteClassroom";
+import DialogLeaveClassroom from "./DialogLeaveClassroom";
 
 function ClassroomCard(props) {
   const { classInfo, role, index } = props;
 
+  const bgColor = [
+    "#bbecff",
+    "#caffcc",
+    "#d9caff",
+    "#e8ffca",
+    "#ffe2ca",
+    "#e1e1e1",
+  ];
   const bgColorItem = bgColor[index % bgColor.length];
 
+  // Dialog Update Classroom
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+
+  const handleOpenUpdateDialog = () => {
+    setOpenUpdateDialog(true);
+  };
+
+  const handleCloseUpdateDialog = () => {
+    setOpenUpdateDialog(false);
+  };
+
+  // Dialog Delete Classroom
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  const handleOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
+  // Dialog Leave Classroom
+  const [openLeaveDialog, setOpenLeaveDialog] = useState(false);
+
+  const handleOpenLeaveDialog = () => {
+    setOpenLeaveDialog(true);
+  };
+
+  const handleCloseLeaveDialog = () => {
+    setOpenLeaveDialog(false);
+  };
+
+  // Dialog GetCode Classroom
+  const [openGetCodeDialog, setOpenGetCodeDialog] = useState(false);
+
+  const handleOpenGetCodeDialog = () => {
+    setOpenGetCodeDialog(true);
+  };
+
+  const handleCloseGetCodeDialog = () => {
+    setOpenGetCodeDialog(false);
+  };
+
+  const OptionMenu = (props) => {
+    const { role } = props;
+
+    const options =
+      role === "student"
+        ? [{ title: "Rời lớp học", handleClick: handleOpenLeaveDialog }]
+        : [
+            { title: "Lấy mã lớp", handleClick: handleOpenGetCodeDialog },
+            { title: "Chỉnh sửa", handleClick: handleOpenUpdateDialog },
+            { title: "Xóa lớp học", handleClick: handleOpenDeleteDialog },
+          ];
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    return (
+      <div className="option-menu">
+        <IconButton
+          aria-label="more"
+          id="long-button"
+          aria-controls="long-menu"
+          aria-expanded={open ? "true" : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="long-menu"
+          MenuListProps={{
+            "aria-labelledby": "long-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+        >
+          {options.map((option, index) => (
+            <MenuItem key={index} onClick={option.handleClick}>
+              {option.title}
+            </MenuItem>
+          ))}
+        </Menu>
+      </div>
+    );
+  };
+
   return (
-    <Link
-      to={{
-        pathname: `/classroom/${classInfo._id}/stream`,
-        role,
-      }}
-      style={{ textDecoration: "none" }}
-    >
-      <Card sx={{ borderRadius: 5, backgroundColor: bgColorItem }}>
+    <Card className="classroom-card" style={{ backgroundColor: bgColorItem }}>
+      <DialogUpdateClassroom
+        openUpdateDialog={openUpdateDialog}
+        handleCloseUpdateDialog={handleCloseUpdateDialog}
+        classInfo={classInfo}
+      />
+
+      <DialogDeleteClassroom
+        openDeleteDialog={openDeleteDialog}
+        handleCloseDeleteDialog={handleCloseDeleteDialog}
+        classInfo={classInfo}
+      />
+
+      <DialogLeaveClassroom
+        openLeaveDialog={openLeaveDialog}
+        handleCloseLeaveDialog={handleCloseLeaveDialog}
+        classInfo={classInfo}
+      />
+
+      <OptionMenu role={role} />
+      <Link
+        to={{
+          pathname: `/classroom/${classInfo._id}/stream`,
+          role,
+        }}
+        className="link-classroom"
+      >
         <CardActionArea sx={{ height: 200 }}>
           <CardContent>
             <Typography
@@ -46,9 +170,9 @@ function ClassroomCard(props) {
 
             {role === "student" ? (
               <Stack
+                className="classroom-card-info"
                 direction="row"
                 spacing={2}
-                sx={{ justifyContent: "flex-end", alignItems: "center" }}
               >
                 <Typography sx={{ fontWeight: "bold" }}>
                   {classInfo.teacherId.fullName}
@@ -65,8 +189,8 @@ function ClassroomCard(props) {
             )}
           </CardContent>
         </CardActionArea>
-      </Card>
-    </Link>
+      </Link>
+    </Card>
   );
 }
 

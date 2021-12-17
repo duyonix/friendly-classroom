@@ -9,21 +9,25 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateClassroom,
-  resetUpdateClassroom,
   fetchUserInfo,
+  resetUpdateClassroom,
 } from "../redux/modules/Home/action";
 
 function DialogUpdateClassroom(props) {
-  const { openUpdateDialog, handleCloseUpdateDialog } = props;
+  const { openUpdateDialog, handleCloseUpdateDialog, classInfo } = props;
+  const classroomId = classInfo._id;
 
   const [emptyNameNotice, setEmptyNameNotice] = useState(false);
   const [emptyDescriptionNotice, setEmptyDescriptionNotice] = useState(false);
   const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
+
+  const inputName = useRef(null);
+  const inputDescription = useRef(null);
 
   const dispatch = useDispatch();
   const [render, setRender] = useState(false);
@@ -34,14 +38,14 @@ function DialogUpdateClassroom(props) {
 
   // state để dispatch tới action Login
   const [state, setState] = useState({
-    name: "",
-    description: "",
+    name: classInfo.name,
+    description: classInfo.description,
   });
 
   useEffect(() => {
     setState({
-      name: "",
-      description: "",
+      name: classInfo.name,
+      description: classInfo.description,
     });
     // eslint-disable-next-line
   }, [render]);
@@ -93,12 +97,19 @@ function DialogUpdateClassroom(props) {
       return <Alert severity="error">Mô tả không được để trống</Alert>;
     }
     if (err) {
-      setTimeout(handleReset, 1500);
+      handleClearInput();
+      setTimeout(handleReset, 1000);
       return <Alert severity="error">{err?.response.data.message}</Alert>;
     }
   };
 
-  // sự kiện submit form đăng nhập
+  const handleClearInput = () => {
+    if (inputName.current) inputName.current.value = classInfo.name;
+    if (inputDescription.current)
+      inputDescription.current.value = classInfo.description;
+  };
+
+  // sự kiện submit form
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -107,35 +118,29 @@ function DialogUpdateClassroom(props) {
       return;
     }
 
-    dispatch(updateClassroom(state));
-    // console.log("state", state);
-    // handleCloseUpdateDialog();
+    dispatch(updateClassroom(classroomId, state));
     setRender(!render);
-    // setRender(!render);
   };
 
   const handleReset = () => {
     dispatch(resetUpdateClassroom());
   };
 
-  if (loading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const renderLoading = () => {
+    if (loading) {
+      return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+  };
 
   if (data) {
-    // console.log("dataUpdate", data);
-    // alert(data.message);
     handleReset();
     handleCloseUpdateDialog();
     dispatch(fetchUserInfo());
-    // handleRender();
   }
-
-  // if (err) console.log("error", err.response.data);
 
   return (
     <div>
@@ -148,9 +153,12 @@ function DialogUpdateClassroom(props) {
         <DialogTitle sx={{ pb: 0 }}>Tạo lớp học</DialogTitle>
 
         <DialogContent>
+          {renderLoading()}
           {renderNotice()}
+
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
+              inputRef={inputName}
               margin="normal"
               required
               fullWidth
@@ -159,10 +167,13 @@ function DialogUpdateClassroom(props) {
               type="text"
               name="name"
               autoComplete="off"
+              defaultValue={classInfo.name}
+              autoFocus
               onChange={handleChange}
               onBlur={handleValidationName}
             />
             <TextField
+              inputRef={inputDescription}
               margin="normal"
               required
               fullWidth
@@ -171,6 +182,7 @@ function DialogUpdateClassroom(props) {
               type="text"
               id="Description"
               autoComplete="off"
+              defaultValue={classInfo.description}
               onChange={handleChange}
               onBlur={handleValidationDescription}
             />
@@ -185,7 +197,7 @@ function DialogUpdateClassroom(props) {
             Hủy
           </Button>
           <Button variant="contained" onClick={handleSubmit}>
-            Tạo lớp
+            Cập nhật
           </Button>
         </DialogActions>
       </Dialog>

@@ -329,27 +329,27 @@ export const resetLeaveClassroom = () => {
 
 const leaveClassroomRequest = () => {
     return {
-        type: actionTypes.DELETE_CLASSROOM_REQUEST
+        type: actionTypes.LEAVE_CLASSROOM_REQUEST
     }
 }
 
 const leaveClassroomSuccess = (data) => {
     return {
-        type: actionTypes.DELETE_CLASSROOM_SUCCESS,
+        type: actionTypes.LEAVE_CLASSROOM_SUCCESS,
         payload: data
     }
 }
 
 const leaveClassroomFailed = (err) => {
     return {
-        type: actionTypes.DELETE_CLASSROOM_FAILED,
+        type: actionTypes.LEAVE_CLASSROOM_FAILED,
         payload: err
     }
 }
 
 const leaveClassroomReset = () => {
     return {
-        type: actionTypes.DELETE_CLASSROOM_RESET
+        type: actionTypes.LEAVE_CLASSROOM_RESET
     }
 }
 

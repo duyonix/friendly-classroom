@@ -56,28 +56,6 @@ function Home() {
     setOpenJoinDialog(false);
   };
 
-  // // Dialog Update Classroom
-  // const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
-
-  // const handleOpenUpdateDialog = () => {
-  //   setOpenUpdateDialog(true);
-  // };
-
-  // const handleCloseUpdateDialog = () => {
-  //   setOpenUpdateDialog(false);
-  // };
-
-  // // Dialog Delete Classroom
-  // const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
-  // const handleOpenDeleteDialog = () => {
-  //   setOpenDeleteDialog(true);
-  // };
-
-  // const handleCloseDeleteDialog = () => {
-  //   setOpenDeleteDialog(false);
-  // };
-
   if (loading) {
     return <Loading />;
   }

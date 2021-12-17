@@ -8,29 +8,29 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Box, CircularProgress } from "@mui/material";
 import {
-  deleteClassroom,
   fetchUserInfo,
-  resetDeleteClassroom,
+  leaveClassroom,
+  resetLeaveClassroom,
 } from "../redux/modules/Home/action";
 
-function DialogDeleteClassroom(props) {
-  const { openDeleteDialog, handleCloseDeleteDialog, classInfo } = props;
+function DialogLeaveClassroom(props) {
+  const { openLeaveDialog, handleCloseLeaveDialog, classInfo } = props;
   const classroomId = classInfo._id;
 
   const dispatch = useDispatch();
   const [render, setRender] = React.useState(false);
 
-  const data = useSelector((state) => state.deleteClassroomReducer.data);
-  const loading = useSelector((state) => state.deleteClassroomReducer.loading);
-  const err = useSelector((state) => state.deleteClassroomReducer.err);
+  const data = useSelector((state) => state.leaveClassroomReducer.data);
+  const loading = useSelector((state) => state.leaveClassroomReducer.loading);
+  const err = useSelector((state) => state.leaveClassroomReducer.err);
 
   const handleReset = () => {
-    dispatch(resetDeleteClassroom());
+    dispatch(resetLeaveClassroom());
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(deleteClassroom(classroomId));
+    dispatch(leaveClassroom(classroomId));
     setRender(!render);
   };
 
@@ -53,7 +53,7 @@ function DialogDeleteClassroom(props) {
 
   if (data) {
     handleReset();
-    handleCloseDeleteDialog();
+    handleCloseLeaveDialog();
     dispatch(fetchUserInfo());
   }
 
@@ -62,13 +62,13 @@ function DialogDeleteClassroom(props) {
       <Dialog
         fullWidth
         maxWidth="xs"
-        open={openDeleteDialog}
-        onClose={handleCloseDeleteDialog}
+        open={openLeaveDialog}
+        onClose={handleCloseLeaveDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" sx={{ pb: 1 }}>
-          Xóa lớp học
+          Rời khỏi lớp học
         </DialogTitle>
 
         <DialogContent>
@@ -79,8 +79,8 @@ function DialogDeleteClassroom(props) {
             sx={{ color: "inherit", mt: 1 }}
             id="alert-dialog-description"
           >
-            Lớp học {classInfo.name} sẽ bị xóa vĩnh viễn. Bạn có chắc chắn muốn
-            xóa lớp học này?
+            Khi rời khỏi lớp học {classInfo.name}, bạn sẽ không thể truy cập vào
+            lớp nữa. Bạn có chắc chắn muốn rời khỏi lớp học này?
           </DialogContentText>
         </DialogContent>
 
@@ -88,7 +88,7 @@ function DialogDeleteClassroom(props) {
           <Button
             variant="contained"
             color="error"
-            onClick={handleCloseDeleteDialog}
+            onClick={handleCloseLeaveDialog}
           >
             Hủy
           </Button>
@@ -101,4 +101,4 @@ function DialogDeleteClassroom(props) {
   );
 }
 
-export default DialogDeleteClassroom;
+export default DialogLeaveClassroom;
