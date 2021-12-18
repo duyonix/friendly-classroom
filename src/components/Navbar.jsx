@@ -26,8 +26,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
-import { useEffect } from "react";
 import { pathImgFromIndex } from "../utils/constants";
+import { useSelector } from "react-redux";
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -95,15 +95,8 @@ const Navbar = (props) => {
 
   const history = useHistory();
 
-  const [avatar, setAvatar] = useState(null);
-
-  useEffect(() => {
-    if (localStorage.getItem("avatar")) {
-      setAvatar(localStorage.getItem("avatar"));
-      console.log(localStorage.getItem("avatar"));
-    }
-    // eslint-disable-next-line
-  }, [avatar]);
+  const data = useSelector((state) => state.fetchUserInfoReducer.data);
+  const avatar = data?.user.avatarUrl;
 
   // console.log("avatar", avatar);
 

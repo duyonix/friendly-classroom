@@ -24,8 +24,6 @@ function Home() {
   const classStudent = user?.classStudent;
   const classTeacher = user?.classTeacher;
 
-  localStorage.setItem("avatar", user?.avatarUrl);
-
   if (localStorage.getItem("role")) localStorage.removeItem("role");
 
   if (localStorage.getItem("classroomId"))
