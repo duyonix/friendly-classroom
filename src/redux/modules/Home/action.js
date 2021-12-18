@@ -68,7 +68,7 @@ export const createClassroom = (data) => {
             data: data
         })
             .then(res => {
-                alert("Tạo lớp học thành công");
+                // alert("Tạo lớp học thành công");
                 dispatch(createClassroomSuccess(res.data));
             })
             .catch(err => {
@@ -129,7 +129,7 @@ export const joinClassroom = (data) => {
             data: data
         })
             .then(res => {
-                alert("Tham gia lớp học thành công");
+                // alert("Tham gia lớp học thành công");
                 dispatch(joinClassroomSuccess(res.data));
             })
             .catch(err => {
@@ -190,7 +190,7 @@ export const updateClassroom = (classroomId, data) => {
             data: data
         })
             .then(res => {
-                alert("Cập nhật lớp học thành công");
+                // alert("Cập nhật lớp học thành công");
                 dispatch(updateClassroomSuccess(res.data));
             })
             .catch(err => {
@@ -250,7 +250,7 @@ export const deleteClassroom = (classroomId) => {
             },
         })
             .then(res => {
-                alert("Xóa lớp học thành công");
+                // alert("Xóa lớp học thành công");
                 dispatch(deleteClassroomSuccess(res.data));
             })
             .catch(err => {
@@ -310,7 +310,7 @@ export const leaveClassroom = (classroomId) => {
             },
         })
             .then(res => {
-                alert("Rời lớp học thành công");
+                // alert("Rời lớp học thành công");
                 dispatch(leaveClassroomSuccess(res.data));
             })
             .catch(err => {

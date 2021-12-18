@@ -16,6 +16,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DialogUpdateClassroom from "./DialogUpdateClassroom";
 import DialogDeleteClassroom from "./DialogDeleteClassroom";
 import DialogLeaveClassroom from "./DialogLeaveClassroom";
+import DialogGetCodeClassroom from "./DialogGetCodeClassroom";
 
 function ClassroomCard(props) {
   const { classInfo, role, index } = props;
@@ -143,6 +144,12 @@ function ClassroomCard(props) {
       <DialogLeaveClassroom
         openLeaveDialog={openLeaveDialog}
         handleCloseLeaveDialog={handleCloseLeaveDialog}
+        classInfo={classInfo}
+      />
+
+      <DialogGetCodeClassroom
+        openGetCodeDialog={openGetCodeDialog}
+        handleCloseGetCodeDialog={handleCloseGetCodeDialog}
         classInfo={classInfo}
       />
 

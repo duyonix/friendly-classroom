@@ -109,6 +109,7 @@ function DialogJoinClassroom(props) {
   };
 
   if (data) {
+    alert("Tham gia lớp học thành công");
     handleReset();
     handleCloseJoinDialog();
     dispatch(fetchUserInfo());

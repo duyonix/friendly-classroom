@@ -137,6 +137,7 @@ function DialogUpdateClassroom(props) {
   };
 
   if (data) {
+    alert("Cập nhật lớp học thành công");
     handleReset();
     handleCloseUpdateDialog();
     dispatch(fetchUserInfo());
@@ -168,7 +169,6 @@ function DialogUpdateClassroom(props) {
               name="name"
               autoComplete="off"
               defaultValue={classInfo.name}
-              autoFocus
               onChange={handleChange}
               onBlur={handleValidationName}
             />

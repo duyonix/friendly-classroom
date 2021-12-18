@@ -90,7 +90,9 @@ const style = {
 };
 
 const Navbar = (props) => {
-  const { pages, settings } = props;
+  const { pages } = props;
+  const settings = ["Đăng xuất"];
+
   const history = useHistory();
 
   const [avatar, setAvatar] = useState(null);
