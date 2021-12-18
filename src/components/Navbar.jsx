@@ -100,7 +100,7 @@ const Navbar = (props) => {
   useEffect(() => {
     if (localStorage.getItem("avatar")) {
       setAvatar(localStorage.getItem("avatar"));
-      // console.log(localStorage.getItem("avatar"));
+      console.log(localStorage.getItem("avatar"));
     }
     // eslint-disable-next-line
   }, [avatar]);

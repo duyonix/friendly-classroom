@@ -2,7 +2,6 @@ import { Button, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClassroomCard from "../../components/ClassroomCard";
-import NavbarHome from "../../components/NavbarHome";
 import { fetchUserInfo } from "../../redux/modules/Home/action";
 import { pathImgFromIndex } from "../../utils/constants";
 import Loading from "../../components/Loading";
@@ -66,7 +65,6 @@ function Home() {
 
   return (
     <div className="home">
-      <NavbarHome />
       <div className="container mt-4">
         <Stack direction="row" spacing={2} sx={{ justifyContent: "flex-end" }}>
           <Button variant="contained" onClick={handleOpenCreateDialog}>
