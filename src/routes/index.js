@@ -1,4 +1,3 @@
-import Classwork from "../containers/ClassroomTemplate/Classwork.jsx";
 import Login from "../containers/HomeTemplate/Login.jsx";
 import Home from "../containers/HomeTemplate/Home.jsx";
 import Intro from "../containers/HomeTemplate/Intro.jsx";
@@ -58,11 +57,6 @@ const routeHome = [
 ]
 
 const routeClassroom = [
-    {
-        exact: false,
-        path: "/classroom/:classroomId/classwork",
-        component: Classwork
-    },
     {
         exact: false,
         path: "/classroom/:classroomId/stream",

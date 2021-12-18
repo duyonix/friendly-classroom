@@ -95,3 +95,101 @@ export const joinClassroomReducer = (state = stateJoinClassroom, { type, payload
     }
 }
 
+// Update Classroom Reducer
+const stateUpdateClassroom = {
+    loading: false,
+    data: null,
+    err: null
+}
+
+export const updateClassroomReducer = (state = stateUpdateClassroom, { type, payload }) => {
+    switch (type) {
+        case actionTypes.UPDATE_CLASSROOM_REQUEST:
+            state.loading = true;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+        case actionTypes.UPDATE_CLASSROOM_SUCCESS:
+            state.loading = false;
+            state.data = payload;
+            state.err = null;
+            return { ...state };
+        case actionTypes.UPDATE_CLASSROOM_FAILED:
+            state.loading = false;
+            state.data = null;
+            state.err = payload;
+            return { ...state };
+        case actionTypes.UPDATE_CLASSROOM_RESET:
+            state.loading = false;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+        default: return { ...state };
+    }
+}
+
+// Delete Classroom Reducer
+const stateDeleteClassroom = {
+    loading: false,
+    data: null,
+    err: null
+}
+
+export const deleteClassroomReducer = (state = stateDeleteClassroom, { type, payload }) => {
+    switch (type) {
+        case actionTypes.DELETE_CLASSROOM_REQUEST:
+            state.loading = true;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+        case actionTypes.DELETE_CLASSROOM_SUCCESS:
+            state.loading = false;
+            state.data = payload;
+            state.err = null;
+            return { ...state };
+        case actionTypes.DELETE_CLASSROOM_FAILED:
+            state.loading = false;
+            state.data = null;
+            state.err = payload;
+            return { ...state };
+        case actionTypes.DELETE_CLASSROOM_RESET:
+            state.loading = false;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+        default: return { ...state };
+    }
+}
+
+// Leave Classroom Reducer
+const stateLeaveClassroom = {
+    loading: false,
+    data: null,
+    err: null
+}
+
+export const leaveClassroomReducer = (state = stateLeaveClassroom, { type, payload }) => {
+    switch (type) {
+        case actionTypes.LEAVE_CLASSROOM_REQUEST:
+            state.loading = true;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+        case actionTypes.LEAVE_CLASSROOM_SUCCESS:
+            state.loading = false;
+            state.data = payload;
+            state.err = null;
+            return { ...state };
+        case actionTypes.LEAVE_CLASSROOM_FAILED:
+            state.loading = false;
+            state.data = null;
+            state.err = payload;
+            return { ...state };
+        case actionTypes.LEAVE_CLASSROOM_RESET:
+            state.loading = false;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+        default: return { ...state };
+    }
+}

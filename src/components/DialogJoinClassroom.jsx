@@ -9,20 +9,23 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  fetchUserInfo,
   joinClassroom,
   resetJoinClassroom,
 } from "../redux/modules/Home/action";
 
-function JoinClassroomDialog(props) {
-  const { openJoinDialog, handleCloseJoinDialog, handleRender } = props;
+function DialogJoinClassroom(props) {
+  const { openJoinDialog, handleCloseJoinDialog } = props;
 
   const [emptyCodeNotice, setEmptyCodeNotice] = useState(false);
 
+  const inputCode = useRef(null);
+
   const dispatch = useDispatch();
-  const [renderJoin, setRenderJoin] = useState(false);
+  const [render, setRender] = useState(false);
 
   const data = useSelector((state) => state.joinClassroomReducer.data);
   const loading = useSelector((state) => state.joinClassroomReducer.loading);
@@ -38,7 +41,7 @@ function JoinClassroomDialog(props) {
       code: "",
     });
     // eslint-disable-next-line
-  }, [renderJoin]);
+  }, [render]);
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
   const handleChange = (e) => {
@@ -67,16 +70,19 @@ function JoinClassroomDialog(props) {
       return <Alert severity="error">Mã môn học không được để trống</Alert>;
     }
     if (err) {
-      setTimeout(handleReset, 1500);
+      setTimeout(handleReset, 1000);
+      handleClearInput();
       return <Alert severity="error">{err?.response.data.message}</Alert>;
     }
+  };
+
+  const handleClearInput = () => {
+    if (inputCode.current) inputCode.current.value = "";
   };
 
   // sự kiện submit form đăng nhập
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    console.log(state);
 
     if (state.code === "") {
       // setEmptyFieldNotice(true);
@@ -85,33 +91,28 @@ function JoinClassroomDialog(props) {
     }
     
     dispatch(joinClassroom(state));
-    // console.log("state", state);
-    // handleCloseJoinDialog();
-    setRenderJoin(!renderJoin);
-    // setRender(!render);
+    setRender(!render);
   };
 
   const handleReset = () => {
     dispatch(resetJoinClassroom());
   };
 
-  if (loading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const renderLoading = () => {
+    if (loading) {
+      return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+  };
 
   if (data) {
-    // console.log("dataJoin", data);
-    // alert(data.message);
     handleReset();
     handleCloseJoinDialog();
-    handleRender();
+    dispatch(fetchUserInfo());
   }
-
-  // if (err) console.log("error", err.response.data);
 
   return (
     <div>
@@ -124,9 +125,11 @@ function JoinClassroomDialog(props) {
         <DialogTitle sx={{ pb: 0 }}>Tham gia lớp học</DialogTitle>
 
         <DialogContent>
+          {renderLoading()}
           {renderNotice()}
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
+              inputRef={inputCode}
               margin="normal"
               required
               fullWidth
@@ -157,4 +160,4 @@ function JoinClassroomDialog(props) {
   );
 }
 
-export default JoinClassroomDialog;
+export default DialogJoinClassroom;

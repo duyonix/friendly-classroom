@@ -9,23 +9,27 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createClassroom,
+  fetchUserInfo,
   resetCreateClassroom,
 } from "../redux/modules/Home/action";
 
-function CreateClassroomDialog(props) {
-  const { openCreateDialog, handleCloseCreateDialog, handleRender } = props;
+function DialogCreateClassroom(props) {
+  const { openCreateDialog, handleCloseCreateDialog } = props;
 
   const [emptyNameNotice, setEmptyNameNotice] = useState(false);
   const [emptyDescriptionNotice, setEmptyDescriptionNotice] = useState(false);
   const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
 
+  const inputName = useRef(null);
+  const inputDescription = useRef(null);
+
   const dispatch = useDispatch();
-  const [renderCreate, setRenderCreate] = useState(false);
+  const [render, setRender] = useState(false);
 
   const data = useSelector((state) => state.createClassroomReducer.data);
   const loading = useSelector((state) => state.createClassroomReducer.loading);
@@ -43,7 +47,7 @@ function CreateClassroomDialog(props) {
       description: "",
     });
     // eslint-disable-next-line
-  }, [renderCreate]);
+  }, [render]);
 
   // sự kiện thay đổi giá trị của các trường đăng nhập
   const handleChange = (e) => {
@@ -92,12 +96,18 @@ function CreateClassroomDialog(props) {
       return <Alert severity="error">Mô tả không được để trống</Alert>;
     }
     if (err) {
-      setTimeout(handleReset, 1500);
+      handleClearInput();
+      setTimeout(handleReset, 1000);
       return <Alert severity="error">{err?.response.data.message}</Alert>;
     }
   };
 
-  // sự kiện submit form đăng nhập
+  const handleClearInput = () => {
+    if (inputName.current) inputName.current.value = "";
+    if (inputDescription.current) inputDescription.current.value = "";
+  };
+
+  // sự kiện submit form
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -107,33 +117,28 @@ function CreateClassroomDialog(props) {
     }
 
     dispatch(createClassroom(state));
-    // console.log("state", state);
-    // handleCloseCreateDialog();
-    setRenderCreate(!renderCreate);
-    // setRender(!render);
+    setRender(!render);
   };
 
   const handleReset = () => {
     dispatch(resetCreateClassroom());
   };
 
-  if (loading) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const renderLoading = () => {
+    if (loading) {
+      return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+  };
 
   if (data) {
-    // console.log("dataCreate", data);
-    // alert(data.message);
     handleReset();
     handleCloseCreateDialog();
-    handleRender();
+    dispatch(fetchUserInfo());
   }
-
-  // if (err) console.log("error", err.response.data);
 
   return (
     <div>
@@ -146,9 +151,12 @@ function CreateClassroomDialog(props) {
         <DialogTitle sx={{ pb: 0 }}>Tạo lớp học</DialogTitle>
 
         <DialogContent>
+          {renderLoading()}
           {renderNotice()}
+
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
+              inputRef={inputName}
               margin="normal"
               required
               fullWidth
@@ -157,10 +165,12 @@ function CreateClassroomDialog(props) {
               type="text"
               name="name"
               autoComplete="off"
+              autoFocus
               onChange={handleChange}
               onBlur={handleValidationName}
             />
             <TextField
+              inputRef={inputDescription}
               margin="normal"
               required
               fullWidth
@@ -191,4 +201,4 @@ function CreateClassroomDialog(props) {
   );
 }
 
-export default CreateClassroomDialog;
+export default DialogCreateClassroom;
