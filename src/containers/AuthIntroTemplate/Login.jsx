@@ -11,12 +11,19 @@ import { Alert, Checkbox, FormControlLabel } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, resetLogin } from "../../redux/modules/Login/action";
 import Loading from "../../components/Loading";
+import { useLocation } from "react-router-dom";
 
 const theme = createTheme();
 
 function Login() {
-  // kiểm tra điều kiện các trường đăng nhập với mỗi dữ kiện tương ứng
+  const location = useLocation();
 
+  let direct = null;
+  if (location.state && location.state.from) {
+    direct = location.state.from.pathname + location.state.from.search;
+  }
+
+  // kiểm tra điều kiện các trường đăng nhập với mỗi dữ kiện tương ứng
   const [emptyUsernameNotice, setEmptyUsernameNotice] = useState(false);
   const [emptyPasswordNotice, setEmptyPasswordNotice] = useState(false);
   const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
@@ -35,7 +42,7 @@ function Login() {
   });
 
   useEffect(() => {
-    setTimeout(handleReset, 1500);
+    setTimeout(handleReset, 1000);
     setState({
       username: "",
       password: "",
@@ -82,15 +89,15 @@ function Login() {
   // hàm thông báo lỗi khi nhập sai giá trị ở các trường đăng nhập tương ứng
   const renderNotice = () => {
     if (emptyFieldNotice) {
-      setTimeout(() => setEmptyFieldNotice(false), 1500);
+      setTimeout(() => setEmptyFieldNotice(false), 1000);
       return <Alert severity="error">Vui lòng nhập đầy đủ thông tin</Alert>;
     }
     if (emptyUsernameNotice) {
-      setTimeout(() => setEmptyUsernameNotice(false), 1500);
+      setTimeout(() => setEmptyUsernameNotice(false), 1000);
       return <Alert severity="error">Tên đăng nhập không được để trống</Alert>;
     }
     if (emptyPasswordNotice) {
-      setTimeout(() => setEmptyPasswordNotice(false), 1500);
+      setTimeout(() => setEmptyPasswordNotice(false), 1000);
       return <Alert severity="error">Mật khẩu không được để trống</Alert>;
     }
     if (err) {
@@ -103,6 +110,8 @@ function Login() {
   }
 
   if (data) {
+    console.log("direct", direct);
+    // return direct ? <Redirect to={direct} /> : <Redirect to="/home" />;
     return <Redirect to="/home" />;
   }
 
