@@ -52,6 +52,7 @@ function DialogLeaveClassroom(props) {
   };
 
   if (data) {
+    alert("Rời lớp học thành công");
     handleReset();
     handleCloseLeaveDialog();
     dispatch(fetchUserInfo());

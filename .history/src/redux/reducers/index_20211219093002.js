@@ -19,6 +19,7 @@ import {
     inviteStudentReducer,
     deleteStudentReducer
 } from '../modules/People/reducer';
+import { fetchUserInfoReducer, createClassroomReducer, joinClassroomReducer, updateClassroomReducer, deleteClassroomReducer, leaveClassroomReducer } from '../modules/Home/reducer';
 import { fetchAllPostReducer, fetchSinglePostReducer, createPostReducer, updatePostReducer, deletePostReducer } from '../modules/Stream/Post/reducer';
 import { createCommentReducer, updateCommentReducer, deleteCommentReducer } from '../modules/Stream/Comment/reducer';
 
@@ -37,7 +38,7 @@ const reducer = combineReducers({
     peopleReducer,
     inviteStudentReducer,
     deleteStudentReducer,
-    documentDetailReducer,
+    documentDetailReducer
     fetchAllPostReducer,
     fetchSinglePostReducer,
     createPostReducer,

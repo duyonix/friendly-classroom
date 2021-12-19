@@ -52,6 +52,7 @@ function DialogDeleteClassroom(props) {
   };
 
   if (data) {
+    alert("Xóa lớp học thành công");
     handleReset();
     handleCloseDeleteDialog();
     dispatch(fetchUserInfo());

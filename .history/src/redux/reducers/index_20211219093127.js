@@ -37,7 +37,7 @@ const reducer = combineReducers({
     peopleReducer,
     inviteStudentReducer,
     deleteStudentReducer,
-    documentDetailReducer,
+    documentDetailReducer
     fetchAllPostReducer,
     fetchSinglePostReducer,
     createPostReducer,
