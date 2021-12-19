@@ -89,7 +89,7 @@ function DialogJoinClassroom(props) {
       setEmptyCodeNotice(true);
       return;
     }
-
+    
     dispatch(joinClassroom(state));
     setRender(!render);
   };

@@ -1,0 +1,15 @@
+.submit-homework {
+  .logo-class {
+      padding
+    .classname {
+      @include button(white, #fc5421, white, #fa5320);
+      display: inline-block;
+      padding: 20px 40px;
+      font-size: $fs-xl;
+      cursor: pointer;
+      letter-spacing: 3px;
+      margin-right: 50px;
+      opacity: 90%;
+    }
+  }
+}

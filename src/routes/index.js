@@ -100,6 +100,7 @@ const routeClassroom = [
         component: Homework
     },
 
+
 ];
 
 export { routeHome, routeClassroom, routeAuthIntro };
