@@ -20,6 +20,16 @@
 @import "./components/document-card";
 @import "./components/classroom-card";
 
+@import "./components/grade";
+@import "./components/operation-stream";
+@import "./components/post";
+@import "./components/comment";
+@import "./components/user-account";
+@import "./components/calendar";
+@import "./components/todo-list";
+
+
+
 // containers
 @import "./containers/HomeTemplate/register";
 @import "./containers/page-not-found";
