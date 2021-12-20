@@ -1,7 +1,7 @@
-import Login from "../containers/HomeTemplate/Login.jsx";
+import Login from "../containers/AuthIntroTemplate/Login.jsx";
 import Home from "../containers/HomeTemplate/Home.jsx";
-import Intro from "../containers/HomeTemplate/Intro.jsx";
-import Register from "../containers/HomeTemplate/Register.jsx";
+import Intro from "../containers/AuthIntroTemplate/Intro.jsx";
+import Register from "../containers/AuthIntroTemplate/Register.jsx";
 import Stream from "../containers/ClassroomTemplate/Stream.jsx";
 import Member from "../containers/ClassroomTemplate/Member.jsx";
 import Calendar from "../containers/HomeTemplate/Calendar.jsx";
@@ -14,17 +14,11 @@ import UploadDocument from "../containers/ClassroomTemplate/UploadDocument.jsx";
 import HomeworkDetail from "../containers/ClassroomTemplate/HomeworkDetail.jsx";
 import Homework from "../containers/ClassroomTemplate/Homework.jsx";
 
-
-const routeHome = [
+const routeAuthIntro = [
     {
         exact: true,   // disable the partial comparison
         path: "/",
         component: Intro
-    },
-    {
-        exact: false,
-        path: "/home",
-        component: Home
     },
     {
         exact: false,
@@ -35,6 +29,14 @@ const routeHome = [
         exact: false,
         path: "/register",
         component: Register
+    },
+]
+
+const routeHome = [
+    {
+        exact: false,
+        path: "/home",
+        component: Home
     },
     {
         exact: false,
@@ -98,6 +100,7 @@ const routeClassroom = [
         component: Homework
     },
 
+
 ];
 
-export { routeHome, routeClassroom };
+export { routeHome, routeClassroom, routeAuthIntro };

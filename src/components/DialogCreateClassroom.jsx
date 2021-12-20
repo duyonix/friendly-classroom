@@ -135,6 +135,7 @@ function DialogCreateClassroom(props) {
   };
 
   if (data) {
+    alert("Tạo lớp học thành công");
     handleReset();
     handleCloseCreateDialog();
     dispatch(fetchUserInfo());
@@ -165,7 +166,6 @@ function DialogCreateClassroom(props) {
               type="text"
               name="name"
               autoComplete="off"
-              autoFocus
               onChange={handleChange}
               onBlur={handleValidationName}
             />

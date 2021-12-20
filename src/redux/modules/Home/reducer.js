@@ -1,10 +1,11 @@
 import * as actionTypes from "./constants";
 
-// User Info Reducer
+
 const userInfo = {
     loading: false,
     data: null,
-    err: null
+    err: null,
+
 }
 
 export const fetchUserInfoReducer = (state = userInfo, { type, payload }) => {

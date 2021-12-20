@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -52,6 +52,7 @@ function DialogLeaveClassroom(props) {
   };
 
   if (data) {
+    alert("Rời lớp học thành công");
     handleReset();
     handleCloseLeaveDialog();
     dispatch(fetchUserInfo());

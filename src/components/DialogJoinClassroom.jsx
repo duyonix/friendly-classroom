@@ -89,7 +89,7 @@ function DialogJoinClassroom(props) {
       setEmptyCodeNotice(true);
       return;
     }
-
+    
     dispatch(joinClassroom(state));
     setRender(!render);
   };
@@ -109,6 +109,7 @@ function DialogJoinClassroom(props) {
   };
 
   if (data) {
+    alert("Tham gia lớp học thành công");
     handleReset();
     handleCloseJoinDialog();
     dispatch(fetchUserInfo());

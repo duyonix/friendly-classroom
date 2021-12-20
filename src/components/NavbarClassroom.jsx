@@ -31,10 +31,9 @@ const NavbarClassroom = () => {
       route: `/classroom/${classroomId}/grade`,
     },
   ];
-  const settings = ["Đăng xuất"];
 
   // console.log("navbar router", props);
-  return <Navbar pages={pages} settings={settings} />;
+  return <Navbar pages={pages} />;
 };
 
 export default NavbarClassroom;
