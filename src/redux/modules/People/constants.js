@@ -6,6 +6,7 @@ export const PEOPLE_RESET = "peopleReducer/PEOPLE_RESET";
 export const PEOPLE_CHANGE = "peopleReducer/PEOPLE_CHANGE";
 
 export const PEOPLE_SEARCH = "peopleReducer/PEOPLE_SEARCH";
+
 export const PEOPLE_SEARCH_RESET = "peopleReducer/PEOPLE_SEARCH_RESET";
 
 export const INVITE_STUDENT_REQUEST = "inviteStudentReducer/INVITE_STUDENT_REQUEST";
