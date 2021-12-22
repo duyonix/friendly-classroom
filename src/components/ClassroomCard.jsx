@@ -74,7 +74,7 @@ function ClassroomCard(props) {
   const handleCloseGetCodeDialog = () => {
     setOpenGetCodeDialog(false);
   };
-  
+
   const OptionMenu = (props) => {
     const { role } = props;
 
@@ -158,6 +158,7 @@ function ClassroomCard(props) {
         to={{
           pathname: `/classroom/${classInfo._id}/stream`,
           role,
+          classInfo,
         }}
         className="link-classroom"
       >

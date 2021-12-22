@@ -1,4 +1,6 @@
 .assign-homework {
+  // @extend .submit-homework;
+
   margin-top: 20px;
   margin-bottom: 20px;
   .header {
@@ -30,12 +32,44 @@
     .left {
       border-right: 2px solid black;
       padding-bottom: 10px;
+      .drop-zone {
+        font-size: 20px !important;
+        @include flex(column, center, center);
+        .up-arrow {
+          background: url("https://courses.fit.hcmus.edu.vn/theme/image.php/academi/theme/1639241394/fp/dnd_arrow")
+            center no-repeat;
+          width: 100%;
+          height: 80px;
+
+          top: 5px;
+        }
+      }
+      .card {
+        .btn-delete-file {
+          &:focus-visible {
+            border: none;
+            outline: none;
+          }
+        }
+      }
     }
     .right {
       .input-label {
         padding-bottom: 5px;
         font-weight: 600;
       }
+      .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+        width: 100%;
+      }
+      .css-1s2u09g-control,
+      .css-1pahdxg-control {
+        padding: 10px 3px;
+      }
+    }
+  }
+  @keyframes rotate {
+    100% {
+      transform: rotate(1turn);
     }
   }
 }

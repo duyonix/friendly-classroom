@@ -95,7 +95,7 @@ function HomeworkCard(props) {
             {role === "teacher" ? (
               <Link
                 to={{
-                  pathname: "/classroom/:classroomId/homework/" + homework?._id,
+                  pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}/update`,
                   state: { homework: homework },
                 }}
               >
@@ -109,7 +109,9 @@ function HomeworkCard(props) {
 
             {role === "teacher" ? (
               <Link
-                to={"/classroom/" + classroomId + "/homework/" + homework?._id}
+                to={{
+                  pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}`,
+                }}
               >
                 <button className="btn btn-detail">Chi tiết</button>
               </Link>
