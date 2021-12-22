@@ -1,42 +1,46 @@
-import React,{ useState }  from "react";
+import React, { useState } from "react";
 import { pathImgFromIndex } from "../../utils/constants";
 import NavbarHome from "../../components/NavbarHome";
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 
 function UserAccount() {
-  const initialInfo={
-    username:"ngngan212",
+  const initialInfo = {
+    username: "ngngan212",
     name: "Nguyễn Ngạn",
-    email:"nganguyen212@gmail.com",
-    birth:"01/06/2008",
-    pass:"********",
-    province:"Quảng Nam",
-    school:"Đo Đo",
-    class:"6/2",
+    email: "nganguyen212@gmail.com",
+    birth: "01/06/2008",
+    pass: "********",
+    province: "Quảng Nam",
+    school: "Đo Đo",
+    class: "6/2",
   };
-  const initialField={
-    username:"",
+  const initialField = {
+    username: "",
     name: "Họ tên",
-    email:"Email",
-    birth:"Ngày sinh",
-    pass:"Mật khẩu",
-    province:"Tỉnh/ thành phố",
-    school:"Trường học",
-    class:"Lớp",
+    email: "Email",
+    birth: "Ngày sinh",
+    pass: "Mật khẩu",
+    province: "Tỉnh/ thành phố",
+    school: "Trường học",
+    class: "Lớp",
   };
- 
- 
-  const [buttonText, setButtonText] = useState(initialInfo.name); 
+
+  const [buttonText, setButtonText] = useState(initialInfo.name);
   const changeText = (text) => setButtonText(text);
   return (
     <div>
-      <NavbarHome />
+      {/* <NavbarHome /> */}
       <div className="user-account">
-        <img src={pathImgFromIndex+"meo_ngu_ngoc.jpg"} alt="" width="200" height="200"></img> 
+        <img
+          src={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
+          alt=""
+          width="200"
+          height="200"
+        ></img>
         <div className="info">
           <h2 className="username">{initialInfo.username}</h2>
-          <hr className="shareHr"/>
+          <hr className="shareHr" />
           <div className="infoline">
             <div className="field-container">
               <h4 className="field">{initialField.name}</h4>
@@ -57,17 +61,45 @@ function UserAccount() {
               <h4 className="value-field">{initialInfo.class}</h4>
             </div>
             <div className="button-edit-info">
-              <div><IconButton id="nameButton" ><EditIcon/></IconButton></div>
-              <div><IconButton id="nameButton" ><EditIcon/></IconButton></div>
-              <div><IconButton id="nameButton" ><EditIcon/></IconButton></div>
-              <div><IconButton id="nameButton" ><EditIcon/></IconButton></div>
-              <div><IconButton id="nameButton" ><EditIcon/></IconButton></div>
-              <div><IconButton id="nameButton" ><EditIcon/></IconButton></div>
-              <div><IconButton id="nameButton" ><EditIcon/></IconButton></div>
+              <div>
+                <IconButton id="nameButton">
+                  <EditIcon />
+                </IconButton>
+              </div>
+              <div>
+                <IconButton id="nameButton">
+                  <EditIcon />
+                </IconButton>
+              </div>
+              <div>
+                <IconButton id="nameButton">
+                  <EditIcon />
+                </IconButton>
+              </div>
+              <div>
+                <IconButton id="nameButton">
+                  <EditIcon />
+                </IconButton>
+              </div>
+              <div>
+                <IconButton id="nameButton">
+                  <EditIcon />
+                </IconButton>
+              </div>
+              <div>
+                <IconButton id="nameButton">
+                  <EditIcon />
+                </IconButton>
+              </div>
+              <div>
+                <IconButton id="nameButton">
+                  <EditIcon />
+                </IconButton>
+              </div>
             </div>
           </div>
         </div>
-      </div> 
+      </div>
     </div>
   );
 }

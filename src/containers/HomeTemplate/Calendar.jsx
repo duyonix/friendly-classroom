@@ -1,17 +1,17 @@
 import React from "react";
 import NavbarHome from "../../components/NavbarHome";
-import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import StaticDatePicker from '@mui/lab/StaticDatePicker';
-import PickersDay from '@mui/lab/PickersDay';
-import endOfWeek from 'date-fns/endOfWeek';
-import isSameDay from 'date-fns/isSameDay';
-import isWithinInterval from 'date-fns/isWithinInterval';
-import startOfWeek from 'date-fns/startOfWeek';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import { styled } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import StaticDatePicker from "@mui/lab/StaticDatePicker";
+import PickersDay from "@mui/lab/PickersDay";
+import endOfWeek from "date-fns/endOfWeek";
+import isSameDay from "date-fns/isSameDay";
+import isWithinInterval from "date-fns/isWithinInterval";
+import startOfWeek from "date-fns/startOfWeek";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
@@ -26,24 +26,23 @@ import moment from "moment";
 
 const CustomPickersDay = styled(PickersDay, {
   shouldForwardProp: (prop) =>
-    prop !== 'dayIsBetween' && prop !== 'isFirstDay' && prop !== 'isLastDay',
+    prop !== "dayIsBetween" && prop !== "isFirstDay" && prop !== "isLastDay",
 })(({ theme, dayIsBetween, isFirstDay, isLastDay }) => ({
   ...(dayIsBetween && {
-
     borderRadius: 0,
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.common.white,
-    '&:hover, &:focus': {
+    "&:hover, &:focus": {
       backgroundColor: theme.palette.primary.dark,
     },
   }),
   ...(isFirstDay && {
-    borderTopLeftRadius: '50%',
-    borderBottomLeftRadius: '50%',
+    borderTopLeftRadius: "50%",
+    borderBottomLeftRadius: "50%",
   }),
   ...(isLastDay && {
-    borderTopRightRadius: '50%',
-    borderBottomRightRadius: '50%',
+    borderTopRightRadius: "50%",
+    borderBottomRightRadius: "50%",
   }),
 }));
 
@@ -105,25 +104,25 @@ function Calendar() {
   //     object:"Anh 6",
   //     title:"Greeting",
   //     deadline:"20th11",
-  //     status:0 
+  //     status:0
   //   },
   //   {
   //     object:"BD toán 6",
   //     title:"Chuyên đề nâng cao",
   //     deadline:"20th11",
-  //     status:0 
+  //     status:0
   //   },
   // ];
   // const numbers = [1, 2, 3, 4, 5,6,7];
 
-  const events={
+  const events = {
     monday: [
       {
         id: 1,
         name: "Homework",
         type: "custom",
         startTime: moment("2018-02-23T11:30:00"),
-        endTime: moment("2018-02-23T13:30:00")
+        endTime: moment("2018-02-23T13:30:00"),
       },
 
       {
@@ -131,22 +130,22 @@ function Calendar() {
         name: "Classwork",
         type: "custom",
         startTime: moment("2018-02-23T09:30:00"),
-        endTime: moment("2018-02-23T11:00:00")
+        endTime: moment("2018-02-23T11:00:00"),
       },
       {
         id: 3,
         name: "Test",
         type: "custom",
         startTime: moment("2018-02-22T14:30:00"),
-        endTime: moment("2018-02-22T15:30:00")
+        endTime: moment("2018-02-22T15:30:00"),
       },
       {
         id: 4,
         name: "Test",
         type: "custom",
         startTime: moment("2018-02-22T15:30:00"),
-        endTime: moment("2018-02-22T16:30:00")
-      }
+        endTime: moment("2018-02-22T16:30:00"),
+      },
     ],
     tuesday: [
       {
@@ -154,29 +153,29 @@ function Calendar() {
         name: "Homework",
         type: "custom",
         startTime: moment("2018-02-22T09:30:00"),
-        endTime: moment("2018-02-22T11:30:00")
+        endTime: moment("2018-02-22T11:30:00"),
       },
       {
         id: 6,
         name: "Classwork",
         type: "custom",
         startTime: moment("2018-02-23T12:00:00"),
-        endTime: moment("2018-02-23T13:00:00")
+        endTime: moment("2018-02-23T13:00:00"),
       },
       {
         id: 7,
         name: "Classwork",
         type: "custom",
         startTime: moment("2018-02-23T13:30:00"),
-        endTime: moment("2018-02-23T14:30:00")
+        endTime: moment("2018-02-23T14:30:00"),
       },
       {
         id: 8,
         name: "Classwork",
         type: "custom",
         startTime: moment("2018-02-23T15:30:00"),
-        endTime: moment("2018-02-23T17:30:00")
-      }
+        endTime: moment("2018-02-23T17:30:00"),
+      },
     ],
     wednesday: [
       {
@@ -184,15 +183,15 @@ function Calendar() {
         name: "Classwork",
         type: "custom",
         startTime: moment("2018-02-23T13:30:00"),
-        endTime: moment("2018-02-23T14:30:00")
+        endTime: moment("2018-02-23T14:30:00"),
       },
       {
         id: 4,
         name: "Test",
         type: "custom",
         startTime: moment("2018-02-22T15:30:00"),
-        endTime: moment("2018-02-22T16:30:00")
-      }
+        endTime: moment("2018-02-22T16:30:00"),
+      },
     ],
     thursday: [
       {
@@ -200,15 +199,15 @@ function Calendar() {
         name: "Classwork",
         type: "custom",
         startTime: moment("2018-02-23T09:30:00"),
-        endTime: moment("2018-02-23T12:30:00")
+        endTime: moment("2018-02-23T12:30:00"),
       },
       {
         id: 4,
         name: "Test",
         type: "custom",
         startTime: moment("2018-02-22T14:30:00"),
-        endTime: moment("2018-02-22T18:30:00")
-      }
+        endTime: moment("2018-02-22T18:30:00"),
+      },
     ],
     friday: [
       {
@@ -216,15 +215,15 @@ function Calendar() {
         name: "Classwork",
         type: "custom",
         startTime: moment("2018-02-23T11:30:00"),
-        endTime: moment("2018-02-23T14:30:00")
+        endTime: moment("2018-02-23T14:30:00"),
       },
       {
         id: 4,
         name: "Test",
         type: "custom",
         startTime: moment("2018-02-22T15:30:00"),
-        endTime: moment("2018-02-22T16:30:00")
-      }
+        endTime: moment("2018-02-22T16:30:00"),
+      },
     ],
     saturday: [
       {
@@ -232,24 +231,24 @@ function Calendar() {
         name: "Classwork",
         type: "custom",
         startTime: moment("2018-02-23T08:30:00"),
-        endTime: moment("2018-02-23T09:30:00")
+        endTime: moment("2018-02-23T09:30:00"),
       },
       {
         id: 4,
         name: "Test",
         type: "custom",
         startTime: moment("2018-02-22T16:30:00"),
-        endTime: moment("2018-02-22T17:30:00")
-      }
+        endTime: moment("2018-02-22T17:30:00"),
+      },
     ],
-    sunday: []
+    sunday: [],
   };
 
   return (
     <div>
-      <NavbarHome />
+      {/* <NavbarHome /> */}
       <div className="calendar-container">
-        <div className="calender-pick-week"> 
+        <div className="calender-pick-week">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <StaticDatePicker
               displayStaticWrapperAs="desktop"
@@ -265,7 +264,6 @@ function Calendar() {
           </LocalizationProvider>
         </div>
         <div className="calendar-todo">
-          
           {/* <TableContainer className="table-calendar" component={Paper}>
             <Table sx={{ minWidth: 1000 }} >
               <TableHead>

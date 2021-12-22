@@ -90,6 +90,10 @@ const style = {
 };
 
 const Navbar = (props) => {
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { pages } = props;
   const settings = ["Đăng xuất"];
 

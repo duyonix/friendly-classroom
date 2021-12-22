@@ -25,6 +25,7 @@ function Home() {
   const classTeacher = user?.classTeacher;
 
   if (localStorage.getItem("role")) localStorage.removeItem("role");
+  if (localStorage.getItem("classInfo")) localStorage.removeItem("classInfo");
 
   if (localStorage.getItem("classroomId"))
     localStorage.removeItem("classroomId");
