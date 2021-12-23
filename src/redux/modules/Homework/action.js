@@ -240,3 +240,126 @@ export const actDocumentDetailFailed = (err) => {
         payload: err
     }
 }
+
+// action Create Homework
+export const createHomework = (data) => {
+    let accessToken = "";
+    if (localStorage.getItem("User"))
+        accessToken = JSON.parse(localStorage.getItem("User")).token;
+
+    return (dispatch) => {
+        dispatch(createHomeworkRequest());
+        axios({
+            url: pathAPI + "homework/createHomework",
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + accessToken,
+                'Content-Type': 'multipart/form-data'
+            },
+            data: data
+        })
+            .then(res => {
+                // alert("Tạo bài đăng thành công");
+                dispatch(createHomeworkSuccess(res.data));
+            })
+            .catch(err => {
+                // alert(err.response.data.message);
+                dispatch(createHomeworkFailed(err));
+            }
+            )
+    }
+}
+
+export const resetCreateHomework = () => {
+    return (dispatch) => {
+        dispatch(createHomeworkReset());
+    }
+}
+
+const createHomeworkRequest = () => {
+    return {
+        type: actionTypes.CREATE_HOMEWORK_REQUEST
+    }
+}
+
+const createHomeworkSuccess = (data) => {
+    return {
+        type: actionTypes.CREATE_HOMEWORK_SUCCESS,
+        payload: data
+    }
+}
+
+const createHomeworkFailed = (err) => {
+    return {
+        type: actionTypes.CREATE_HOMEWORK_FAILED,
+        payload: err
+    }
+}
+
+const createHomeworkReset = () => {
+    return {
+        type: actionTypes.CREATE_HOMEWORK_RESET
+    }
+}
+
+
+// action Create Document
+export const createDocument = (data) => {
+    let accessToken = "";
+    if (localStorage.getItem("User"))
+        accessToken = JSON.parse(localStorage.getItem("User")).token;
+
+    return (dispatch) => {
+        dispatch(createDocumentRequest());
+        axios({
+            url: pathAPI + "document/upload",
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + accessToken,
+                'Content-Type': 'multipart/form-data'
+            },
+            data: data
+        })
+            .then(res => {
+                // alert("Tạo bài đăng thành công");
+                dispatch(createDocumentSuccess(res.data));
+            })
+            .catch(err => {
+                // alert(err.response.data.message);
+                dispatch(createDocumentFailed(err));
+            }
+            )
+    }
+}
+
+export const resetCreateDocument = () => {
+    return (dispatch) => {
+        dispatch(createDocumentReset());
+    }
+}
+
+const createDocumentRequest = () => {
+    return {
+        type: actionTypes.CREATE_DOCUMENT_REQUEST
+    }
+}
+
+const createDocumentSuccess = (data) => {
+    return {
+        type: actionTypes.CREATE_DOCUMENT_SUCCESS,
+        payload: data
+    }
+}
+
+const createDocumentFailed = (err) => {
+    return {
+        type: actionTypes.CREATE_DOCUMENT_FAILED,
+        payload: err
+    }
+}
+
+const createDocumentReset = () => {
+    return {
+        type: actionTypes.CREATE_DOCUMENT_RESET
+    }
+}

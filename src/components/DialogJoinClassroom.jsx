@@ -51,10 +51,6 @@ function DialogJoinClassroom(props) {
       ...state,
       [name]: value,
     });
-
-    if (state.code !== "") {
-      setEmptyCodeNotice(false);
-    }
   };
 
   const handleValidationCode = () => {
@@ -89,7 +85,7 @@ function DialogJoinClassroom(props) {
       setEmptyCodeNotice(true);
       return;
     }
-    
+
     dispatch(joinClassroom(state));
     setRender(!render);
   };

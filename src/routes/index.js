@@ -73,6 +73,11 @@ const routeClassroom = [
     },
     {
         exact: false,
+        path: "/classroom/:classroomId/homework",
+        component: Homework
+    },
+    {
+        exact: false,
         path: "/classroom/:classroomId/grade",
         component: Grade
     },
@@ -95,11 +100,6 @@ const routeClassroom = [
         exact: false,
         path: "/classroom/:classroomId/homework-detail/:homeworkId/",
         component: HomeworkDetail
-    },
-    {
-        exact: false,
-        path: "/classroom/:classroomId/homework",
-        component: Homework
     },
     {
         exact: false,

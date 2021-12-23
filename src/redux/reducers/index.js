@@ -13,7 +13,9 @@ import {
     homeworkReducer,
     documentReducer,
     homeworkDetailReducer,
-    documentDetailReducer
+    documentDetailReducer,
+    createHomeworkReducer,
+    createDocumentReducer
 } from '../modules/Homework/reducer';
 import {
     peopleReducer,
@@ -48,6 +50,8 @@ const reducer = combineReducers({
     createCommentReducer,
     updateCommentReducer,
     deleteCommentReducer,
+    createHomeworkReducer,
+    createDocumentReducer,
 });
 
 export default reducer;
