@@ -58,16 +58,6 @@ function DialogUpdateClassroom(props) {
       ...state,
       [name]: value,
     });
-
-    if (state.name !== "") {
-      setEmptyNameNotice(false);
-    }
-    if (state.description !== "") {
-      setEmptyDescriptionNotice(false);
-    }
-    if (state.name !== "" && state.description !== "") {
-      setEmptyFieldNotice(false);
-    }
   };
 
   const handleValidationName = () => {
@@ -151,7 +141,7 @@ function DialogUpdateClassroom(props) {
         open={openUpdateDialog}
         onClose={handleCloseUpdateDialog}
       >
-        <DialogTitle sx={{ pb: 0 }}>Tạo lớp học</DialogTitle>
+        <DialogTitle sx={{ pb: 0 }}>Chỉnh sửa lớp học</DialogTitle>
 
         <DialogContent>
           {renderLoading()}
@@ -164,7 +154,7 @@ function DialogUpdateClassroom(props) {
               required
               fullWidth
               id="name"
-              label="Tên môn học"
+              label="Tên lớp học"
               type="text"
               name="name"
               autoComplete="off"

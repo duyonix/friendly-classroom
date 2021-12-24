@@ -1,35 +1,59 @@
-import React, { useState } from "react";
-import { Button, Box, TextField, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Button, Box, TextField, Typography, Alert } from "@mui/material";
 import TitleIcon from "@mui/icons-material/Title";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DateTimePicker from "@mui/lab/DateTimePicker";
-import { useSelector } from "react-redux";
+// import DateTimePicker from "@mui/lab/DateTimePicker";
+import { useDispatch, useSelector } from "react-redux";
 import CreatableSelect from "react-select/creatable";
 import Files from "react-files";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { pathImgFromIndex } from "../../utils/constants";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
+import {
+  createHomework,
+  resetCreateHomework,
+} from "../../redux/modules/Homework/action";
+import Loading from "../../components/Loading";
+import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
 
 function AssignHomework() {
   const classInfo = JSON.parse(localStorage.getItem("classInfo"));
   const { classroomId } = useParams();
 
+  const dispatch = useDispatch();
+  const [render, setRender] = useState(false);
+
+  const data = useSelector((state) => state.createHomeworkReducer.data);
+  const loading = useSelector((state) => state.createHomeworkReducer.loading);
+  const err = useSelector((state) => state.createHomeworkReducer.err);
+
   const [state, setState] = useState({
     title: "",
     description: "",
-    deadline: new Date(),
+    deadline: new Date(new Date().setHours(24, 0, 0, 0)),
     file: null,
     topic: "Không có chủ đề",
   });
 
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [file, setFile] = useState(null);
-  // const [deadline, setDeadline] = useState(new Date());
-  // const [topic, setTopic] = useState("Không có chủ đề");
+  useEffect(() => {
+    setState({
+      title: "",
+      description: "",
+      deadline: new Date(new Date().setHours(24, 0, 0, 0)),
+      file: null,
+      topic: "Không có chủ đề",
+    });
+    // eslint-disable-next-line
+  }, [render]);
+
+  const [emptyTitleNotice, setEmptyTitleNotice] = useState(false);
+  // const [emptyDeadlineNotice, setEmptyDeadlineNotice] = useState(false);
+  const [emptyTopicNotice, setEmptyTopicNotice] = useState(false);
+  const [validateFileNotice, setValidateFileNotice] = useState(false);
+  const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
 
   const rawTopic = useSelector((state) => state.homeworkReducer.data);
   let allTopics = [];
@@ -40,22 +64,12 @@ function AssignHomework() {
       label: item.topic,
     };
   });
-  allTopics.unshift({ value: "Không có chủ đề", label: "Không có chủ đề" });
 
-  // console.log("topic", allTopics);
-  // console.log("classInfo", classInfo);
+  let idx = allTopics.findIndex((item) => item.value === "Không có chủ đề");
+  if (idx === -1)
+    allTopics.unshift({ value: "Không có chủ đề", label: "Không có chủ đề" });
 
-  const onFilesChange = (files) => {
-    if (files[0] !== undefined) setState({ ...state, file: files[0] });
-    console.log(files[0]);
-  };
-  const onFilesError = (error) => {
-    console.log("error code " + error.code + ": " + error.message);
-    setState({ ...state, file: null });
-    if (error.code === 2) {
-      alert("Kích thước tệp vượt quá 20MB. Vui lòng thử lại hoặc nén file!");
-    }
-  };
+  console.log("allTopics: ", allTopics);
 
   const format2Digits = (n) => {
     return n < 10 ? "0" + n : n;
@@ -73,19 +87,149 @@ function AssignHomework() {
     return " " + dd + "/" + mm + "/" + yyyy + " " + hours + ":" + minutes;
   };
 
-  const handleDeleteFile = () => {
-    setState({ ...state, file: null });
-    // setSubmit(false);
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setState({
+      ...state,
+      [name]: value,
+    });
   };
+
+  const handleFileChange = (files) => {
+    if (files[0] !== undefined) setState({ ...state, file: files[0] });
+    // console.log(files[0]);
+  };
+
+  const handleFileError = (error) => {
+    console.log("error code " + error.code + ": " + error.message);
+    setState({ ...state, file: null });
+    if (error.code === 2) {
+      setValidateFileNotice(true);
+    }
+  };
+
+  const handleFileDelete = () => {
+    setState({ ...state, file: null });
+  };
+
+  const handleDeadlineChange = (date) => {
+    // console.log("deadline", date);
+    if (date === null || date === "Invalid Date") {
+      setState({ ...state, deadline: null });
+    } else {
+      setState({ ...state, deadline: date });
+    }
+  };
+
+  const handleTopicChange = (field) => {
+    // console.log("topic", field);
+    if (field === null) {
+      setState({ ...state, topic: null });
+    } else {
+      setState({ ...state, topic: field.value });
+    }
+  };
+
+  const handleValidationTitle = () => {
+    if (state.title === "") {
+      setEmptyTitleNotice(true);
+    }
+  };
+
+  // const handleDeadlineError = () => {
+  //   setEmptyDeadlineNotice(true);
+  // };
+
+  const handleValidationTopic = () => {
+    if (state.topic === null) {
+      setEmptyTopicNotice(true);
+    }
+  };
+
+  const renderNotice = () => {
+    if (emptyFieldNotice) {
+      setTimeout(() => setEmptyFieldNotice(false), 1000);
+      return (
+        <Alert severity="error">
+          Vui lòng điền đầy đủ tiêu đề, hạn nộp và chủ đề bài tập
+        </Alert>
+      );
+    }
+    if (emptyTitleNotice) {
+      setTimeout(() => setEmptyTitleNotice(false), 1000);
+      return <Alert severity="error">Tiêu đề không được để trống</Alert>;
+    }
+    // if (emptyDeadlineNotice) {
+    //   setTimeout(() => setEmptyDeadlineNotice(false), 1000);
+    //   return (
+    //     <Alert severity="error">
+    //       Hạn nộp không được để trống hoặc sai định dạng
+    //     </Alert>
+    //   );
+    // }
+    if (emptyTopicNotice) {
+      setTimeout(() => setEmptyTopicNotice(false), 1000);
+      return <Alert severity="error">Chủ đề không được để trống</Alert>;
+    }
+    if (validateFileNotice) {
+      setTimeout(() => setValidateFileNotice(false), 1000);
+      return (
+        <Alert severity="error">
+          Kích thước tệp vượt quá 20MB. Vui lòng thử lại hoặc nén file!
+        </Alert>
+      );
+    }
+    if (err) {
+      setTimeout(handleReset, 1000);
+      return <Alert severity="error">{err?.response.data.message}</Alert>;
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (state.title === "" || state.deadline === null || state.topic === null) {
+      setEmptyFieldNotice(true);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("classroomId", classroomId);
+    formData.append("title", state.title);
+    formData.append("file", state.file);
+    formData.append("topic", state.topic);
+    formData.append("deadline", state.deadline);
+    formData.append("description", state.description);
+
+    dispatch(createHomework(formData));
+    setRender(!render);
+  };
+
+  const handleReset = () => {
+    dispatch(resetCreateHomework());
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (data) {
+    alert("Tạo bài tập thành công!");
+    setTimeout(handleReset, 1000);
+    return <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />;
+  }
 
   return (
     <section className="assign-homework container">
       <div className="header">
         <div className="classroom-name">{classInfo.name}</div>
-        <Button variant="contained" sx={{ px: 3, py: 1.5 }}>
+        <Button variant="contained" className="btn-add" onClick={handleSubmit}>
           Giao Bài tập
         </Button>
       </div>
+
+      <Box className="box-notice">{renderNotice()}</Box>
 
       <Box className="content" component="form" noValidate>
         <div className="row">
@@ -100,15 +244,15 @@ function AssignHomework() {
                 variant="filled"
                 // inputRef={inputName}
                 margin="normal"
-                // required
+                required
                 fullWidth
                 id="title"
                 label="Tiêu đề"
                 type="text"
                 name="title"
                 autoComplete="off"
-                // onChange={handleChange}
-                // onBlur={handleValidationName}
+                onChange={handleChange}
+                onBlur={handleValidationTitle}
               />
             </Box>
             <Box className="input-box">
@@ -130,7 +274,7 @@ function AssignHomework() {
                 autoComplete="off"
                 multiline
                 minRows={5}
-                // onChange={handleChange}
+                onChange={handleChange}
                 // onBlur={handleValidationName}
               />
             </Box>
@@ -147,8 +291,8 @@ function AssignHomework() {
                 <Files
                   enctype="multipart/form-data"
                   className="files-dropzone"
-                  onChange={onFilesChange}
-                  onError={onFilesError}
+                  onChange={handleFileChange}
+                  onError={handleFileError}
                   multiple={false}
                   maxFiles={1}
                   maxFileSize={20971520}
@@ -225,7 +369,7 @@ function AssignHomework() {
                             <DeleteIcon
                               fontSize="large"
                               color="error"
-                              onClick={handleDeleteFile}
+                              onClick={handleFileDelete}
                             />
                           </button>
                         </div>
@@ -247,29 +391,28 @@ function AssignHomework() {
                 id="grade"
                 name="grade"
                 type="number"
-                // label="-"
+                label="-"
                 fullWidth
                 defaultValue="10"
                 InputProps={{
                   readOnly: true,
                 }}
+                disabled
               />
             </Box>
             <Box sx={{ pb: 2 }}>
               <Typography className="input-label">Hạn nộp</Typography>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                  // label="-"
+                <MobileDateTimePicker
+                  label="-"
                   fullWidth
                   renderInput={(props) => <TextField {...props} />}
                   inputFormat="dd/MM/yyyy hh:mm a"
                   mask="_/__/____ __:__ _M"
-                  // minDateTime={new Date()}
+                  minDateTime={new Date()}
                   value={state.deadline}
-                  // onChange={(newValue) => {
-                  //   setDeadline(newValue);
-                  //   console.log(newValue);
-                  // }}
+                  onChange={handleDeadlineChange}
+                  // onError={handleDeadlineError}
                 />
               </LocalizationProvider>
             </Box>
@@ -282,13 +425,25 @@ function AssignHomework() {
                 }
                 defaultValue={allTopics[0]}
                 placeholder="Chọn chủ đề"
-                onChange={(value) => console.log(value)}
+                onChange={handleTopicChange}
+                onBlur={handleValidationTopic}
                 options={allTopics}
                 size="large"
               />
             </Box>
           </div>
         </div>
+      </Box>
+
+      <Box className="box-notice-mobile">{renderNotice()}</Box>
+      <Box className="box-mobile-add">
+        <Button
+          variant="contained"
+          className="btn-mobile-add"
+          onClick={handleSubmit}
+        >
+          Giao Bài tập
+        </Button>
       </Box>
     </section>
   );

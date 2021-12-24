@@ -57,16 +57,6 @@ function DialogCreateClassroom(props) {
       ...state,
       [name]: value,
     });
-
-    if (state.name !== "") {
-      setEmptyNameNotice(false);
-    }
-    if (state.description !== "") {
-      setEmptyDescriptionNotice(false);
-    }
-    if (state.name !== "" && state.description !== "") {
-      setEmptyFieldNotice(false);
-    }
   };
 
   const handleValidationName = () => {
@@ -162,7 +152,7 @@ function DialogCreateClassroom(props) {
               required
               fullWidth
               id="name"
-              label="Tên môn học"
+              label="Tên lớp học"
               type="text"
               name="name"
               autoComplete="off"
