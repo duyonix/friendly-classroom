@@ -8,7 +8,8 @@ import PostForm from "./post/PostForm.js";
 function OperationStream() {
   let className = null;
   if (localStorage.getItem("classInfo")) {
-    className = JSON.parse(localStorage.getItem("classInfo")).name;
+    className = JSON.stringify(localStorage.getItem("classInfo"));
+    console.log(className);
   }
   const initialPost = [
     {

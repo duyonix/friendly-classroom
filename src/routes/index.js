@@ -72,7 +72,7 @@ const routeClassroom = [
         component: Member
     },
     {
-        exact: false,
+        exact: true,
         path: "/classroom/:classroomId/homework",
         component: Homework
     },
@@ -93,7 +93,7 @@ const routeClassroom = [
     },
     {
         exact: false,
-        path: "/classroom/:classroomId/homework/:homeworkId/",
+        path: "/classroom/:classroomId/homework/:homeworkId",
         component: SubmitHomework
     },
     {

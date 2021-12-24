@@ -9,6 +9,7 @@ function OperationStream() {
   let className = null;
   if (localStorage.getItem("classInfo")) {
     className = JSON.parse(localStorage.getItem("classInfo")).name;
+    console.log(className);
   }
   const initialPost = [
     {

@@ -128,7 +128,7 @@ function OperationMember() {
       }}
       className="operation-member container"
     >
-      <div className="classname">{className}</div>
+      <div className="classname">TOÁN 6</div>
       <div className="input-group">
         <TextField
           label="Tìm thành viên"

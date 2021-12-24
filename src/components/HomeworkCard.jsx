@@ -141,7 +141,10 @@ function HomeworkCard(props) {
               )
             ) : type === "Homework" ? (
               <Link
-                to={"/classroom/" + classroomId + "/homework/" + homework?._id}
+                to={{
+                  pathname:
+                    "/classroom/" + classroomId + "/homework/" + homework?._id,
+                }}
               >
                 <button className="btn btn-detail">Chi tiết</button>
               </Link>

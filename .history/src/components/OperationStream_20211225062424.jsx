@@ -6,10 +6,6 @@ import Posts from "./post/Posts.js";
 import PostForm from "./post/PostForm.js";
 
 function OperationStream() {
-  let className = null;
-  if (localStorage.getItem("classInfo")) {
-    className = JSON.parse(localStorage.getItem("classInfo")).name;
-  }
   const initialPost = [
     {
       id: 1,
@@ -29,7 +25,7 @@ function OperationStream() {
       postedBy: 1,
     },
     {
-      id: 3,
+      id: 2,
       name: "Võ Vũ",
       avatar: "h2.jpg",
       time: "22 th 11",
@@ -44,7 +40,7 @@ function OperationStream() {
   return (
     <div>
       <section className="operation-stream container">
-        <div className="classname">{className}</div>
+        <div className="classname">TOÁN 6</div>
         <div className="share">
           <div className="shareWrapper">
             <div className="shareTop">
@@ -56,7 +52,7 @@ function OperationStream() {
               <input
                 placeholder="Thông báo nội dung nào đó cho lớp học"
                 className="shareInput"
-                //onBlur={getVal()}
+                onBlur={getVal}
               />
 
               <div className="posts">
