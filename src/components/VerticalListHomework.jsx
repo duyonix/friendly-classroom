@@ -46,7 +46,9 @@ export default function VerticalListHomework(props) {
   const renderTopics = (topic) => {
     const data = topic[type === "Homework" ? "homeworks" : "documents"].filter(
       (item) => {
-        return item.title.toUpperCase().indexOf(keySearch.toUpperCase()) !== -1;
+        return (
+          item?.title.toUpperCase().indexOf(keySearch.toUpperCase()) !== -1
+        );
       }
     );
     return (
@@ -133,7 +135,7 @@ export default function VerticalListHomework(props) {
                   type === "Homework" ? "homeworks" : "documents"
                 ].filter((item) => {
                   return (
-                    item.title
+                    item?.title
                       .toUpperCase()
                       .indexOf(keySearch.toUpperCase()) !== -1
                   );
