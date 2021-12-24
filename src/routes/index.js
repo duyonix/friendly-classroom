@@ -97,7 +97,7 @@ const routeClassroom = [
         component: SubmitHomework
     },
     {
-        exact: false,
+        exact: true,
         path: "/classroom/:classroomId/homework-detail/:homeworkId/",
         component: HomeworkDetail
     },
