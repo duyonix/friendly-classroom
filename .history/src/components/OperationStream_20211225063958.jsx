@@ -6,9 +6,9 @@ import Posts from "./post/Posts.js";
 import PostForm from "./post/PostForm.js";
 
 function OperationStream() {
-  let className = null;
+  let className;
   if (localStorage.getItem("classInfo")) {
-    className = JSON.parse(localStorage.getItem("classInfo")).name;
+    className = JSON.stringify(localStorage.getItem("classInfo")).name;
   }
   const initialPost = [
     {

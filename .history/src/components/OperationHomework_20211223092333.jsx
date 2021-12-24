@@ -123,10 +123,6 @@ export default function OperationHomework() {
   if (localStorage.getItem("role")) {
     role = localStorage.getItem("role");
   }
-  let className = null;
-  if (localStorage.getItem("classInfo")) {
-    className = JSON.parse(localStorage.getItem("classInfo")).name;
-  }
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -154,7 +150,7 @@ export default function OperationHomework() {
       }}
       className="operation-homework container"
     >
-      <div className="classname">{className}</div>
+      <div className="classname">TOÁN 6</div>
       <div className="input-group">
         <TextField
           label="Tìm kiếm bài tập hoặc tài liệu"

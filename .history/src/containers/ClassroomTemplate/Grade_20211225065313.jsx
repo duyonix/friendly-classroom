@@ -157,7 +157,7 @@ function Grade() {
     <div className="list-grade">
       <div className="inputFind">
         <div className="function">
-          <div className="classname">{className}</div>
+          <div className="classname">TOÁN 6</div>
           <Box
             component="form"
             sx={{
