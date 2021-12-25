@@ -15,6 +15,8 @@ import {
   actPeopleSearch,
 } from "../redux/modules/People/action";
 function OperationMember() {
+  const classInfo = JSON.parse(localStorage.getItem("classInfo"));
+
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
 
@@ -125,7 +127,7 @@ function OperationMember() {
       }}
       className="operation-member container"
     >
-      <div className="classname">TOÁN 6</div>
+      <div className="classname">{classInfo?.name}</div>
       <div className="input-group">
         <TextField
           label="Tìm thành viên"
