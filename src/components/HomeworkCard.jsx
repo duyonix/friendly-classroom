@@ -21,7 +21,7 @@ function HomeworkCard(props) {
   const imgIconCard = type === "Homework" ? "homework_icon" : "document_icon";
   const renderMore = () => {
     if (more === true && data) {
-      console.log(data);
+      // console.log(data);
       return (
         <div className="More">
           {" "}
@@ -93,14 +93,25 @@ function HomeworkCard(props) {
 
             {/* button change */}
             {role === "teacher" ? (
-              <Link
-                to={{
-                  pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}/update`,
-                  state: { homework: homework },
-                }}
-              >
-                <button className="btn btn-change">Sửa</button>
-              </Link>
+              type === "Homework" ? (
+                <Link
+                  to={{
+                    pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}/update`,
+                    state: { homework: homework },
+                  }}
+                >
+                  <button className="btn btn-change">Sửa</button>
+                </Link>
+              ) : (
+                <Link
+                  to={{
+                    pathname: `/classroom/${classroomId}/document/${homework?._id}/update`,
+                    state: { homework: homework },
+                  }}
+                >
+                  <button className="btn btn-change">Sửa</button>
+                </Link>
+              )
             ) : (
               ""
             )}
@@ -108,13 +119,26 @@ function HomeworkCard(props) {
             {/* button detail */}
 
             {role === "teacher" ? (
-              <Link
-                to={{
-                  pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}`,
-                }}
-              >
-                <button className="btn btn-detail">Chi tiết</button>
-              </Link>
+              type === "Homework" ? (
+                <Link
+                  to={{
+                    pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}`,
+                  }}
+                >
+                  <button className="btn btn-detail">Chi tiết</button>
+                </Link>
+              ) : more === false ? (
+                <button
+                  className="btn btn-detail"
+                  onClick={showDetailDocument(homework)}
+                >
+                  Chi tiết
+                </button>
+              ) : (
+                <button className="btn btn-detail" onClick={collapseDocument}>
+                  Thu gọn
+                </button>
+              )
             ) : type === "Homework" ? (
               <Link
                 to={{
