@@ -20,6 +20,8 @@ import DialogGetCodeClassroom from "./DialogGetCodeClassroom";
 
 function ClassroomCard(props) {
   const { classInfo, role, index } = props;
+  console.log("classInfo: " + classInfo);
+  console.log("role: " + role);
 
   const bgColor = [
     "#bbecff",
@@ -183,13 +185,13 @@ function ClassroomCard(props) {
                 spacing={2}
               >
                 <Typography sx={{ fontWeight: "bold" }}>
-                  {classInfo.teacherId.fullName}
+                  {classInfo.teacherId?.fullName}
                 </Typography>
 
                 <Avatar
                   sx={{ width: "48px", height: "48px" }}
                   alt="User"
-                  src={classInfo.teacherId.avatarUrl}
+                  src={classInfo.teacherId?.avatarUrl}
                 />
               </Stack>
             ) : (
