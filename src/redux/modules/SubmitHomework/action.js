@@ -72,6 +72,7 @@ export const actSubmitHomework = (userId, file, homeworkId) => {
     let accessToken = "";
     if (localStorage.getItem("User"))
         accessToken = JSON.parse(localStorage.getItem("User")).token;
+
     return (dispatch) => {
         dispatch(actSubmitHomeworkRequest());
         axios({
