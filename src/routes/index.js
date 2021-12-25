@@ -13,6 +13,8 @@ import SubmitHomework from "../containers/ClassroomTemplate/SubmitHomework.jsx";
 import UploadDocument from "../containers/ClassroomTemplate/UploadDocument.jsx";
 import HomeworkDetail from "../containers/ClassroomTemplate/HomeworkDetail.jsx";
 import Homework from "../containers/ClassroomTemplate/Homework.jsx";
+import UpdateHomework from "../containers/ClassroomTemplate/UpdateHomework.jsx";
+import UpdateDocument from "../containers/ClassroomTemplate/UpdateDocument.jsx";
 
 const routeAuthIntro = [
     {
@@ -71,6 +73,11 @@ const routeClassroom = [
     },
     {
         exact: false,
+        path: "/classroom/:classroomId/homework",
+        component: Homework
+    },
+    {
+        exact: false,
         path: "/classroom/:classroomId/grade",
         component: Grade
     },
@@ -90,17 +97,20 @@ const routeClassroom = [
         component: SubmitHomework
     },
     {
-        exact: false,
+        exact: true,
         path: "/classroom/:classroomId/homework-detail/:homeworkId/",
         component: HomeworkDetail
     },
     {
         exact: false,
-        path: "/classroom/:classroomId/homework",
-        component: Homework
+        path: "/classroom/:classroomId/homework-detail/:homeworkId/update",
+        component: UpdateHomework
     },
-
-
+    {
+        exact: false,
+        path: "/classroom/:classroomId/document/:documentId/update",
+        component: UpdateDocument
+    },
 ];
 
 export { routeHome, routeClassroom, routeAuthIntro };

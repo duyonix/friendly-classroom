@@ -20,3 +20,14 @@ export const DOCUMENT_DETAIL_SUCCESS = "documentDetailReducer/DOCUMENT_DETAIL_SU
 export const DOCUMENT_DETAIL_FAILED = "documentDetailReducer/DOCUMENT_DETAIL_FAILED";
 export const DOCUMENT_DETAIL_RESET = "documentDetailReducer/DOCUMENT_DETAIL_RESET";
 
+export const CREATE_HOMEWORK_REQUEST = "createHomeworkReducer/CREATE_HOMEWORK_REQUEST";
+export const CREATE_HOMEWORK_SUCCESS = "createHomeworkReducer/CREATE_HOMEWORK_SUCCESS";
+export const CREATE_HOMEWORK_FAILED = "createHomeworkReducer/CREATE_HOMEWORK_FAILED";
+export const CREATE_HOMEWORK_RESET = "createHomeworkReducer/CREATE_HOMEWORK_RESET";
+
+export const CREATE_DOCUMENT_REQUEST = "createDocumentReducer/CREATE_DOCUMENT_REQUEST";
+export const CREATE_DOCUMENT_SUCCESS = "createDocumentReducer/CREATE_DOCUMENT_SUCCESS";
+export const CREATE_DOCUMENT_FAILED = "createDocumentReducer/CREATE_DOCUMENT_FAILED";
+export const CREATE_DOCUMENT_RESET = "createDocumentReducer/CREATE_DOCUMENT_RESET";
+
+

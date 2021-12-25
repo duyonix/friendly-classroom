@@ -12,8 +12,15 @@ import {
 import {
     homeworkReducer,
     documentReducer,
-    documentDetailReducer
+    homeworkDetailReducer,
+    documentDetailReducer,
+    createHomeworkReducer,
+    createDocumentReducer
 } from '../modules/Homework/reducer';
+import {
+    submit_homeworkReducer,
+    submissionReducer
+} from '../modules/SubmitHomework/reducer';
 import {
     peopleReducer,
     inviteStudentReducer,
@@ -37,7 +44,10 @@ const reducer = combineReducers({
     peopleReducer,
     inviteStudentReducer,
     deleteStudentReducer,
+    homeworkDetailReducer,
     documentDetailReducer,
+    submit_homeworkReducer,
+    submissionReducer,
     fetchAllPostReducer,
     fetchSinglePostReducer,
     createPostReducer,
@@ -46,6 +56,8 @@ const reducer = combineReducers({
     createCommentReducer,
     updateCommentReducer,
     deleteCommentReducer,
+    createHomeworkReducer,
+    createDocumentReducer,
 });
 
 export default reducer;

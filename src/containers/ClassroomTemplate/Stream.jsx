@@ -5,35 +5,35 @@ import OperationStream from "../../components/OperationStream";
 
 function Stream() {
   const { classroomId } = useParams();
-  const { role } = useLocation();
+  const { role, classInfo } = useLocation();
   localStorage.setItem("classroomId", classroomId);
   if (role) localStorage.setItem("role", role);
-  const initialPost=[
+  if (classInfo) localStorage.setItem("classInfo", JSON.stringify(classInfo));
+
+  const initialPost = [
     {
-        id:1,
-        name: "Võ Hoàng Vũ",
-        avatar: "hoang_vu.jpg",
-        time:"22 th 11",
-        title:" Ahihi",
-        body:"Cô thông báo bài 1 không làm bị trừ điểm",
-        
+      id: 1,
+      name: "Võ Hoàng Vũ",
+      avatar: "hoang_vu.jpg",
+      time: "22 th 11",
+      title: " Ahihi",
+      body: "Cô thông báo bài 1 không làm bị trừ điểm",
     },
     {
-        id:2,
-        name: "Võ Vũ",
-        avatar: "h2.jpg",
-        time:"22 th 11",
-        body:"Hôm nay nghỉ nhé các em",
-        
+      id: 2,
+      name: "Võ Vũ",
+      avatar: "h2.jpg",
+      time: "22 th 11",
+      body: "Hôm nay nghỉ nhé các em",
     },
-  ]
+  ];
 
   return (
     <div className="member">
-      <OperationStream/>
+      <OperationStream />
       {/* <ListPost/>  */}
     </div>
-  )
+  );
 }
 
 export default Stream;
