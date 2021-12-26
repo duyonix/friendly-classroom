@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Box, TextField, Typography, Alert } from "@mui/material";
+import {
+  Button,
+  Box,
+  TextField,
+  Typography,
+  Alert,
+  Stack,
+} from "@mui/material";
 import TitleIcon from "@mui/icons-material/Title";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -14,11 +21,13 @@ import {
   resetCreateDocument,
 } from "../../redux/modules/Homework/action";
 import Loading from "../../components/Loading";
+import { useHistory } from "react-router-dom";
 
 function UploadDocument() {
   const classInfo = JSON.parse(localStorage.getItem("classInfo"));
   const { classroomId } = useParams();
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const [render, setRender] = useState(false);
 
@@ -59,11 +68,11 @@ function UploadDocument() {
     };
   });
 
-  let idx = allTopics.findIndex((item) => item.value === "Không có chủ đề");
+  let idx = allTopics?.findIndex((item) => item.value === "Không có chủ đề");
   if (idx === -1)
     allTopics.unshift({ value: "Không có chủ đề", label: "Không có chủ đề" });
 
-  console.log("allTopics: ", allTopics);
+  // console.log("allTopics: ", allTopics);
 
   const format2Digits = (n) => {
     return n < 10 ? "0" + n : n;
@@ -137,7 +146,7 @@ function UploadDocument() {
       setTimeout(() => setEmptyFieldNotice(false), 1000);
       return (
         <Alert severity="error">
-          Vui lòng điền đầy đủ tiêu đề và chủ đề bài tập
+          Vui lòng điền đầy đủ tiêu đề, chủ đề bài tập và đính kèm file tài liệu
         </Alert>
       );
     }
@@ -166,7 +175,7 @@ function UploadDocument() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (state.title === "" || state.topic === null) {
+    if (state.title === "" || state.topic === null || state.file === null) {
       setEmptyFieldNotice(true);
       return;
     }
@@ -191,7 +200,7 @@ function UploadDocument() {
   }
 
   if (data) {
-    alert("Tạo bài tập thành công!");
+    alert("Tạo tài liệu thành công!");
     setTimeout(handleReset, 1000);
     return <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />;
   }
@@ -200,9 +209,23 @@ function UploadDocument() {
     <section className="upload-document container">
       <div className="header">
         <div className="classroom-name">{classInfo.name}</div>
-        <Button variant="contained" className="btn-add" onClick={handleSubmit}>
-          Đăng Tài Liệu
-        </Button>
+        <Stack direction="row" spacing={2}>
+          <Button
+            variant="contained"
+            color="error"
+            className="btn-add"
+            onClick={() => history.goBack()}
+          >
+            Hủy bỏ
+          </Button>
+          <Button
+            variant="contained"
+            className="btn-add"
+            onClick={handleSubmit}
+          >
+            Đăng Tài Liệu
+          </Button>
+        </Stack>
       </div>
 
       <Box className="box-notice">{renderNotice()}</Box>
@@ -380,15 +403,23 @@ function UploadDocument() {
       </Box>
 
       <Box className="box-notice-mobile">{renderNotice()}</Box>
-      <Box className="box-mobile-add">
+      <Stack direction="row" spacing={2} className="box-mobile-add">
+        <Button
+          variant="contained"
+          color="error"
+          className="btn-mobile-add"
+          onClick={() => history.goBack()}
+        >
+          Hủy bỏ
+        </Button>
         <Button
           variant="contained"
           className="btn-mobile-add"
           onClick={handleSubmit}
         >
-          Đăng Tài Liệu
+          Đăng tài liệu
         </Button>
-      </Box>
+      </Stack>
     </section>
   );
 }

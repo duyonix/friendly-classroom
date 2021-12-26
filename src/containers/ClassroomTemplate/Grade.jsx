@@ -35,6 +35,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function Grade() {
+  const classInfo = JSON.parse(localStorage.getItem("classInfo"));
+
   const members = [
     {
       name: "Bài tập bất đẳng thức",
@@ -149,15 +151,11 @@ function Grade() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  let className = null;
-  if (localStorage.getItem("classInfo")) {
-    className = JSON.parse(localStorage.getItem("classInfo")).name;
-  }
   return (
     <div className="list-grade">
       <div className="inputFind">
         <div className="function">
-          <div className="classname">{className}</div>
+          <div className="classname">{classInfo?.name}</div>
           <Box
             component="form"
             sx={{
@@ -227,7 +225,7 @@ function Grade() {
 
       <div className="inputFind">
         <div className="function">
-          <div className="classname">TOÁN 6</div>
+          <div className="classname">{classInfo?.name}</div>
           <Box
             component="form"
             sx={{

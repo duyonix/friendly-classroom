@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Route } from "react-router";
 import NavbarHome from "../../components/NavbarHome";
+import Footer from "../../components/Footer";
 import { Redirect } from "react-router-dom";
 
 function LayoutHome(props) {
@@ -8,6 +9,7 @@ function LayoutHome(props) {
     <Fragment>
       <NavbarHome />
       {props.children}
+      <Footer />
     </Fragment>
   );
 }
