@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Box, TextField, Typography, Alert } from "@mui/material";
+import {
+  Button,
+  Box,
+  TextField,
+  Typography,
+  Alert,
+  Stack,
+} from "@mui/material";
 import TitleIcon from "@mui/icons-material/Title";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -18,11 +25,13 @@ import {
 } from "../../redux/modules/Homework/action";
 import Loading from "../../components/Loading";
 import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
+import { useHistory } from "react-router-dom";
 
 function AssignHomework() {
   const classInfo = JSON.parse(localStorage.getItem("classInfo"));
   const { classroomId } = useParams();
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const [render, setRender] = useState(false);
 
@@ -65,11 +74,11 @@ function AssignHomework() {
     };
   });
 
-  let idx = allTopics.findIndex((item) => item.value === "Không có chủ đề");
+  let idx = allTopics?.findIndex((item) => item.value === "Không có chủ đề");
   if (idx === -1)
     allTopics.unshift({ value: "Không có chủ đề", label: "Không có chủ đề" });
 
-  console.log("allTopics: ", allTopics);
+  // console.log("allTopics: ", allTopics);
 
   const format2Digits = (n) => {
     return n < 10 ? "0" + n : n;
@@ -202,6 +211,10 @@ function AssignHomework() {
     formData.append("deadline", state.deadline);
     formData.append("description", state.description);
 
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+
     dispatch(createHomework(formData));
     setRender(!render);
   };
@@ -224,9 +237,23 @@ function AssignHomework() {
     <section className="assign-homework container">
       <div className="header">
         <div className="classroom-name">{classInfo.name}</div>
-        <Button variant="contained" className="btn-add" onClick={handleSubmit}>
-          Giao Bài tập
-        </Button>
+        <Stack direction="row" spacing={2}>
+          <Button
+            variant="contained"
+            color="error"
+            className="btn-add"
+            onClick={() => history.goBack()}
+          >
+            Hủy bỏ
+          </Button>
+          <Button
+            variant="contained"
+            className="btn-add"
+            onClick={handleSubmit}
+          >
+            Giao bài tập
+          </Button>
+        </Stack>
       </div>
 
       <Box className="box-notice">{renderNotice()}</Box>
@@ -436,15 +463,23 @@ function AssignHomework() {
       </Box>
 
       <Box className="box-notice-mobile">{renderNotice()}</Box>
-      <Box className="box-mobile-add">
+      <Stack direction="row" spacing={2} className="box-mobile-add">
+        <Button
+          variant="contained"
+          color="error"
+          className="btn-mobile-add"
+          onClick={() => history.goBack()}
+        >
+          Hủy bỏ
+        </Button>
         <Button
           variant="contained"
           className="btn-mobile-add"
           onClick={handleSubmit}
         >
-          Giao Bài tập
+          Giao bài tập
         </Button>
-      </Box>
+      </Stack>
     </section>
   );
 }

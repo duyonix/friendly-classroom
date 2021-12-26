@@ -235,19 +235,21 @@ const Navbar = (props) => {
                 onClose={handleCloseNavMenu}
                 sx={{
                   display: { xs: "block", md: "none" },
+                  width: "100%",
                 }}
               >
                 {pages.map((page, index) => (
-                  <MenuItem key={index} onClick={handleCloseNavMenu}>
-                    <NavLink
-                      style={{ color: "black", textDecoration: "none" }}
-                      exact
-                      to={page.route}
-                      activeStyle={{ color: "#1e62f5" }}
-                    >
-                      {page.name}
-                    </NavLink>
-                  </MenuItem>
+                  <NavLink
+                    key={index}
+                    className="nav-page-link-mobile"
+                    exact
+                    to={page.route}
+                    activeStyle={{ color: "#1e62f5" }}
+                  >
+                    <MenuItem>
+                      <span style={{ margin: "0 auto" }}>{page.name}</span>
+                    </MenuItem>
+                  </NavLink>
                 ))}
               </Menu>
             </Box>

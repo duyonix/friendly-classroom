@@ -92,25 +92,25 @@ const AddMenuButton = () => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
-          <Link
-            to={{ pathname: `/classroom/${classroomId}/assign-homework` }}
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
+        <Link
+          to={{ pathname: `/classroom/${classroomId}/assign-homework` }}
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          <MenuItem disableRipple>
             <AssignmentIcon size="large" />
             Bài Tập
-          </Link>
-        </MenuItem>
+          </MenuItem>
+        </Link>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
-          <Link
-            to={{ pathname: `/classroom/${classroomId}/upload-document` }}
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <TopicIcon size="large" />
+        <Link
+          to={{ pathname: `/classroom/${classroomId}/upload-document` }}
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          <MenuItem disableRipple>
+            <AssignmentIcon size="large" />
             Tài liệu
-          </Link>
-        </MenuItem>
+          </MenuItem>
+        </Link>
       </StyledMenu>
     </div>
   );

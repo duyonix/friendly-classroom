@@ -20,6 +20,8 @@ import DialogGetCodeClassroom from "./DialogGetCodeClassroom";
 
 function ClassroomCard(props) {
   const { classInfo, role, index } = props;
+  console.log("classInfo: " + classInfo);
+  console.log("role: " + role);
 
   const bgColor = [
     "#bbecff",

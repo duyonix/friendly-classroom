@@ -29,6 +29,8 @@ import {
 } from '../modules/People/reducer';
 import { fetchAllPostReducer, fetchSinglePostReducer, createPostReducer, updatePostReducer, deletePostReducer } from '../modules/Stream/Post/reducer';
 import { createCommentReducer, updateCommentReducer, deleteCommentReducer } from '../modules/Stream/Comment/reducer';
+import { updateHomeworkReducer, updateHomeworkFileReducer, updateDocumentReducer, updateDocumentFileReducer } from '../modules/UpdateHomeworkDocument/reducer';
+
 
 const reducer = combineReducers({
     // Add reducers here
@@ -59,7 +61,11 @@ const reducer = combineReducers({
     deleteCommentReducer,
     createHomeworkReducer,
     createDocumentReducer,
-    submissionDeleteReducer
+    submissionDeleteReducer,
+    updateHomeworkReducer,
+    updateHomeworkFileReducer,
+    updateDocumentReducer,
+    updateDocumentFileReducer,
 });
 
 export default reducer;
