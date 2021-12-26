@@ -15,6 +15,9 @@
       margin-right: 20px;
       opacity: 90%;
       max-width: 300px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
   .container-student {

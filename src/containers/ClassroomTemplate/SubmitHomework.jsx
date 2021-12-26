@@ -11,7 +11,10 @@ import { actFetchHomeworkDetailList } from "../../redux/modules/Homework/action"
 import {
   actSubmitHomework,
   actFetchSubmission,
-  actSubmitHomeworkReset,
+  actDeleteSubmission,
+  resetSubmitHomework,
+  deleteSubmissionReset,
+  resetSubmission,
 } from "../../redux/modules/SubmitHomework/action";
 import { Alert, Box, CircularProgress } from "@mui/material";
 
@@ -23,11 +26,8 @@ function SubmitHomework(props) {
   const [file, setFile] = useState(null);
   const [check, setCheck] = useState(false);
   const [submit, setSubmit] = useState(false);
-  let role = null,
-    userId = null;
-  if (localStorage.getItem("role")) {
-    role = localStorage.getItem("role");
-  }
+  let userId = null;
+
   if (localStorage.getItem("User")) {
     userId = JSON.parse(localStorage.getItem("User")).user._id;
   }
@@ -61,33 +61,22 @@ function SubmitHomework(props) {
   );
   const errSubmission = useSelector((state) => state.submissionReducer?.err);
 
+  const datadeleteSubmission = useSelector(
+    (state) => state.submissionDeleteReducer?.data
+  );
+  const loadingdeleteSubmission = useSelector(
+    (state) => state.submissionDeleteReducer?.loading
+  );
+  const errdeleteSubmission = useSelector(
+    (state) => state.submissionDeleteReducer?.err
+  );
+
   if (loadingHomework) {
     return <Loading />;
   }
   if (errHomework) {
     console.log(errHomework);
   }
-  // const handleSubmission = () => {
-  // 	const formData = new FormData();
-
-  // 	formData.append('File', selectedFile);
-
-  // 	fetch(
-  // 		'https://freeimage.host/api/1/upload?key=<YOUR_API_KEY>',
-  // 		{
-  // 			method: 'POST',
-  // 			body: formData,
-  // 		}
-  // 	)
-  // 		.then((response) => response.json())
-  // 		.then((result) => {
-  // 			console.log('Success:', result);
-  // 		})
-  // 		.catch((error) => {
-  // 			console.error('Error:', error);
-  // 		});
-  // };
-  // };
 
   const onFilesChange = (files) => {
     if (files[0] !== undefined) setFile(files[0]);
@@ -140,7 +129,7 @@ function SubmitHomework(props) {
     }
   };
   const renderLoadingSubmisson = () => {
-    if (loadingSubmission) {
+    if (loadingSubmission || loadingdeleteSubmission) {
       return (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <CircularProgress />
@@ -157,14 +146,27 @@ function SubmitHomework(props) {
       );
     }
   };
-  const renderSuccessSubmit = () => {
-    if (dataSubmitHomework) {
-      dispatch(actFetchSubmission(homeworkId, userId));
-      dispatch(actSubmitHomeworkReset());
 
-      //return <Alert severity="success">{dataSubmitHomework.message}</Alert>;
+  const renderErrorDeleteSubmission = () => {
+    if (errdeleteSubmission) {
+      return (
+        <Alert severity="error">
+          {errdeleteSubmission.response?.data.message}
+        </Alert>
+      );
     }
   };
+
+  if (dataSubmitHomework) {
+    setFile(null);
+    setCheck(false);
+    setSubmit(false);
+    dispatch(actFetchSubmission(homeworkId, userId));
+    dispatch(resetSubmitHomework());
+    dispatch(resetSubmission());
+
+    //return <Alert severity="success">{dataSubmitHomework.message}</Alert>;
+  }
 
   //console.log(dataHomework);
   const convertOnlyDate = (date) => {
@@ -174,7 +176,13 @@ function SubmitHomework(props) {
     var yyyy = date.getFullYear();
     return dd + "/" + mm + "/" + yyyy;
   };
-  const handleDeleteSubmission = (e) => {};
+  const handleDeleteSubmission = (e) => {
+    dispatch(actDeleteSubmission(homeworkId));
+  };
+  if (datadeleteSubmission) {
+    dispatch(actFetchSubmission(homeworkId, userId));
+    dispatch(deleteSubmissionReset());
+  }
 
   return (
     <div className="submit-homework container">
@@ -215,6 +223,7 @@ function SubmitHomework(props) {
             )}
           </div>
           {renderLoadingSubmisson()}
+          {renderErrorDeleteSubmission()}
           {dataSubmission?.submission.markDone ? (
             <div
               className="card"
@@ -309,7 +318,6 @@ function SubmitHomework(props) {
               </FormGroup>
               {renderLoadingSubmit()}
               {renderErrorSubmit()}
-              {renderSuccessSubmit()}
               {file === null ? (
                 <Files
                   enctype="multipart/form-data"
