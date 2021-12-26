@@ -61,6 +61,64 @@ export const actSubmissionFailed = (err) => {
 
 
 
+export const actDeleteSubmission = (homeworkId) => {
+
+    let accessToken = "";
+    if (localStorage.getItem("User"))
+        accessToken = JSON.parse(localStorage.getItem("User")).token;
+    return (dispatch) => {
+        dispatch(actDeleteSubmissionRequest());
+        axios({
+            url: pathAPI + "submission/deleteSubmission",
+            method: "POST",
+            data: { homeworkId },
+            headers: {
+                "Authorization": "Bearer " + accessToken,
+
+            },
+        })
+            .then((res) => {
+
+                dispatch(actDeleteSubmissionSuccess(res.data));
+            })
+            .catch((err) => {
+                dispatch(actDeleteSubmissionFailed(err));
+            })
+    }
+}
+
+
+export const actDeleteSubmissionRequest = () => {
+    return {
+        type: actionTypes.SUBMISSION_DELETE_REQUEST,
+    }
+}
+
+export const actDeleteSubmissionSuccess = (data) => {
+    return {
+        type: actionTypes.SUBMISSION_DELETE_SUCCESS,
+        payload: data
+    }
+}
+export const actDeleteSubmissionFailed = (err) => {
+    return {
+        type: actionTypes.SUBMISSION_DELETE_FAILED,
+        payload: err
+    }
+}
+export const deleteSubmissionReset = () => {
+    return (dispatch) => {
+        dispatch(actDeleteSubmissionReset());
+    }
+}
+
+export const actDeleteSubmissionReset = () => {
+    return {
+        type: actionTypes.SUBMISSION_DELETE_RESET,
+    }
+}
+
+
 
 
 
@@ -72,6 +130,7 @@ export const actSubmitHomework = (userId, file, homeworkId) => {
     let accessToken = "";
     if (localStorage.getItem("User"))
         accessToken = JSON.parse(localStorage.getItem("User")).token;
+
     return (dispatch) => {
         dispatch(actSubmitHomeworkRequest());
         axios({

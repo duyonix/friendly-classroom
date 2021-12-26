@@ -15,7 +15,7 @@ import {
   actPeopleSearch,
 } from "../redux/modules/People/action";
 function OperationMember() {
-  const classInfo = JSON.parse(localStorage.getItem("classInfo"));
+  
 
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -44,7 +44,10 @@ function OperationMember() {
   if (localStorage.getItem("role")) {
     role = localStorage.getItem("role");
   }
-
+  let className = null;
+  if (localStorage.getItem("classInfo")) {
+    className = JSON.parse(localStorage.getItem("classInfo")).name;
+  }
   const handleClickOpen = () => {
     setOpen(true);
     setUsername(""); // test được nè
@@ -127,7 +130,7 @@ function OperationMember() {
       }}
       className="operation-member container"
     >
-      <div className="classname">{classInfo?.name}</div>
+      <div className="classname">{className}</div>
       <div className="input-group">
         <TextField
           label="Tìm thành viên"

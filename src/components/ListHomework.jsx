@@ -12,6 +12,7 @@ import {
   actFetchHomeworkList,
 } from "../redux/modules/Homework/action";
 import Loading from "./Loading";
+import NotInterestedIcon from "@mui/icons-material/NotInterested";
 const useStyles = makeStyles({
   label: {
     fontSize: 18,
@@ -76,19 +77,41 @@ export default function ListHomework() {
               />
             </TabList>
           </Box>
+
           <TabPanel value="homework">
-            <VerticalListHomework
-              type={"Homework"}
-              listHomework={dataHomework}
-              keySearch={keyHomework}
-            />
+            {dataHomework.length === 0 ? (
+              <h3 className="notification-nothing">
+                <NotInterestedIcon
+                  fontSize="large"
+                  style={{ color: "red", marginRight: 10 }}
+                />
+                Hiện không có bài tập nào!
+              </h3>
+            ) : (
+              <VerticalListHomework
+                type={"Homework"}
+                listHomework={dataHomework}
+                keySearch={keyHomework}
+              />
+            )}
           </TabPanel>
+
           <TabPanel value="document">
-            <VerticalListHomework
-              type={"Document"}
-              listHomework={dataDocument}
-              keySearch={keyDocument}
-            />
+            {dataHomework.length === 0 ? (
+              <h3 className="notification-nothing">
+                <NotInterestedIcon
+                  fontSize="large"
+                  style={{ color: "red", marginRight: 10 }}
+                />
+                Hiện không có tài liệu nào!
+              </h3>
+            ) : (
+              <VerticalListHomework
+                type={"Document"}
+                listHomework={dataDocument}
+                keySearch={keyDocument}
+              />
+            )}
           </TabPanel>
         </TabContext>
       </Box>
