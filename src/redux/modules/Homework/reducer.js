@@ -2,76 +2,7 @@ import * as actionTypes from "./constants";
 
 const homeworkState = {
     loading: false,
-    data: [
-        {
-            topic: "Chương 1",
-            homeworks: [
-                {
-                    title: "Nhân biểu thức",
-                    attachedFiles: ["https1", "https2"],
-                    _id: "abcxyz",
-                    deadline: "20.11.2021",
-                },
-                {
-                    title: "Chia biểu thức",
-                    attachedFiles: ["https1", "https2"],
-                    _id: "abcxyz2",
-                    deadline: "20.11.2021",
-                },
-            ],
-        },
-        {
-            topic: "Chương 2",
-            homeworks: [
-                {
-                    title: "Cộng biểu thức",
-                    attachedFiles: ["https1", "https2"],
-                    _id: "abcxyz",
-                    deadline: "20.11.2021",
-                },
-                {
-                    title: "Trừ biểu thức",
-                    attachedFiles: ["https1", "https2"],
-                    _id: "abcxyz2",
-                    deadline: "20.11.2021",
-                },
-            ],
-        },
-        {
-            topic: "Chương 3",
-            homeworks: [
-                {
-                    title: "Cộng biểu thức",
-                    attachedFiles: ["https1", "https2"],
-                    _id: "abcxyz",
-                    deadline: "20.11.2021",
-                },
-                {
-                    title: "Trừ biểu thức",
-                    attachedFiles: ["https1", "https2"],
-                    _id: "abcxyz2",
-                    deadline: "20.11.2021",
-                },
-            ],
-        },
-        {
-            topic: "Chương 4",
-            homeworks: [
-                {
-                    title: "Cộng biểu thức",
-                    attachedFiles: ["https1", "https2"],
-                    _id: "abcxyz",
-                    deadline: "20.11.2021",
-                },
-                {
-                    title: "Trừ biểu thức",
-                    attachedFiles: ["https1", "https2"],
-                    _id: "abcxyz2",
-                    deadline: "20.11.2021",
-                },
-            ],
-        },
-    ],
+    data: null,
     err: null,
     key: ""
 }
@@ -148,56 +79,7 @@ export const homeworkDetailReducer = (state = homeworkDetailState, { type, paylo
 
 const documentState = {
     loading: false,
-    data: [
-        {
-            topic: "Chương 1",
-            documents: [
-                {
-                    title: "Nhân biểu thức",
-                    _id: "abcxyz",
-                    createdAt: "20.11.2021",
-                },
-                {
-                    title: "Chia biểu thức",
-
-                    _id: "abcxyz2",
-                    createdAt: "20.12.2021",
-                },
-            ],
-        },
-        {
-            topic: "Chương 2",
-            documents: [
-                {
-                    title: "Nhân biểu thức",
-                    _id: "abcxyz",
-                    createdAt: "20.11.2021",
-                },
-                {
-                    title: "Chia biểu thức",
-
-                    _id: "abcxyz2",
-                    createdAt: "20.12.2021",
-                },
-            ],
-        },
-        {
-            topic: "Chương 3",
-            documents: [
-                {
-                    title: "Nhân biểu thức",
-                    _id: "abcxyz",
-                    createdAt: "20.11.2021",
-                },
-                {
-                    title: "Chia biểu thức",
-
-                    _id: "abcxyz2",
-                    createdAt: "20.12.2021",
-                },
-            ],
-        },
-    ],
+    data: null,
     err: null,
     key: ""
 }

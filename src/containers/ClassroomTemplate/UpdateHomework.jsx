@@ -20,24 +20,46 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { pathImgFromIndex } from "../../utils/constants";
 import { Redirect, useParams } from "react-router-dom";
 import {
-  createHomework,
-  resetCreateHomework,
-} from "../../redux/modules/Homework/action";
+  updateHomework,
+  resetUpdateHomework,
+  updateHomeworkFile,
+  resetUpdateHomeworkFile,
+} from "../../redux/modules/UpdateHomeworkDocument/action";
+import { actFetchHomeworkDetailList } from "../../redux/modules/Homework/action";
 import Loading from "../../components/Loading";
 import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
 import { useHistory } from "react-router-dom";
 
 function UpdateHomework() {
   const classInfo = JSON.parse(localStorage.getItem("classInfo"));
-  const { classroomId } = useParams();
+  const { classroomId, homeworkId } = useParams();
 
   const history = useHistory();
   const dispatch = useDispatch();
   const [render, setRender] = useState(false);
 
-  const data = useSelector((state) => state.createHomeworkReducer.data);
-  const loading = useSelector((state) => state.createHomeworkReducer.loading);
-  const err = useSelector((state) => state.createHomeworkReducer.err);
+  const dataFetch = useSelector((state) => state.homeworkDetailReducer.data);
+  const loadingFetch = useSelector(
+    (state) => state.homeworkDetailReducer.loading
+  );
+  const errFetch = useSelector((state) => state.homeworkDetailReducer.err);
+
+  const [getDataFetch, setGetDataFetch] = useState(false);
+
+  const dataInfo = useSelector((state) => state.updateHomeworkReducer.data);
+  const loadingInfo = useSelector(
+    (state) => state.updateHomeworkReducer.loading
+  );
+  const errInfo = useSelector((state) => state.updateHomeworkReducer.err);
+
+  const dataFile = useSelector((state) => state.updateHomeworkFileReducer.data);
+  const loadingFile = useSelector(
+    (state) => state.updateHomeworkFileReducer.loading
+  );
+  const errFile = useSelector((state) => state.updateHomeworkFileReducer.err);
+
+  const [fileChange, setFileChange] = useState(false);
+  const [stateInfoChange, setStateInfoChange] = useState(false);
 
   const [state, setState] = useState({
     title: "",
@@ -48,37 +70,62 @@ function UpdateHomework() {
   });
 
   useEffect(() => {
-    setState({
-      title: "",
-      description: "",
-      deadline: new Date(new Date().setHours(24, 0, 0, 0)),
-      file: null,
-      topic: "Không có chủ đề",
-    });
+    dispatch(actFetchHomeworkDetailList(homeworkId));
+    setGetDataFetch(true);
     // eslint-disable-next-line
-  }, [render]);
+  }, []);
+
+  useEffect(() => {
+    // No file upload in this homework
+    if (dataFetch?.homework.fileAttributes.length === 0) {
+      setState({
+        title: dataFetch?.homework?.title,
+        description: dataFetch?.homework?.description,
+        deadline: dataFetch?.homework?.deadline,
+        file: null,
+        topic: dataFetch?.homework?.topic,
+      });
+    }
+    // Have file upload in this homework
+    else {
+      setState({
+        title: dataFetch?.homework?.title,
+        description: dataFetch?.homework?.description,
+        deadline: dataFetch?.homework?.deadline,
+        file: {
+          name: dataFetch?.homework?.fileAttributes[0].name,
+          // wait BE update the DB for file, now just default those both are null
+          sizeReadable: dataFetch?.homework?.fileAttributes[0].size,
+          extension: dataFetch?.homework?.fileAttributes[0].extension,
+          lastModified: dataFetch?.homework?.updatedAt,
+        },
+        topic: dataFetch?.homework?.topic,
+      });
+    }
+    // eslint-disable-next-line
+  }, [render, getDataFetch]);
+
+  // console.log("dataFetch", dataFetch);
+  // console.log("state", state);
+  // console.log("fileChange", fileChange);
+  // console.log("stateInfoChange", stateInfoChange);
 
   const [emptyTitleNotice, setEmptyTitleNotice] = useState(false);
   // const [emptyDeadlineNotice, setEmptyDeadlineNotice] = useState(false);
   const [emptyTopicNotice, setEmptyTopicNotice] = useState(false);
   const [validateFileNotice, setValidateFileNotice] = useState(false);
   const [emptyFieldNotice, setEmptyFieldNotice] = useState(false);
+  const [updateNotice, setUpdateNotice] = useState(false);
 
   const rawTopic = useSelector((state) => state.homeworkReducer.data);
-  let allTopics = [];
 
-  allTopics = rawTopic?.map((item) => {
+  // get Topic list
+  const allTopics = rawTopic?.map((item) => {
     return {
       value: item.topic,
       label: item.topic,
     };
   });
-
-  let idx = allTopics?.findIndex((item) => item.value === "Không có chủ đề");
-  if (idx === -1)
-    allTopics.unshift({ value: "Không có chủ đề", label: "Không có chủ đề" });
-
-  // console.log("allTopics: ", allTopics);
 
   const format2Digits = (n) => {
     return n < 10 ? "0" + n : n;
@@ -97,17 +144,25 @@ function UpdateHomework() {
   };
 
   const handleChange = (e) => {
+    // console.log("change", e.target.name);
     const name = e.target.name;
     const value = e.target.value;
     setState({
       ...state,
       [name]: value,
     });
+    if (!stateInfoChange) setStateInfoChange(true);
   };
 
   const handleFileChange = (files) => {
+    if (!fileChange) setFileChange(true);
     if (files[0] !== undefined) setState({ ...state, file: files[0] });
     // console.log(files[0]);
+    // if drag directory
+    // if (files[0].type === "") {
+    //   setState({ ...state, file: null });
+    //   alert("Vui lòng chỉ nộp 1 tệp. Nếu muốn nộp thư mục, hãy nén lại!");
+    // }
   };
 
   const handleFileError = (error) => {
@@ -119,6 +174,7 @@ function UpdateHomework() {
   };
 
   const handleFileDelete = () => {
+    if (!fileChange) setFileChange(true);
     setState({ ...state, file: null });
   };
 
@@ -129,6 +185,7 @@ function UpdateHomework() {
     } else {
       setState({ ...state, deadline: date });
     }
+    if (!stateInfoChange) setStateInfoChange(true);
   };
 
   const handleTopicChange = (field) => {
@@ -138,6 +195,7 @@ function UpdateHomework() {
     } else {
       setState({ ...state, topic: field.value });
     }
+    if (!stateInfoChange) setStateInfoChange(true);
   };
 
   const handleValidationTitle = () => {
@@ -189,52 +247,116 @@ function UpdateHomework() {
         </Alert>
       );
     }
-    if (err) {
+    if (updateNotice) {
+      setTimeout(() => setUpdateNotice(false), 1000);
+      return (
+        <Alert severity="error">
+          Bạn chưa thay đổi thông tin nào của bài tập
+        </Alert>
+      );
+    }
+    if (errInfo) {
       setTimeout(handleReset, 1000);
-      return <Alert severity="error">{err?.response.data.message}</Alert>;
+      return <Alert severity="error">{errInfo?.response.data.message}</Alert>;
+    }
+    if (errFile) {
+      setTimeout(handleReset, 1000);
+      return <Alert severity="error">{errFile?.response.data.message}</Alert>;
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    // empty required field
     if (state.title === "" || state.deadline === null || state.topic === null) {
       setEmptyFieldNotice(true);
       return;
     }
 
-    const formData = new FormData();
-    formData.append("classroomId", classroomId);
-    formData.append("title", state.title);
-    formData.append("file", state.file);
-    formData.append("topic", state.topic);
-    formData.append("deadline", state.deadline);
-    formData.append("description", state.description);
+    // don't change anything
+    if (!stateInfoChange && !fileChange) {
+      setUpdateNotice(true);
+      return;
+    }
 
-    // for (let pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
+    // change info
+    if (stateInfoChange) {
+      const valueDispatch = {
+        homeworkId: homeworkId,
+        title: state.title,
+        description: state.description,
+        deadline: state.deadline,
+        topic: state.topic,
+      };
+      dispatch(updateHomework(valueDispatch));
+    }
 
-    dispatch(createHomework(formData));
+    // change file
+    if (fileChange) {
+      const formData = new FormData();
+      formData.append("homeworkId", homeworkId);
+      formData.append("file", state.file);
+      dispatch(updateHomeworkFile(formData));
+    }
+
     setRender(!render);
   };
 
   const handleReset = () => {
-    dispatch(resetCreateHomework());
+    if (stateInfoChange) {
+      dispatch(resetUpdateHomework());
+    }
+    if (fileChange) {
+      dispatch(resetUpdateHomeworkFile());
+    }
+    setStateInfoChange(false);
+    setFileChange(false);
   };
 
-  if (loading) {
+  if (loadingFetch || loadingInfo || loadingFile) {
     return <Loading />;
   }
 
-  if (data) {
-    alert("Tạo bài tập thành công!");
-    setTimeout(handleReset, 1000);
-    return <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />;
+  if (dataFetch && getDataFetch) {
+    setGetDataFetch(false);
+  }
+
+  if (errFetch) {
+    console.log(errFetch);
+  }
+
+  if (stateInfoChange && fileChange) {
+    // change both info and file of homework
+    if (dataInfo && dataFile) {
+      alert("Chỉnh sửa thông tin và file đính kèm của bài tập thành công!");
+      setTimeout(handleReset, 1000);
+      return (
+        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+      );
+    }
+  } else if (stateInfoChange) {
+    // just only change info of homework without file
+    if (dataInfo) {
+      alert("Chỉnh sửa thông tin của bài tập thành công!");
+      setTimeout(handleReset, 1000);
+      return (
+        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+      );
+    }
+  } else if (fileChange) {
+    // just only change file of homework without info
+    if (dataFile) {
+      alert("Chỉnh sửa file đính kèm của bài tập thành công!");
+      setTimeout(handleReset, 1000);
+      return (
+        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+      );
+    }
   }
 
   return (
-    <section className="assign-homework container">
+    <section className="update-homework container">
       <div className="header">
         <div className="classroom-name">{classInfo.name}</div>
         <Stack direction="row" spacing={2}>
@@ -278,6 +400,7 @@ function UpdateHomework() {
                 type="text"
                 name="title"
                 autoComplete="off"
+                defaultValue={dataFetch?.homework?.title}
                 onChange={handleChange}
                 onBlur={handleValidationTitle}
               />
@@ -300,6 +423,7 @@ function UpdateHomework() {
                 name="description"
                 autoComplete="off"
                 multiline
+                defaultValue={dataFetch?.homework?.description}
                 minRows={5}
                 onChange={handleChange}
                 // onBlur={handleValidationName}
@@ -450,7 +574,10 @@ function UpdateHomework() {
                 formatCreateLabel={(inputValue) =>
                   "Tạo chủ đề mới: " + inputValue
                 }
-                defaultValue={allTopics[0]}
+                defaultValue={{
+                  value: dataFetch?.homework?.topic,
+                  label: dataFetch?.homework?.topic,
+                }}
                 placeholder="Chọn chủ đề"
                 onChange={handleTopicChange}
                 onBlur={handleValidationTopic}
