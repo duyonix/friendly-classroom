@@ -26,7 +26,7 @@ function DialogGetCodeClassroom(props) {
         open={openGetCodeDialog}
         onClose={handleCloseGetCodeDialog}
       >
-        <DialogTitle sx={{ pb: 0 }}>Lấy mã lớp học</DialogTitle>
+        <DialogTitle sx={{ pb: 0 }}>Lớp học {classInfo.name}</DialogTitle>
 
         <DialogContent>
           <Box component="form" noValidate sx={{ mt: 1 }}>

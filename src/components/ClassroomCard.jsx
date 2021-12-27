@@ -20,8 +20,6 @@ import DialogGetCodeClassroom from "./DialogGetCodeClassroom";
 
 function ClassroomCard(props) {
   const { classInfo, role, index } = props;
-  console.log("classInfo: " + classInfo);
-  console.log("role: " + role);
 
   const bgColor = [
     "#bbecff",
@@ -82,7 +80,10 @@ function ClassroomCard(props) {
 
     const options =
       role === "student"
-        ? [{ title: "Rời lớp học", handleClick: handleOpenLeaveDialog }]
+        ? [
+            { title: "Lấy mã lớp", handleClick: handleOpenGetCodeDialog },
+            { title: "Rời lớp học", handleClick: handleOpenLeaveDialog },
+          ]
         : [
             { title: "Lấy mã lớp", handleClick: handleOpenGetCodeDialog },
             { title: "Chỉnh sửa", handleClick: handleOpenUpdateDialog },

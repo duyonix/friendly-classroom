@@ -69,7 +69,7 @@ function DialogLeaveClassroom(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" sx={{ pb: 1 }}>
-          Rời khỏi lớp học
+          Rời lớp học
         </DialogTitle>
 
         <DialogContent>
