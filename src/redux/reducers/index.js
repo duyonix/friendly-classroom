@@ -19,7 +19,8 @@ import {
 } from '../modules/Homework/reducer';
 import {
     submit_homeworkReducer,
-    submissionReducer
+    submissionReducer,
+    submissionDeleteReducer
 } from '../modules/SubmitHomework/reducer';
 import {
     peopleReducer,
@@ -60,6 +61,7 @@ const reducer = combineReducers({
     deleteCommentReducer,
     createHomeworkReducer,
     createDocumentReducer,
+    submissionDeleteReducer,
     updateHomeworkReducer,
     updateHomeworkFileReducer,
     updateDocumentReducer,

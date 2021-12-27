@@ -151,7 +151,6 @@ function Grade() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
   return (
     <div className="list-grade">
       <div className="inputFind">
