@@ -352,7 +352,7 @@ function AssignHomework() {
               ) : (
                 ""
               )}
-              <div className="files">
+              <div className="files" style={{ maxWidth: "calc(100% -40px)" }}>
                 {state.file !== null ? (
                   <div
                     className="card"

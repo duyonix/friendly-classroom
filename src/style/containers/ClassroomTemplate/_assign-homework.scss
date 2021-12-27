@@ -47,6 +47,10 @@
           top: 5px;
         }
       }
+      .files {
+        max-width: calc(100% - 40px) !important;
+      }
+
       .card {
         .btn-delete-file {
           &:focus-visible {
