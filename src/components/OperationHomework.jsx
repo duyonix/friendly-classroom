@@ -117,12 +117,15 @@ const AddMenuButton = () => {
 };
 
 export default function OperationHomework() {
-  const classInfo = JSON.parse(localStorage.getItem("classInfo"));
   let role = null;
 
   const [itemName, setItemName] = useState("");
   if (localStorage.getItem("role")) {
     role = localStorage.getItem("role");
+  }
+  let className = null;
+  if (localStorage.getItem("classInfo")) {
+    className = JSON.parse(localStorage.getItem("classInfo")).name;
   }
   const dispatch = useDispatch();
 
@@ -151,7 +154,7 @@ export default function OperationHomework() {
       }}
       className="operation-homework container"
     >
-      <div className="classname">{classInfo?.name}</div>
+      <div className="classname">{className}</div>
       <div className="input-group">
         <TextField
           label="Tìm kiếm bài tập hoặc tài liệu"

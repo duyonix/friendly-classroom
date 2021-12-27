@@ -37,6 +37,42 @@ export const submissionReducer = (state = submissionState, { type, payload }) =>
 }
 
 
+const deleteSubmissionState = {
+    loading: false,
+    data: null,
+    err: null,
+
+}
+
+export const submissionDeleteReducer = (state = deleteSubmissionState, { type, payload }) => {
+    switch (type) {
+
+        case actionTypes.SUBMISSION_DELETE_REQUEST:
+            state.loading = true;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+        case actionTypes.SUBMISSION_DELETE_SUCCESS:
+            state.loading = false;
+            state.data = payload;
+            state.err = null;
+            return { ...state };
+        case actionTypes.SUBMISSION_DELETE_FAILED:
+            state.loading = false;
+            state.data = null;
+            state.err = payload;
+            return { ...state };
+        case actionTypes.SUBMISSION_DELETE_RESET:
+            state.loading = false;
+            state.data = null;
+            state.err = null;
+            return { ...state };
+
+        default:
+            return { ...state };
+    }
+}
+
 
 
 const submit_homeworkState = {
