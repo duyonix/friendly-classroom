@@ -1,12 +1,23 @@
 .post{
-    margin: 50px 50px 50px 50px;
+    margin: 50px 20% 50px 20%;
+    .card-header-function{
+        width:100%;
+        display:inline-flex;
+    }
     .card-post{
         width: 100%;
         .card-post-name{
             style:bold;
         }
+        .show-helper-text{
+            margin-left:72%;
+            font-size: smaller;
+            color: gray;
+            
+        }
+        .post-author{
+            color:rgb(31, 121, 224);
+            font-size: 16px;
+        }
     }
-}
-.posts{
-    
 }

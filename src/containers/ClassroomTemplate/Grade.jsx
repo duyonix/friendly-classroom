@@ -34,10 +34,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+
 function Grade() {
   const classInfo = JSON.parse(localStorage.getItem("classInfo"));
-
-  const members = [
+  let id = null,
+    role = null;
+    if (localStorage.getItem("role")) {
+      role = localStorage.getItem("role");
+    }
+  //TODO: load list name and grade for this student
+  const stuGrades = [
     {
       name: "Bài tập bất đẳng thức",
       grade: "10/10",
@@ -97,7 +103,7 @@ function Grade() {
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
-
+//TODO: load list bài tập của lớp học
   const columns = [
     { id: "name", label: "Học sinh", minWidth: 200 },
     { id: "equal", label: "Bất đẳng thức", minWidth: 100 },
@@ -117,11 +123,11 @@ function Grade() {
       minWidth: 100,
     },
   ];
-
+//TODO load list học sinh + điểm
   function createData(name, equal, rectangle, add, sub) {
     return { name, equal, rectangle, add, sub };
   }
-
+  
   const rows = [
     createData("Vi xinh dep", 8, 9, 10, 2),
     createData("Y xau xi", 8, 9, 10, 5),
@@ -141,7 +147,7 @@ function Grade() {
   ];
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -151,9 +157,20 @@ function Grade() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  
+  // const handleSearchChange = (e) => {
+  //   const name = e.target.name;
+  //   const value = e.target.value;
+  //   //console.log(value);
+  //   if (name === "fullName") {
+  //     setFullName(value);
+  //   }
+  // };
   return (
     <div className="list-grade">
-      <div className="inputFind">
+      {role==="student" ? (
+          <div>
+            <div className="inputFind">
         <div className="function">
           <div className="classname">{classInfo?.name}</div>
           <Box
@@ -166,9 +183,10 @@ function Grade() {
           >
             <TextField
               id="outlined-basic"
-              label="Tìm kiếm tên bài tập"
+              label="Tìm kiếm bài tập"
+              placeholder="Nhập tên bài tập"
+              // onChange={handleSearchChange}
               variant="outlined"
-              text="hi"
             />
           </Box>
           <Box
@@ -208,7 +226,7 @@ function Grade() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {members?.map((row) => (
+              {stuGrades?.map((row) => (
                 <StyledTableRow key={row.name}>
                   <StyledTableCell align="right"></StyledTableCell>
                   <StyledTableCell component="th" scope="row">
@@ -222,8 +240,10 @@ function Grade() {
         </TableContainer>
         <img src={pathImgFromIndex + "gradepeople.png"}></img>
       </div>
-
-      <div className="inputFind">
+          </div>
+      ):(
+        <div>
+          <div className="inputFind">
         <div className="function">
           <div className="classname">{classInfo?.name}</div>
           <Box
@@ -324,6 +344,11 @@ function Grade() {
           />
         </Paper>
       </div>
+        </div>
+      )}
+      
+
+      
     </div>
   );
 }
