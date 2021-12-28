@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "./Post";
 import { pathImgFromIndex } from "../utils/constants";
@@ -46,12 +46,12 @@ function OperationStream() {
     },
   ];
   const [posts, setPosts] = useState(initialPost);
-  const addPost = (text) => {
-    setPosts([...posts, { body: {}, id: 1 }]);
-  };
+  // const addPost = (text) => {
+  //   setPosts([...posts, { body: {}, id: 1 }]);
+  // };
   //TODO: addPost --> createPost
   //TODO: fetch singlePost, allPosts
-  
+  const dispatch = useDispatch();
 
   //load user info
   return (

@@ -15,8 +15,6 @@ import {
   actPeopleSearch,
 } from "../redux/modules/People/action";
 function OperationMember() {
-  
-
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
   const [open, setOpen] = React.useState(false);
