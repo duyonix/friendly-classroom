@@ -221,14 +221,14 @@ function Calendar() {
     ],
     sunday: [],
   };
-  const renderHour=(hour, defaultAttributes, styles) => {
+  const renderHour = (hour, defaultAttributes, styles) => {
     return (
       <div {...defaultAttributes} key={hour}>
         {hour}h
       </div>
     );
-  }
-  const renderEvent= (event, defaultAttributes, styles)=> {
+  };
+  const renderEvent = (event, defaultAttributes, styles) => {
     return (
       <div
         {...defaultAttributes}
@@ -237,17 +237,16 @@ function Calendar() {
         style={{
           ...defaultAttributes.style,
           background: "#000",
-          borderRadius: "50px"
+          borderRadius: "50px",
         }}
       >
         <span className={styles.event_info}>[ {event.name} ]</span>
         <span className={styles.event_info}>
-          {event.startTime.format("HH:mm")} -{" "}
-          {event.endTime.format("HH:mm")}
+          {event.startTime.format("HH:mm")} - {event.endTime.format("HH:mm")}
         </span>
       </div>
     );
-  }
+  };
   return (
     <div>
       <div className="calendar-container">
@@ -269,9 +268,9 @@ function Calendar() {
         <div className="calendar-todo">
           <div>
             <TimeTable
-              events={this.state.events}
-              renderHour={this.renderHour}
-              renderEvent={this.renderEvent}
+              events={events}
+              renderHour={renderHour}
+              renderEvent={renderEvent}
               hoursInterval={[7, 24]}
               timeLabel="Thời gian"
             />
@@ -283,4 +282,3 @@ function Calendar() {
 }
 
 export default Calendar;
-
