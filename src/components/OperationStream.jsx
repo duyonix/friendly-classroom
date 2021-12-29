@@ -80,10 +80,11 @@ function OperationStream() {
             </div>
           </div>
         </div>
-        <div className="posts-container">
+        <div className="posts-container container" >
           <div className="posts-poster">
             <img src={pathImgFromIndex+"post.png"}></img>
           </div>
+
           <div className="posts-list">
           {initialPost.map((post)=>(
                 <Post 

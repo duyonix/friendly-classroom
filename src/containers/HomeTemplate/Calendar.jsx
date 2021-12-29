@@ -268,13 +268,13 @@ function Calendar() {
         </div>
         <div className="calendar-todo">
           <div>
-            {/* <TimeTable
+            <TimeTable
               events={this.state.events}
               renderHour={this.renderHour}
               renderEvent={this.renderEvent}
               hoursInterval={[7, 24]}
               timeLabel="Thời gian"
-            /> */}
+            />
           </div>
         </div>
       </div>

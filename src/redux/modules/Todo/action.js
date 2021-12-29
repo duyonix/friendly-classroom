@@ -3,7 +3,7 @@ import { pathAPI } from "../../../../utils/constants";
 import * as actionTypes from "./constants";
 
 // action Fetch All Task
-export const fetchAllPost = (classroomId) => {
+export const fetchAllTodo = (classroomId) => {
     let accessToken = "";
     if (localStorage.getItem("User"))
         accessToken = JSON.parse(localStorage.getItem("User")).token;
@@ -47,3 +47,10 @@ const fetchAllTodoFailed = (err) => {
     }
 }
 
+export const fetchAllTodoReset = (err) => {
+    return {
+        type: actionTypes.FETCH_ALL_TODO_RESET,
+    }
+}
+
+ 
