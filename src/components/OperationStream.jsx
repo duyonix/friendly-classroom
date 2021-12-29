@@ -1,17 +1,17 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "./Post";
 import { pathImgFromIndex } from "../utils/constants";
 import { Avatar } from "@mui/material";
 import Posts from "./post/Posts.js";
 import PostForm from "./post/PostForm.js";
-import{
+import {
   actFetchAllPost,
   actFetchSinglePost,
   actCreatePost,
   actUpdatePost,
   deletePost,
-} from "../redux/modules/Stream/Post/action"
+} from "../redux/modules/Stream/Post/action";
 // TODO: action call API
 function OperationStream() {
   let className = null;
@@ -56,47 +56,45 @@ function OperationStream() {
   //load user info
   return (
     <div>
-        <div className="operation-stream container">
-          <div className="classname">{className}</div>
-          <div className="share">
-            <div className="shareWrapper">
-              <div className="shareTop">
-                 <Avatar
-                  // TODO: load avt of this user
-                  src={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
-                  alt="avatar"
-                  sx={{ width: 40, height: 40 }}
-                />      
-                <input
-                  placeholder="Nhập nội dung ..."
-                  className="shareInput"
-                />
-              </div>
-              <hr className="shareHr"/>
-              <div className="shareBottom">
-                  <button  className="shareButton"> Đăng </button>
-                  {/* <button className="cancelButton">Hủy</button> */}
-              </div>
+      <div className="operation-stream container">
+        <div className="classname">{className}</div>
+        <div className="share">
+          <div className="shareWrapper">
+            <div className="shareTop">
+              <Avatar
+                // TODO: load avt of this user
+                src={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
+                alt="avatar"
+                sx={{ width: 40, height: 40 }}
+              />
+              <input placeholder="Nhập nội dung ..." className="shareInput" />
+            </div>
+            <hr className="shareHr" />
+            <div className="shareBottom">
+              <button className="shareButton"> Đăng </button>
+              {/* <button className="cancelButton">Hủy</button> */}
             </div>
           </div>
         </div>
-        <div className="posts-container container" >
-          <div className="posts-poster">
-            <img src={pathImgFromIndex+"post.png"}></img>
-          </div>
+      </div>
+      <div className="posts-container ">
+        <div className="posts-poster">
+          <img src={pathImgFromIndex + "post.png"}></img>
+        </div>
 
-          <div className="posts-list">
-          {initialPost.map((post)=>(
-                <Post 
-                key ={post.id}
-                name={post.name}
-                avatar={post.avatar}
-                body={post.body}
-                time={post.time}/>
-                ))}
-          </div>
+        <div className="posts-list">
+          {initialPost.map((post) => (
+            <Post
+              key={post.id}
+              name={post.name}
+              avatar={post.avatar}
+              body={post.body}
+              time={post.time}
+            />
+          ))}
         </div>
-        </div>
+      </div>
+    </div>
   );
 }
 

@@ -21,12 +21,12 @@ import { Alert, Box, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 
-function SubmitHomework(props) {
-  const { classroomId, homeworkId } = useParams();
+function SubmitHomework() {
+  const { homeworkId } = useParams();
   const [file, setFile] = useState(null);
   const [check, setCheck] = useState(false);
   const [submit, setSubmit] = useState(false);
-  const [doneSubmit, setDoneSubmit] = useState(false);
+
   let userId = null;
 
   if (localStorage.getItem("User")) {
@@ -38,6 +38,7 @@ function SubmitHomework(props) {
     dispatch(actFetchSubmission(homeworkId, userId));
     // eslint-disable-next-line
   }, []);
+
   const dataHomework = useSelector(
     (state) => state.homeworkDetailReducer?.data
   );
@@ -60,7 +61,6 @@ function SubmitHomework(props) {
   const loadingSubmission = useSelector(
     (state) => state.submissionReducer?.loading
   );
-  const errSubmission = useSelector((state) => state.submissionReducer?.err);
 
   const datadeleteSubmission = useSelector(
     (state) => state.submissionDeleteReducer?.data
@@ -71,7 +71,18 @@ function SubmitHomework(props) {
   const errdeleteSubmission = useSelector(
     (state) => state.submissionDeleteReducer?.err
   );
-
+  useEffect(() => {
+    // it works exactly
+    if (dataSubmitHomework) {
+      setFile(null);
+      setCheck(false);
+      setSubmit(false);
+      dispatch(actFetchSubmission(homeworkId, userId));
+      dispatch(resetSubmitHomework());
+      dispatch(resetSubmission());
+    }
+    // eslint-disable-next-line
+  }, [dataSubmitHomework]);
   if (loadingHomework) {
     return <Loading />;
   }
@@ -120,6 +131,7 @@ function SubmitHomework(props) {
       dispatch(actSubmitHomework(userId, file, homeworkId));
     }
   };
+
   const renderLoadingSubmit = () => {
     if (loadingSubmitHomework) {
       return (
@@ -157,21 +169,6 @@ function SubmitHomework(props) {
       );
     }
   };
-
-  if (dataSubmitHomework) {
-    //setDoneSubmit(true);
-    dispatch(actFetchSubmission(homeworkId, userId));
-    dispatch(resetSubmitHomework());
-    dispatch(resetSubmission());
-
-    //return <Alert severity="success">{dataSubmitHomework.message}</Alert>;
-  }
-  // if (doneSubmit) {
-  //   setFile(null);
-  //   setCheck(false);
-  //   setSubmit(false);
-  //   setDoneSubmit(false);
-  // }
 
   //console.log(dataHomework);
   const convertOnlyDate = (date) => {
@@ -264,14 +261,22 @@ function SubmitHomework(props) {
                           overflow: "hidden",
                         }}
                       >
-                        {dataSubmission?.submission?.name}
+                        {dataSubmission?.submission?.fileAttributes[0].name}
                       </h5>
 
                       <h6 className="card-subtitle mb-2 text-muted">
-                        Loại: {dataSubmission?.submission?.extension}
+                        Loại:{" "}
+                        {
+                          dataSubmission?.submission?.fileAttributes[0]
+                            .extension
+                        }
                       </h6>
                       <h6 className="card-subtitle mb-2 text-muted">
-                        Sửa lần cuối:{" "}
+                        Kích thước:{" "}
+                        {dataSubmission?.submission?.fileAttributes[0].size}
+                      </h6>
+                      <h6 className="card-subtitle mb-2 text-muted">
+                        Nộp lần cuối:
                         {convertDate(dataSubmission?.submission?.updatedAt)}
                       </h6>
                     </div>
@@ -288,7 +293,6 @@ function SubmitHomework(props) {
             </div>
           ) : (
             <div>
-              {" "}
               <h4
                 style={{
                   textAlign: "right",
@@ -341,7 +345,6 @@ function SubmitHomework(props) {
                   }}
                 >
                   <button className="btn btn-add">
-                    {" "}
                     <AddIcon style={{ marginRight: 5 }} />
                     Thêm bài nộp
                   </button>

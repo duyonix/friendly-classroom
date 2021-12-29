@@ -5,15 +5,14 @@
     margin-left: 10px;
     position: relative;
     width: 100%;
-    height: 64px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+
+    .detail {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
   }
   .hw-name {
-    position: absolute;
-    left: 0;
-    top: 0;
     color: $color-pr-3;
     font-size: $fs-md;
     font-weight: $fw-bold-1;
@@ -50,6 +49,14 @@
     a:hover {
       color: #fa5320;
     }
+  }
+  @media only screen and (max-width: 1200px) {
+  }
+  @media only screen and (max-width: 992px) {
+  }
+  @media only screen and (max-width: 768px) {
+  }
+  @media only screen and (max-width: 550px) {
   }
 }
 @keyframes flickerAnimation {

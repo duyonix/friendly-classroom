@@ -59,6 +59,7 @@ export default function ListHomework() {
   if (errDocument) {
     console.log(errDocument);
   }
+
   return (
     <div className="list-homework">
       <Box sx={{ width: "100%", typography: "body1" }}>
