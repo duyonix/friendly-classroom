@@ -30,8 +30,8 @@ import {
 import { fetchAllPostReducer, fetchSinglePostReducer, createPostReducer, updatePostReducer, deletePostReducer } from '../modules/Stream/Post/reducer';
 import { createCommentReducer, updateCommentReducer, deleteCommentReducer } from '../modules/Stream/Comment/reducer';
 import { updateHomeworkReducer, updateHomeworkFileReducer, updateDocumentReducer, updateDocumentFileReducer } from '../modules/UpdateHomeworkDocument/reducer';
-
-
+import{fetchAllTodoReducer} from '../modules/Todo/reducer'
+import { fetchAllCalendarReducer } from '../modules/Calendar/reducer';
 const reducer = combineReducers({
     // Add reducers here
     loginReducer,
@@ -66,6 +66,9 @@ const reducer = combineReducers({
     updateHomeworkFileReducer,
     updateDocumentReducer,
     updateDocumentFileReducer,
+    
+    fetchAllTodoReducer,
+    fetchAllCalendarReducer,
 });
 
 export default reducer;
