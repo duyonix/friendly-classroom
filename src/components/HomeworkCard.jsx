@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import { pathImgFromIndex } from "../utils/constants";
 import { Link, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import { actFetchDocumentDetailList } from "../redux/modules/Homework/action";
+import {
+  actDocumentDetailRequest,
+  actDocumentDetailReset,
+  actFetchDocumentDetailList,
+} from "../redux/modules/Homework/action";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import Loading from "./Loading";
 function HomeworkCard(props) {
@@ -17,16 +21,18 @@ function HomeworkCard(props) {
   }
   const dispatch = useDispatch();
   const [more, setMore] = useState(false);
+  const [dataDocument, setDataDocument] = useState(null);
 
   const imgIconCard = type === "Homework" ? "homework_icon" : "document_icon";
   const renderMore = () => {
     if (more === true && data) {
-      // console.log(data);
       return (
         <div className="More">
-          {" "}
-          <p className="desc">{data.document.description}</p>
-          <a title="Tải xuống tài liệu" href={data.document.attachedFiles[0]}>
+          <p className="desc">{dataDocument?.document.description}</p>
+          <a
+            title="Tải xuống tài liệu"
+            href={dataDocument?.document.attachedFiles[0]}
+          >
             <FileDownloadIcon fontSize={"large"} />
           </a>
         </div>
@@ -43,6 +49,10 @@ function HomeworkCard(props) {
   const data = useSelector((state) => state.documentDetailReducer?.data);
   const loading = useSelector((state) => state.documentDetailReducer?.loading);
   const err = useSelector((state) => state.documentDetailReducer?.err);
+  useEffect(() => {
+    if (data && data.document._id === homework._id) setDataDocument(data);
+    // eslint-disable-next-line
+  }, [data]);
   if (loading) {
     return <Loading />;
   }
@@ -81,48 +91,73 @@ function HomeworkCard(props) {
           />
           <div className="info">
             <span className="hw-name">{homework?.title}</span>
-            {type === "Homework" ? (
-              <span className="hw-deadline">
-                Hạn chót: {convertDate(homework?.deadline)}
-              </span>
-            ) : (
-              <span className="hw-createdAt">
-                Ngày đăng: {convertDate(homework?.createdAt)}
-              </span>
-            )}
-
-            {/* button change */}
-            {role === "teacher" ? (
-              type === "Homework" ? (
-                <Link
-                  to={{
-                    pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}/update`,
-                    state: { homework: homework },
-                  }}
-                >
-                  <button className="btn btn-change">Sửa</button>
-                </Link>
+            <div className="detail">
+              {type === "Homework" ? (
+                <span className="hw-deadline">
+                  Hạn chót: {convertDate(homework?.deadline)}
+                </span>
               ) : (
+                <span className="hw-createdAt">
+                  Ngày đăng: {convertDate(homework?.createdAt)}
+                </span>
+              )}
+
+              {/* button change */}
+              {role === "teacher" ? (
+                type === "Homework" ? (
+                  <Link
+                    to={{
+                      pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}/update`,
+                      state: { homework: homework },
+                    }}
+                  >
+                    <button className="btn btn-change">Sửa</button>
+                  </Link>
+                ) : (
+                  <Link
+                    to={{
+                      pathname: `/classroom/${classroomId}/document/${homework?._id}/update`,
+                      state: { homework: homework },
+                    }}
+                  >
+                    <button className="btn btn-change">Sửa</button>
+                  </Link>
+                )
+              ) : (
+                ""
+              )}
+
+              {/* button detail */}
+
+              {role === "teacher" ? (
+                type === "Homework" ? (
+                  <Link
+                    to={{
+                      pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}`,
+                    }}
+                  >
+                    <button className="btn btn-detail">Chi tiết</button>
+                  </Link>
+                ) : more === false ? (
+                  <button
+                    className="btn btn-detail"
+                    onClick={showDetailDocument(homework)}
+                  >
+                    Chi tiết
+                  </button>
+                ) : (
+                  <button className="btn btn-detail" onClick={collapseDocument}>
+                    Thu gọn
+                  </button>
+                )
+              ) : type === "Homework" ? (
                 <Link
                   to={{
-                    pathname: `/classroom/${classroomId}/document/${homework?._id}/update`,
-                    state: { homework: homework },
-                  }}
-                >
-                  <button className="btn btn-change">Sửa</button>
-                </Link>
-              )
-            ) : (
-              ""
-            )}
-
-            {/* button detail */}
-
-            {role === "teacher" ? (
-              type === "Homework" ? (
-                <Link
-                  to={{
-                    pathname: `/classroom/${classroomId}/homework-detail/${homework?._id}`,
+                    pathname:
+                      "/classroom/" +
+                      classroomId +
+                      "/homework/" +
+                      homework?._id,
                   }}
                 >
                   <button className="btn btn-detail">Chi tiết</button>
@@ -138,28 +173,8 @@ function HomeworkCard(props) {
                 <button className="btn btn-detail" onClick={collapseDocument}>
                   Thu gọn
                 </button>
-              )
-            ) : type === "Homework" ? (
-              <Link
-                to={{
-                  pathname:
-                    "/classroom/" + classroomId + "/homework/" + homework?._id,
-                }}
-              >
-                <button className="btn btn-detail">Chi tiết</button>
-              </Link>
-            ) : more === false ? (
-              <button
-                className="btn btn-detail"
-                onClick={showDetailDocument(homework)}
-              >
-                Chi tiết
-              </button>
-            ) : (
-              <button className="btn btn-detail" onClick={collapseDocument}>
-                Thu gọn
-              </button>
-            )}
+              )}
+            </div>
           </div>
         </Box>
         {renderMore()}
