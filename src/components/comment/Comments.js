@@ -15,13 +15,7 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
   );
-  const getReplies = (commentId) =>
-    backendComments
-      .filter((backendComment) => backendComment.parentId === commentId)
-      .sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      );
+  console.log(rootComments);
   const addComment = (text, parentId) => {
     createCommentApi(text, parentId).then((comment) => {
       setBackendComments([comment, ...backendComments]);
@@ -60,13 +54,12 @@ const Comments = ({ commentsUrl, currentUserId }) => {
 
   return (
     <div className="comments">
-      
+      <hr className="shareHr"/>
       <div className="comments-container">
         {rootComments.map((rootComment) => (
           <Comment className="comment-child"
             key={rootComment.id}
             comment={rootComment}
-            replies={getReplies(rootComment.id)}
             activeComment={activeComment}
             setActiveComment={setActiveComment}
             addComment={addComment}
@@ -76,7 +69,8 @@ const Comments = ({ commentsUrl, currentUserId }) => {
           />
         ))}
       </div>
-      <CommentForm submitLabel={<SendIcon />} 
+      <hr className="shareHr"/>
+      <CommentForm submitLabel={<SendIcon/>} 
       handleSubmit={addComment} />
     </div>
   );

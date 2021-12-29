@@ -2,6 +2,8 @@ import axios from "axios";
 import { pathAPI } from "../../../../utils/constants";
 import * as actionTypes from "./constants";
 
+//action Fetch all comments
+
 // action Create Comment
 export const createComment = (classroomId, postId, data) => {
     let accessToken = "";

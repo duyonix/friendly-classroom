@@ -79,7 +79,7 @@ export default function ListHomework() {
           </Box>
 
           <TabPanel value="homework">
-            {dataHomework.length === 0 ? (
+            {dataHomework?.length === 0 ? (
               <h3 className="notification-nothing">
                 <NotInterestedIcon
                   fontSize="large"
@@ -97,7 +97,7 @@ export default function ListHomework() {
           </TabPanel>
 
           <TabPanel value="document">
-            {dataHomework.length === 0 ? (
+            {dataHomework?.length === 0 ? (
               <h3 className="notification-nothing">
                 <NotInterestedIcon
                   fontSize="large"
