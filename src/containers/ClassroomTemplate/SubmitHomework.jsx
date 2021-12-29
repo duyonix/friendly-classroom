@@ -26,6 +26,7 @@ function SubmitHomework(props) {
   const [file, setFile] = useState(null);
   const [check, setCheck] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const [doneSubmit, setDoneSubmit] = useState(false);
   let userId = null;
 
   if (localStorage.getItem("User")) {
@@ -158,15 +159,19 @@ function SubmitHomework(props) {
   };
 
   if (dataSubmitHomework) {
-    setFile(null);
-    setCheck(false);
-    setSubmit(false);
+    //setDoneSubmit(true);
     dispatch(actFetchSubmission(homeworkId, userId));
     dispatch(resetSubmitHomework());
     dispatch(resetSubmission());
 
     //return <Alert severity="success">{dataSubmitHomework.message}</Alert>;
   }
+  // if (doneSubmit) {
+  //   setFile(null);
+  //   setCheck(false);
+  //   setSubmit(false);
+  //   setDoneSubmit(false);
+  // }
 
   //console.log(dataHomework);
   const convertOnlyDate = (date) => {
