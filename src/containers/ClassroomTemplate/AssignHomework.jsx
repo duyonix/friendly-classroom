@@ -238,6 +238,8 @@ function AssignHomework() {
     return <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />;
   }
 
+  const fileStyle = { maxWidth: "calc(100% - 40px)" };
+
   return (
     <section className="assign-homework container">
       <div className="header">
@@ -352,7 +354,7 @@ function AssignHomework() {
               ) : (
                 ""
               )}
-              <div className="files" style={{ maxWidth: "calc(100% -40px)" }}>
+              <div className="files">
                 {state.file !== null ? (
                   <div
                     className="card"
@@ -383,6 +385,8 @@ function AssignHomework() {
                                 whiteSpace: "nowrap",
                                 textOverflow: "ellipsis",
                                 overflow: "hidden",
+                                marginBottom: 0,
+                                lineHeight: 2.3,
                               }}
                             >
                               {state.file?.name}
