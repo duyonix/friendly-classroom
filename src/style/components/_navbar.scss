@@ -42,6 +42,19 @@
       @include flex(row, center, center, no-wrap);
     }
   }
+
+  @media only screen and (max-width: 400px) {
+    padding: 0.5rem 5px !important;
+    .css-2uchni {
+      @include flex(column, center, center, null);
+      .notification {
+        margin-right: 4px;
+      }
+    }
+    .css-19r6kue-MuiContainer-root {
+      padding: 0 5px;
+    }
+  }
 }
 
 .nav-page-link-mobile {
