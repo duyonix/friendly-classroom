@@ -49,12 +49,49 @@
   }
 
   @media only screen and (max-width: 1200px) {
-    
   }
   @media only screen and (max-width: 992px) {
+    .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+      width: 80.5%;
+    }
+    #idFind {
+      width: 50px;
+    }
+    .input-group {
+      margin-left: 0;
+    }
   }
   @media only screen and (max-width: 768px) {
+    #demo-customized-button {
+      margin-left: 10px;
+    }
+    justify-content: space-between !important;
+    .input-group {
+      justify-content: flex-end;
+    }
   }
   @media only screen and (max-width: 550px) {
+    #demo-customized-button {
+      margin-left: 5px;
+      font-size: 12px;
+      padding: 10px;
+    }
+    .classname {
+      padding: 10px;
+      margin-right: 10px;
+      font-size: 14px;
+    }
+    #idFind {
+      width: 35px;
+    }
+    .input-group {
+      width: 70%;
+    }
+    .MuiSvgIcon-fontSizeMedium {
+      width: 16px;
+    }
+    .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+      width: 70.5%;
+    }
   }
 }

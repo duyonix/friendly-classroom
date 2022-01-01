@@ -5,7 +5,8 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import VerticalListHomework from "./VerticalListHomework";
-import { makeStyles } from "@mui/styles";
+
+import { makeStyles } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {
   actFetchDocumentList,
@@ -13,15 +14,34 @@ import {
 } from "../redux/modules/Homework/action";
 import Loading from "./Loading";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
-const useStyles = makeStyles({
-  label: {
-    fontSize: 18,
+import { createTheme } from "@mui/material";
+
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
   },
 });
+const useStyles = makeStyles((theme) => ({
+  label: {
+    fontSize: 18,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 16,
+    },
+    [theme.breakpoints.only("xs")]: {
+      fontSize: 14,
+    },
+  },
+}));
 
 export default function ListHomework() {
   const [value, setValue] = React.useState("homework");
-  const classes = useStyles();
+  const classes = useStyles(theme);
   let id = null;
   if (localStorage.getItem("classroomId")) {
     id = localStorage.getItem("classroomId");
@@ -69,6 +89,11 @@ export default function ListHomework() {
               <Tab
                 label="Danh sách bài tập"
                 className={classes.label}
+                style={{
+                  "@media  (maxWidth: 900px)": {
+                    fontSize: "16px",
+                  },
+                }}
                 value="homework"
               />
               <Tab

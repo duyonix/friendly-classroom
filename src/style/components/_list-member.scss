@@ -43,4 +43,13 @@
       }
     }
   }
+ 
+  @media only screen and (max-width: 549px) {
+    .css-ruri26-MuiTableCell-root,
+    .css-mn62av-MuiTableCell-root,
+    .css-1vmb3k8-MuiTableCell-root.MuiTableCell-body {
+      padding: 10px;
+    }
+    
+  }
 }

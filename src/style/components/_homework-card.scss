@@ -53,10 +53,22 @@
   @media only screen and (max-width: 1200px) {
   }
   @media only screen and (max-width: 992px) {
+    .info .detail {
+      display: block;
+    }
+    .hw-deadline,
+    .hw-createdAt {
+      position: relative;
+      display: block;
+      padding-bottom: 10px;
+    }
   }
   @media only screen and (max-width: 768px) {
   }
   @media only screen and (max-width: 550px) {
+    .btn-change {
+      margin: 10px 5px;
+    }
   }
 }
 @keyframes flickerAnimation {

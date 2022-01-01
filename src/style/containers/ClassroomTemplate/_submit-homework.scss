@@ -122,13 +122,76 @@
     }
     //border-bottom: 1px solid #665d5c;
   }
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 1400px) {
+    .content {
+      padding-right: 20px;
+    }
   }
   @media only screen and (max-width: 992px) {
   }
   @media only screen and (max-width: 768px) {
+    .content {
+      padding-left: 10px;
+      .homework-detail {
+        .name {
+          font-size: 25px;
+        }
+        .detail {
+          margin-left: 12px;
+          p {
+            font-size: 16px;
+          }
+        }
+      }
+      .submit {
+        font-size: 16px;
+        width: 52%;
+      }
+    }
   }
-  @media only screen and (max-width: 550px) {
+  @media only screen and (max-width: 650px) {
+    .logo-class {
+      padding: 40px 10px;
+    }
+    .logo-class .classname {
+      font-size: 25px;
+      padding: 20px 25px;
+    }
+    .content {
+      display: block;
+      .homework-detail {
+        width: 100%;
+        justify-content: center;
+        padding-bottom: 20px;
+        img {
+          height: 80px;
+        }
+        .name {
+          font-size: 22px;
+        }
+        .detail {
+          margin-left: 12px;
+          p {
+            font-size: 14px;
+          }
+        }
+      }
+      .submit {
+        padding: 18px;
+        font-size: 14px;
+        width: 100%;
+        h4 {
+          text-align: left !important;
+          font-size: 12px !important;
+        }
+        .btn-add {
+          font-size: 14px;
+        }
+      }
+      .drop-zone {
+        font-size: 16px !important;
+      }
+    }
   }
 }
 @keyframes rotate {

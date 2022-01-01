@@ -121,6 +121,7 @@ export default function VerticalListHomework(props) {
           index={0}
         >
           <Box
+            className="box-homework-content"
             style={{
               display: "block",
               width: "70%",
@@ -166,12 +167,14 @@ export default function VerticalListHomework(props) {
         {listHomework?.map((topic, index) => {
           return (
             <TabPanel
+              className="tab-panel"
               key={index + 4000}
               value={value}
               style={{ width: "86.5%" }}
               index={index + 1}
             >
               <Box
+                className="box-homework-content"
                 style={{
                   display: "block",
                   width: "70%",
