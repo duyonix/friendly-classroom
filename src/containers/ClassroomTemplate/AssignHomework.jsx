@@ -109,10 +109,10 @@ function AssignHomework() {
     if (files[0] !== undefined) setState({ ...state, file: files[0] });
     console.log(files[0]);
     // if drag directory
-    // if (files[0]?.type === "") {
-    //   setState({ ...state, file: null });
-    //   alert("Vui lòng chỉ nộp 1 tệp. Nếu muốn nộp thư mục, hãy nén lại!");
-    // }
+    if (files[0] !== undefined && files[0].type === "") {
+      setState({ ...state, file: null });
+      alert("Vui lòng chỉ nộp 1 tệp. Nếu muốn nộp thư mục, hãy nén lại!");
+    }
   };
 
   const handleFileError = (error) => {

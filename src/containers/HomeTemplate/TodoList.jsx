@@ -1,9 +1,9 @@
 import React from "react";
-import NavbarHome from "../../components/NavbarHome";
+// import NavbarHome from "../../components/NavbarHome";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+// import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
@@ -11,16 +11,6 @@ import Typography from "@mui/material/Typography";
 import { pathImgFromIndex } from "../../utils/constants";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import ButtonBase from "@mui/material/ButtonBase";
-const commonStyles = {
-  bgcolor: "background.paper",
-  m: 1,
-  border: 3,
-  width: "fit-content",
-  height: "fit-content",
-};
 
 const theme = createTheme({
   components: {
@@ -39,6 +29,7 @@ const theme = createTheme({
 });
 
 function TodoList() {
+  //TODO: load list course
   const currencies = [
     {
       value: "Tất cả các lớp học",
@@ -61,7 +52,7 @@ function TodoList() {
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
-
+  //TODO: load list task
   const todoList = {
     duocgiao: [
       {
@@ -177,18 +168,6 @@ function TodoList() {
           </div>
         </div>
         <div className="data-groups">
-          {/* <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Box sx={{ ...commonStyles, borderColor: 'primary.main',borderRadius: '7%' }} >
-            <Card>
-                  <CardContent>
-                    {todoList.duocgiao?.map((ex) => (
-                    <div><h5>{ex.object}</h5>
-                    <h5>{ex.title}</h5></div>
-                    ))}
-                  </CardContent>
-                </Card>
-            </Box>
-          </Box> */}
           <div className="card-content-exercise">
             {todoList.duocgiao?.map((ex) => (
               <div className="card-content-exercise-button">

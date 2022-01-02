@@ -4,7 +4,7 @@ import OperationHomework from "../../components/OperationHomework";
 
 export default function Homework() {
   return (
-    <div className="homework">
+    <div className="homework container">
       <OperationHomework />
       <ListHomework />
     </div>

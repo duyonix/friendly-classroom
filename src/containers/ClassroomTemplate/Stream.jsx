@@ -29,7 +29,7 @@ function Stream() {
   ];
 
   return (
-    <div className="member">
+    <div className="container">
       <OperationStream />
       {/* <ListPost/>  */}
     </div>

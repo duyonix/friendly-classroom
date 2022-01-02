@@ -310,7 +310,7 @@ function ListMember() {
               {renderError()}
               {renderSuccess()}
               <DialogContentText id="alert-dialog-description">
-                Thao tác này sẽ không thể hoàn tác. Bạn vẫn muốn xoá{" "}
+                Thao tác này sẽ không thể hoàn tác. Bạn vẫn muốn xoá
                 {studentDelete?.fullName} ra khỏi lớp chứ?
               </DialogContentText>
             </DialogContent>

@@ -122,17 +122,14 @@
     }
     //border-bottom: 1px solid #665d5c;
   }
-  // .description {
-  //   padding: 30px 50px;
-
-  //   h2 {
-  //     color: $color-pr-2;
-  //     font-size: $fs-xl;
-  //   }
-  //   p {
-  //     width: 80%;
-  //   }
-  // }
+  @media only screen and (max-width: 1200px) {
+  }
+  @media only screen and (max-width: 992px) {
+  }
+  @media only screen and (max-width: 768px) {
+  }
+  @media only screen and (max-width: 550px) {
+  }
 }
 @keyframes rotate {
   100% {
