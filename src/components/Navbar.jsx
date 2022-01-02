@@ -99,10 +99,20 @@ const Navbar = (props) => {
 
   const history = useHistory();
 
-  const data = useSelector((state) => state.fetchUserInfoReducer.data);
-  const avatar = data?.user.avatarUrl;
+  let avatar = null;
 
-  // console.log("avatar", avatar);
+  const data = useSelector((state) => state.fetchUserInfoReducer.data);
+
+  if (localStorage.getItem("avatar")) {
+    avatar = localStorage.getItem("avatar");
+  } else if (data) {
+    localStorage.setItem("avatar", data?.user.avatarUrl);
+    avatar = data?.user.avatarUrl;
+  } else {
+    avatar = pathImgFromIndex + "avatar.png";
+  }
+
+  console.log("avatar", avatar);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
