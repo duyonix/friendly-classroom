@@ -86,6 +86,7 @@ function DataSubmissionCell(props) {
         <StyledTableCell>
           <Stack direction="row" spacing={2}>
             <Typography
+              // sx={{ display: { xs: "none", md: "block" } }}
               style={{
                 width: 200,
                 overflow: "hidden",
