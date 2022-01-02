@@ -12,37 +12,43 @@ import {
 import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
-  createClassroom,
-  fetchUserInfo,
-  resetCreateClassroom,
-} from "../redux/modules/Home/action";
+  addScore,
+  resetAddScore,
+  fetchAllSubmission,
+} from "../redux/modules/HomeworkDetail/action";
 
-function DialogCreateClassroom(props) {
-  const { openCreateDialog, handleCloseCreateDialog } = props;
+function DialogAddScore(props) {
+  const { openAddScoreDialog, handleCloseAddScoreDialog, studentId } = props;
+  const { homeworkId } = useParams();
 
-  const [emptyNameNotice, setEmptyNameNotice] = useState(false);
+  const [emptyScoreNotice, setEmptyScoreNotice] = useState(false);
 
-  const inputName = useRef(null);
-  const inputDescription = useRef(null);
+  const inputScore = useRef(null);
+  const inputComment = useRef(null);
 
   const dispatch = useDispatch();
   const [render, setRender] = useState(false);
 
-  const data = useSelector((state) => state.createClassroomReducer.data);
-  const loading = useSelector((state) => state.createClassroomReducer.loading);
-  const err = useSelector((state) => state.createClassroomReducer.err);
+  const data = useSelector((state) => state.addScoreReducer.data);
+  const loading = useSelector((state) => state.addScoreReducer.loading);
+  const err = useSelector((state) => state.addScoreReducer.err);
 
   // state để dispatch tới action Login
   const [state, setState] = useState({
-    name: "",
-    description: "",
+    homeworkId,
+    studentId,
+    score: "",
+    comment: "",
   });
 
   useEffect(() => {
     setState({
-      name: "",
-      description: "",
+      homeworkId,
+      studentId,
+      score: "",
+      comment: "",
     });
     // eslint-disable-next-line
   }, [render]);
@@ -57,17 +63,17 @@ function DialogCreateClassroom(props) {
     });
   };
 
-  const handleValidationName = () => {
-    if (state.name === "") {
-      setEmptyNameNotice(true);
+  const handleValidationScore = () => {
+    if (state.score === "") {
+      setEmptyScoreNotice(true);
     }
   };
 
-  // hàm thông báo lỗi khi nhập sai giá trị ở các trường đăng nhập tương ứng
+  // hàm thông báo lỗi khi nhập sai giá trị ở các trường tương ứng
   const renderNotice = () => {
-    if (emptyNameNotice) {
-      setTimeout(() => setEmptyNameNotice(false), 1000);
-      return <Alert severity="error">Tên môn học không được để trống</Alert>;
+    if (emptyScoreNotice) {
+      setTimeout(() => setEmptyScoreNotice(false), 1000);
+      return <Alert severity="error">Điểm số không được để trống</Alert>;
     }
     if (err) {
       handleClearInput();
@@ -77,25 +83,26 @@ function DialogCreateClassroom(props) {
   };
 
   const handleClearInput = () => {
-    if (inputName.current) inputName.current.value = "";
-    if (inputDescription.current) inputDescription.current.value = "";
+    if (inputScore.current) inputScore.current.value = "";
+    if (inputComment.current) inputComment.current.value = "";
   };
 
   // sự kiện submit form
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (state.name === "") {
-      setEmptyNameNotice(true);
+    if (state.score === "") {
+      setEmptyScoreNotice(true);
       return;
     }
 
-    dispatch(createClassroom(state));
+    // console.log("state", state);
+    dispatch(addScore(state));
     setRender(!render);
   };
 
   const handleReset = () => {
-    dispatch(resetCreateClassroom());
+    dispatch(resetAddScore());
   };
 
   const renderLoading = () => {
@@ -109,10 +116,10 @@ function DialogCreateClassroom(props) {
   };
 
   if (data) {
-    alert("Tạo lớp học thành công");
+    alert("Chấm điểm thành công");
     handleReset();
-    handleCloseCreateDialog();
-    dispatch(fetchUserInfo());
+    handleCloseAddScoreDialog();
+    dispatch(fetchAllSubmission(homeworkId));
   }
 
   return (
@@ -120,10 +127,10 @@ function DialogCreateClassroom(props) {
       <Dialog
         fullWidth
         maxWidth="xs"
-        open={openCreateDialog}
-        onClose={handleCloseCreateDialog}
+        open={openAddScoreDialog}
+        onClose={handleCloseAddScoreDialog}
       >
-        <DialogTitle sx={{ pb: 0 }}>Tạo lớp học</DialogTitle>
+        <DialogTitle sx={{ pb: 0 }}>Chấm điểm bài nộp</DialogTitle>
 
         <DialogContent>
           {renderLoading()}
@@ -131,26 +138,26 @@ function DialogCreateClassroom(props) {
 
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
-              inputRef={inputName}
+              inputRef={inputScore}
               margin="normal"
               required
               fullWidth
-              id="name"
-              label="Tên lớp học"
-              type="text"
-              name="name"
+              id="score"
+              label="Điểm số"
+              type="number"
+              name="score"
               autoComplete="off"
               onChange={handleChange}
-              onBlur={handleValidationName}
+              onBlur={handleValidationScore}
             />
             <TextField
-              inputRef={inputDescription}
+              inputRef={inputComment}
               margin="normal"
               fullWidth
-              name="description"
-              label="Mô tả"
+              name="comment"
+              label="Nhận xét"
               type="text"
-              id="Description"
+              id="comment"
               autoComplete="off"
               onChange={handleChange}
             />
@@ -160,12 +167,12 @@ function DialogCreateClassroom(props) {
           <Button
             variant="contained"
             color="error"
-            onClick={handleCloseCreateDialog}
+            onClick={handleCloseAddScoreDialog}
           >
             Hủy
           </Button>
           <Button variant="contained" onClick={handleSubmit}>
-            Tạo lớp
+            Chấm điểm
           </Button>
         </DialogActions>
       </Dialog>
@@ -173,4 +180,4 @@ function DialogCreateClassroom(props) {
   );
 }
 
-export default DialogCreateClassroom;
+export default DialogAddScore;

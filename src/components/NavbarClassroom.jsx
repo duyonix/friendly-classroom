@@ -1,17 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 
 const NavbarClassroom = () => {
-  const [classroomId, setClassroomId] = useState(null);
-
-  useEffect(() => {
-    if (localStorage.getItem("classroomId")) {
-      setClassroomId(localStorage.getItem("classroomId"));
-    }
-    // eslint-disable-next-line
-  }, [classroomId]);
+  const { classroomId } = useParams();
 
   const pages = [
     {
