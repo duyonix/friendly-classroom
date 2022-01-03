@@ -10,24 +10,6 @@ function Stream() {
   if (role) localStorage.setItem("role", role);
   if (classInfo) localStorage.setItem("classInfo", JSON.stringify(classInfo));
 
-  const initialPost = [
-    {
-      id: 1,
-      name: "Võ Hoàng Vũ",
-      avatar: "hoang_vu.jpg",
-      time: "22 th 11",
-      title: " Ahihi",
-      body: "Cô thông báo bài 1 không làm bị trừ điểm",
-    },
-    {
-      id: 2,
-      name: "Võ Vũ",
-      avatar: "h2.jpg",
-      time: "22 th 11",
-      body: "Hôm nay nghỉ nhé các em",
-    },
-  ];
-
   return (
     <div className="container">
       <OperationStream />
