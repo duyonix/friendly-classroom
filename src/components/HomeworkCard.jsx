@@ -6,8 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  actDocumentDetailRequest,
-  actDocumentDetailReset,
+ 
   actFetchDocumentDetailList,
 } from "../redux/modules/Homework/action";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
