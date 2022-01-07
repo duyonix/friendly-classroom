@@ -299,7 +299,7 @@ function Grade() {
               alt="score"
               style={{
                 width: "100%",
-                height: "532px",
+                maxHeight: "532px",
                 objectFit: "contain",
               }}
             />

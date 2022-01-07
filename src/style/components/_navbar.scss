@@ -6,7 +6,7 @@
   z-index: 100;
   img {
     height: 70px;
-    width: auto;
+    width: 100%;
   }
   .nav-page-item {
     padding: 0;
@@ -46,7 +46,7 @@
   @media only screen and (max-width: 400px) {
     padding: 0.5rem 5px !important;
     .css-2uchni {
-      @include flex(column, center, center, null);
+      @include flex(row, center, center, null);
       .notification {
         margin-right: 4px;
       }
