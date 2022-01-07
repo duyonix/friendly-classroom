@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { pathImgFromIndex } from "../../utils/constants";
 import Files from "react-files";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 
 function SubmitHomework() {
-  const { homeworkId } = useParams();
+  const { homeworkId, classroomId } = useParams();
   const [file, setFile] = useState(null);
   const [check, setCheck] = useState(false);
   const [submit, setSubmit] = useState(false);
@@ -32,6 +32,12 @@ function SubmitHomework() {
   if (localStorage.getItem("User")) {
     userId = JSON.parse(localStorage.getItem("User")).user._id;
   }
+
+  let className = null;
+  if (localStorage.getItem("classInfo")) {
+    className = JSON.parse(localStorage.getItem("classInfo")).name;
+  }
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actFetchHomeworkDetailList(homeworkId));
@@ -189,7 +195,9 @@ function SubmitHomework() {
   return (
     <div className="submit-homework container">
       <div className="logo-class">
-        <div className="classname">TOÁN 6</div>
+        <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+          <div className="classname">{className}</div>
+        </Link>
       </div>
       <div className="content">
         <div className="homework-detail">

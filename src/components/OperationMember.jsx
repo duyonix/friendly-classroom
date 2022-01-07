@@ -14,7 +14,10 @@ import {
   actPeopleChange,
   actPeopleSearch,
 } from "../redux/modules/People/action";
+import { Link, useParams } from "react-router-dom";
 function OperationMember() {
+  const { classroomId } = useParams();
+
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
   const [open, setOpen] = React.useState(false);
@@ -128,7 +131,11 @@ function OperationMember() {
       }}
       className="operation-member container"
     >
-      <div className="classname">{className}</div>
+      {/* <div className="classname">{className}</div> */}
+
+      <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+        <div className="classname">{className}</div>
+      </Link>
       <div className="input-group">
         <TextField
           label="Tìm thành viên"

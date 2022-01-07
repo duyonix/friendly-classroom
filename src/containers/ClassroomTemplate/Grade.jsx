@@ -10,7 +10,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { Avatar, Button, TextField, Box, Grid } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import { pathImgFromIndex } from "../../utils/constants";
@@ -232,7 +232,10 @@ function Grade() {
   return (
     <div className="grade container">
       <div className="header">
-        <div className="classroom-name">{classInfo.name}</div>
+        <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+          <div className="classroom-name">{classInfo.name}</div>
+        </Link>
+
         <Box className="wrap-search">
           <TextField
             type="search"
