@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import CreatableSelect from "react-select/creatable";
 // import Files from "react-files";
 import { pathImgFromIndex } from "../utils/constants";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { actFetchHomeworkDetailList } from "../redux/modules/Homework/action";
 import Loading from "./Loading";
 import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
@@ -18,7 +18,7 @@ import { useHistory } from "react-router-dom";
 
 function HomeworkInfo() {
   const classInfo = JSON.parse(localStorage.getItem("classInfo"));
-  const { homeworkId } = useParams();
+  const { homeworkId, classroomId } = useParams();
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -59,7 +59,9 @@ function HomeworkInfo() {
   return (
     <section className="homework-info">
       <div className="header">
-        <div className="classroom-name">{classInfo.name}</div>
+        <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+          <div className="classroom-name">{classInfo.name}</div>
+        </Link>
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"

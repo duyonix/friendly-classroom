@@ -15,7 +15,7 @@ import CreatableSelect from "react-select/creatable";
 import Files from "react-files";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { pathImgFromIndex } from "../../utils/constants";
-import { Redirect, useParams } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import {
   createDocument,
   resetCreateDocument,
@@ -228,7 +228,9 @@ function UploadDocument() {
   return (
     <section className="upload-document container">
       <div className="header">
-        <div className="classroom-name">{classInfo.name}</div>
+        <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+          <div className="classroom-name">{classInfo.name}</div>
+        </Link>
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"
