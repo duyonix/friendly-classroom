@@ -71,6 +71,14 @@ function UploadDocument() {
   let idx = allTopics?.findIndex((item) => item.value === "Không có chủ đề");
   if (idx === -1)
     allTopics.unshift({ value: "Không có chủ đề", label: "Không có chủ đề" });
+  else
+    allTopics.sort(function (x, y) {
+      return x.value === "Không có chủ đề"
+        ? -1
+        : y.value === "Không có chủ đề"
+        ? 1
+        : 0;
+    });
 
   // console.log("allTopics: ", allTopics);
 
@@ -205,9 +213,16 @@ function UploadDocument() {
   }
 
   if (data) {
-    alert("Tạo tài liệu thành công!");
+    // alert("Tạo tài liệu thành công!");
     setTimeout(handleReset, 1000);
-    return <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />;
+    return (
+      <Redirect
+        to={{
+          pathname: `/classroom/${classroomId}/homework`,
+          state: { reason: "Tạo tài liệu thành công!" },
+        }}
+      />
+    );
   }
 
   return (

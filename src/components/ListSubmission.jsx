@@ -81,7 +81,7 @@ function DataSubmissionCell(props) {
       <StyledTableCell>{data.studentId?.fullName}</StyledTableCell>
 
       {data.fileAttributes?.length === 0 ? (
-        <StyledTableCell>Chưa có bài nộp</StyledTableCell>
+        <StyledTableCell>Chưa nộp bài</StyledTableCell>
       ) : (
         <StyledTableCell>
           <Stack direction="row" spacing={2}>
@@ -241,7 +241,7 @@ function ListSubmission() {
       <div className="header-line"></div>
 
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 1000 }}>
+        <TableContainer sx={{ maxHeight: 500 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -257,10 +257,11 @@ function ListSubmission() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[10, 20, 30]}
           component="div"
           count={dataFetch?.length}
           rowsPerPage={rowsPerPage}
+          labelRowsPerPage="Số dòng:"
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}

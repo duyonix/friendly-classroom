@@ -329,28 +329,48 @@ function UpdateHomework() {
   if (stateInfoChange && fileChange) {
     // change both info and file of homework
     if (dataInfo && dataFile) {
-      alert("Chỉnh sửa thông tin và file đính kèm của bài tập thành công!");
+      // alert("Chỉnh sửa thông tin và file đính kèm của bài tập thành công!");
       setTimeout(handleReset, 1000);
       return (
-        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+        <Redirect
+          to={{
+            pathname: `/classroom/${classroomId}/homework`,
+            state: {
+              reason:
+                "Chỉnh sửa thông tin và file đính kèm của bài tập thành công!",
+            },
+          }}
+        />
       );
     }
   } else if (stateInfoChange) {
     // just only change info of homework without file
     if (dataInfo) {
-      alert("Chỉnh sửa thông tin của bài tập thành công!");
+      // alert("Chỉnh sửa thông tin của bài tập thành công!");
       setTimeout(handleReset, 1000);
       return (
-        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+        <Redirect
+          to={{
+            pathname: `/classroom/${classroomId}/homework`,
+            state: { reason: "Chỉnh sửa thông tin của bài tập thành công!" },
+          }}
+        />
       );
     }
   } else if (fileChange) {
     // just only change file of homework without info
     if (dataFile) {
-      alert("Chỉnh sửa file đính kèm của bài tập thành công!");
+      // alert("Chỉnh sửa file đính kèm của bài tập thành công!");
       setTimeout(handleReset, 1000);
       return (
-        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+        <Redirect
+          to={{
+            pathname: `/classroom/${classroomId}/homework`,
+            state: {
+              reason: "Chỉnh sửa file đính kèm của bài tập thành công!",
+            },
+          }}
+        />
       );
     }
   }
