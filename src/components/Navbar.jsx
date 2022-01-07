@@ -112,7 +112,7 @@ const Navbar = (props) => {
     avatar = pathImgFromIndex + "avatar.png";
   }
 
-  console.log("avatar", avatar);
+  // console.log("avatar", avatar);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

@@ -33,6 +33,8 @@ import { updateHomeworkReducer, updateHomeworkFileReducer, updateDocumentReducer
 import { fetchAllTodoReducer } from '../modules/Todo/reducer'
 import { fetchAllCalendarReducer } from '../modules/Calendar/reducer';
 import { fetchAllSubmissionReducer, addScoreReducer } from '../modules/HomeworkDetail/reducer';
+import { fetchAllScoreClassroomReducer, fetchAllScoreUserReducer } from "../modules/Grade/reducer";
+
 
 const reducer = combineReducers({
     // Add reducers here
@@ -72,6 +74,8 @@ const reducer = combineReducers({
     fetchAllCalendarReducer,
     fetchAllSubmissionReducer,
     addScoreReducer,
+    fetchAllScoreClassroomReducer,
+    fetchAllScoreUserReducer,
 });
 
 export default reducer;
