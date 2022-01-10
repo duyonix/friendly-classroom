@@ -87,11 +87,11 @@ function UpdateDocument() {
         title: dataFetch?.document?.title,
         description: dataFetch?.document?.description,
         file: {
-          name: dataFetch?.filename,
+          name: dataFetch?.document?.fileAttributes[0].name,
           // wait BE update the DB for file, now just default those both are null
-          sizeReadable: null,
-          extension: null,
-          lastModified: null,
+          sizeReadable: dataFetch?.document?.fileAttributes[0].size,
+          extension: dataFetch?.document?.fileAttributes[0].extension,
+          lastModified: dataFetch?.document?.updatedAt,
         },
         topic: dataFetch?.document?.topic,
       });
@@ -355,7 +355,10 @@ function UpdateDocument() {
   return (
     <section className="update-document container">
       <div className="header">
-        <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+        <Link
+          to={{ pathname: `/classroom/${classroomId}/stream` }}
+          style={{ textDecoration: "none" }}
+        >
           <div className="classroom-name">{classInfo.name}</div>
         </Link>
         <Stack direction="row" spacing={2}>

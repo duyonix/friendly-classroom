@@ -378,7 +378,10 @@ function UpdateHomework() {
   return (
     <section className="update-homework container">
       <div className="header">
-        <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+        <Link
+          to={{ pathname: `/classroom/${classroomId}/stream` }}
+          style={{ textDecoration: "none" }}
+        >
           <div className="classroom-name">{classInfo.name}</div>
         </Link>
         <Stack direction="row" spacing={2}>
