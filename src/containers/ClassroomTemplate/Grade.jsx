@@ -167,12 +167,14 @@ function Grade() {
   // filter data by keySearch
   let dataScoreClassroomFilter = [];
 
-  if (keySearch !== "") {
-    dataScoreClassroomFilter = dataScoreClassroom?.result.filter(
-      (student) => isMatch(student.fullName, keySearch) !== -1
-    );
-  } else {
-    dataScoreClassroomFilter = dataScoreClassroom?.result;
+  if (dataScoreClassroom) {
+    if (keySearch !== "") {
+      dataScoreClassroomFilter = dataScoreClassroom.result.filter(
+        (student) => isMatch(student.fullName, keySearch) !== -1
+      );
+    } else {
+      dataScoreClassroomFilter = dataScoreClassroom.result;
+    }
   }
 
   const renderRowScoreClassroom = () => {
