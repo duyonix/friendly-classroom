@@ -1,5 +1,5 @@
 import axios from "axios";
-import { pathAPI } from "../../../../utils/constants";
+import { pathAPI } from "../../../utils/constants";
 import * as actionTypes from "./constants";
 
 // action Fetch All Task
@@ -11,7 +11,7 @@ export const fetchAllTodo = (classroomId) => {
     return (dispatch) => {
         dispatch(fetchAllTodoRequest());
         axios({
-            url: pathAPI + `/user/todo`,
+            url: pathAPI + "/user/todo",
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + accessToken
@@ -47,10 +47,5 @@ const fetchAllTodoFailed = (err) => {
     }
 }
 
-export const fetchAllTodoReset = (err) => {
-    return {
-        type: actionTypes.FETCH_ALL_TODO_RESET,
-    }
-}
 
  

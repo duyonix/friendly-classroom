@@ -77,14 +77,14 @@ function Calendar() {
         id: 7,
         name: "Classwork",
         type: "custom",
-        startTime: moment("2018-02-23T13:30:00"),
+        startTime: moment("2018-02-23T13:00:00"),
         endTime: moment("2018-02-23T14:30:00"),
       },
       {
         id: 4,
         name: "Test",
         type: "custom",
-        startTime: moment("2018-02-22T15:30:00"),
+        startTime: moment("2018-02-22T15:00:00"),
         endTime: moment("2018-02-22T16:30:00"),
       },
     ],
@@ -103,7 +103,7 @@ function Calendar() {
         id: 4,
         name: "Test",
         type: "custom",
-        startTime: moment("2018-02-22T15:30:00"),
+        startTime: moment("2018-02-22T14:30:00"),
         endTime: moment("2018-02-22T16:30:00"),
       },
     ],
@@ -112,14 +112,14 @@ function Calendar() {
         id: 7,
         name: "Classwork",
         type: "custom",
-        startTime: moment("2018-02-23T08:30:00"),
+        startTime: moment("2018-02-23T07:00:00"),
         endTime: moment("2018-02-23T09:30:00"),
       },
       {
         id: 4,
         name: "Test",
         type: "custom",
-        startTime: moment("2018-02-22T16:30:00"),
+        startTime: moment("2018-02-22T16:00:00"),
         endTime: moment("2018-02-22T17:30:00"),
       },
     ],
@@ -140,17 +140,16 @@ function Calendar() {
         key={event.id}
         style={{
           ...defaultAttributes.style,
-          background: "re",
           borderRadius: "10px",
-    
         }}
       >
-        <span className={styles.event_info}>[ {event.name} ]</span>
+        <span className={styles.event_info}> {event.name} </span>
         <span className={styles.event_info}>
           {event.startTime.format("HH:mm")} - {event.endTime.format("HH:mm")}
         </span>
       </div>
     );
+   
   };
   return (
     <div>
@@ -177,6 +176,7 @@ function Calendar() {
               renderEvent={renderEvent}
               hoursInterval={[7, 24]}
               timeLabel=""
+              dayLabel={(day) => ("hi")}
             />
         </div>
       </div>

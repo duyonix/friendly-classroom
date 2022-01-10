@@ -1,6 +1,6 @@
 import React from "react";
-// import NavbarHome from "../../components/NavbarHome";
-import MenuItem from "@mui/material/MenuItem";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 // import CardActions from "@mui/material/CardActions";
@@ -11,7 +11,9 @@ import Typography from "@mui/material/Typography";
 import { pathImgFromIndex } from "../../utils/constants";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
-
+import{
+  fetchAllTodo,
+} from "../../redux/modules/Todo/action.js";
 const theme = createTheme({
   components: {
     // Name of the component
@@ -85,10 +87,26 @@ function TodoList() {
       },
     ],
   };
+  useEffect(() => {
+      dispatch(fetchAllTodo);
+    //eslint-disable-next-line
+  }, []);
+  const dispatch = useDispatch();
 
+  const dataTodo = useSelector(
+    (state) => state.fetchAllTodoReducer?.data
+  );
+  const loadingTodo = useSelector(
+    (state) => state.fetchAllTodoReducer?.loading
+  );
+  const errTodo = useSelector(
+    (state) => state.fetchAllTodoReducer?.err
+  );
+  console.log("dataTodo");
+  console.log(dataTodo);
   return (
     <div>
-      {/* <NavbarHome /> */}
+      {dataTodo}
       <div className="container-todolist">
         <div className="function-filter">
           <TextField
