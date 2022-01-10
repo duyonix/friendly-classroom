@@ -15,7 +15,7 @@ import CreatableSelect from "react-select/creatable";
 import Files from "react-files";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { pathImgFromIndex } from "../../utils/constants";
-import { Redirect, useParams } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import {
   createDocument,
   resetCreateDocument,
@@ -71,6 +71,14 @@ function UploadDocument() {
   let idx = allTopics?.findIndex((item) => item.value === "Không có chủ đề");
   if (idx === -1)
     allTopics.unshift({ value: "Không có chủ đề", label: "Không có chủ đề" });
+  else
+    allTopics.sort(function (x, y) {
+      return x.value === "Không có chủ đề"
+        ? -1
+        : y.value === "Không có chủ đề"
+        ? 1
+        : 0;
+    });
 
   // console.log("allTopics: ", allTopics);
 
@@ -205,15 +213,24 @@ function UploadDocument() {
   }
 
   if (data) {
-    alert("Tạo tài liệu thành công!");
+    // alert("Tạo tài liệu thành công!");
     setTimeout(handleReset, 1000);
-    return <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />;
+    return (
+      <Redirect
+        to={{
+          pathname: `/classroom/${classroomId}/homework`,
+          state: { reason: "Tạo tài liệu thành công!" },
+        }}
+      />
+    );
   }
 
   return (
     <section className="upload-document container">
       <div className="header">
-        <div className="classroom-name">{classInfo.name}</div>
+        <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+          <div className="classroom-name">{classInfo.name}</div>
+        </Link>
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"

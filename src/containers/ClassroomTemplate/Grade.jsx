@@ -1,17 +1,25 @@
-import React from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { pathImgFromIndex } from "../../utils/constants";
-import MenuItem from "@mui/material/MenuItem";
 import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import { styled } from "@mui/material/styles";
+import { Avatar, Button, TextField, Box, Grid } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Loading from "../../components/Loading";
+import { pathImgFromIndex } from "../../utils/constants";
+import {
+  fetchAllScoreClassroom,
+  fetchAllScoreUser,
+} from "../../redux/modules/Grade/action";
+import SearchIcon from "@mui/icons-material/Search";
+import { useRef } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,120 +42,94 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+function DataScoreClassroomCell(props) {
+  const { data } = props;
+
+  return (
+    <StyledTableRow role="checkbox" tabIndex={-1}>
+      <StyledTableCell>
+        <Avatar
+          src={
+            data.avatarUrl !== undefined
+              ? data.avatarUrl
+              : pathImgFromIndex + "avatar.png"
+          }
+          alt="avatar"
+          sx={{ width: 64, height: 64 }}
+        />
+      </StyledTableCell>
+      <StyledTableCell sx={{ minWidth: 150 }}>{data?.fullName}</StyledTableCell>
+
+      {data?.scores.map((score) => (
+        <StyledTableCell align="right" sx={{ minWidth: 150 }}>
+          {score !== null ? score : "..."}
+        </StyledTableCell>
+      ))}
+    </StyledTableRow>
+  );
+}
+
+function DataScoreUserCell(props) {
+  const { data } = props;
+
+  return (
+    <StyledTableRow role="checkbox" tabIndex={-1}>
+      <StyledTableCell>{data.title}</StyledTableCell>
+      <StyledTableCell align="right">
+        {data.score ? data.score : "..."}
+      </StyledTableCell>
+    </StyledTableRow>
+  );
+}
 
 function Grade() {
+  const { classroomId } = useParams();
   const classInfo = JSON.parse(localStorage.getItem("classInfo"));
-  let id = null,
-    role = null;
-    if (localStorage.getItem("role")) {
-      role = localStorage.getItem("role");
-    }
-  //TODO: load list name and grade for this student
-  const stuGrades = [
-    {
-      name: "Bài tập bất đẳng thức",
-      grade: "10/10",
-    },
-    {
-      name: "Bài tập chia ",
-      grade: "5/10",
-    },
-    {
-      name: "Bài tập nhân",
-      grade: "3/10",
-    },
-    {
-      name: "Bài tập trừ",
-      grade: "8/10",
-    },
-    {
-      name: "Bài tập cộng",
-      grade: "9/10",
-    },
-    {
-      name: "Bài tập Pytago",
-      grade: "10/10",
-    },
-    {
-      name: "Bài tập Talet",
-      grade: "5/10",
-    },
-    {
-      name: "Bài tập huhu",
-      grade: "10/10",
-    },
-    {
-      name: "Bài tập hehe",
-      grade: "5/10",
-    },
-  ];
-  const currencies = [
-    {
-      value: "Cũ nhất",
-      label: "$",
-    },
-    {
-      value: "Mới nhất",
-      label: "€",
-    },
-    {
-      value: "Cao nhất",
-      label: "฿",
-    },
-    {
-      value: "Thấp nhất",
-      label: "¥",
-    },
-  ];
-  const [currency, setCurrency] = React.useState("Mới nhất");
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
-//TODO: load list bài tập của lớp học
-  const columns = [
-    { id: "name", label: "Học sinh", minWidth: 200 },
-    { id: "equal", label: "Bất đẳng thức", minWidth: 100 },
-    {
-      id: "rectangle",
-      label: "Tứ giác nội tiếp",
-      minWidth: 100,
-    },
-    {
-      id: "add",
-      label: "Cộng",
-      minWidth: 100,
-    },
-    {
-      id: "sub",
-      label: "Trừ",
-      minWidth: 100,
-    },
-  ];
-//TODO load list học sinh + điểm
-  function createData(name, equal, rectangle, add, sub) {
-    return { name, equal, rectangle, add, sub };
-  }
-  
-  const rows = [
-    createData("Vi xinh dep", 8, 9, 10, 2),
-    createData("Y xau xi", 8, 9, 10, 5),
-    createData("Vu ngungok", 8, 9, 10, 3),
-    createData("Duy ko co bo", 8, 9, 10, 4),
-    createData("DMB TT", 8, 9, 10, 8),
-    createData("Vi xinh dep1", 8, 9, 10),
-    createData("Y xau xi1", 8, 9, 10),
-    createData("Vu ngungok1", 8, 9, 10),
-    createData("Duy ko co bo1", 8, 9, 10),
-    createData("DMB TT1", 8, 9, 10),
-    createData("Vi xinh dep2", 8, 9, 10),
-    createData("Y xau xi2", 8, 9, 10),
-    createData("Vu ngungok2", 8, 9, 10),
-    createData("Duy ko co bo2", 8, 9, 10),
-    createData("DMB TT2", 8, 9, 10),
-  ];
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  let role = null;
+  if (localStorage.getItem("role")) {
+    role = localStorage.getItem("role");
+  }
+
+  const [keySearch, setKeySearch] = useState("");
+
+  const searchInput = useRef(null);
+
+  useEffect(() => {
+    if (role === "teacher") {
+      dispatch(fetchAllScoreClassroom(classroomId));
+    } else if (role === "student") {
+      dispatch(fetchAllScoreUser(classroomId));
+    }
+    //eslint-disable-next-line
+  }, []);
+
+  const dispatch = useDispatch();
+
+  // teacher role
+  const dataScoreClassroom = useSelector(
+    (state) => state.fetchAllScoreClassroomReducer?.data
+  );
+  const loadingScoreClassroom = useSelector(
+    (state) => state.fetchAllScoreClassroomReducer?.loading
+  );
+  const errScoreClassroom = useSelector(
+    (state) => state.fetchAllScoreClassroomReducer?.err
+  );
+
+  // student role
+  const dataScoreUser = useSelector(
+    (state) => state.fetchAllScoreUserReducer?.data
+  );
+  const loadingScoreUser = useSelector(
+    (state) => state.fetchAllScoreUserReducer?.loading
+  );
+  const errScoreUser = useSelector(
+    (state) => state.fetchAllScoreUserReducer?.err
+  );
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -157,198 +139,199 @@ function Grade() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  
-  // const handleSearchChange = (e) => {
-  //   const name = e.target.name;
-  //   const value = e.target.value;
-  //   //console.log(value);
-  //   if (name === "fullName") {
-  //     setFullName(value);
-  //   }
-  // };
-  return (
-    <div className="list-grade">
-      {role==="student" ? (
-          <div>
-            <div className="inputFind">
-        <div className="function">
-          <div className="classname">{classInfo?.name}</div>
-          <Box
-            component="form"
-            sx={{
-              "& > :not(style)": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              id="outlined-basic"
-              label="Tìm kiếm bài tập"
-              placeholder="Nhập tên bài tập"
-              // onChange={handleSearchChange}
-              variant="outlined"
-            />
-          </Box>
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <div>
-              <TextField
-                id="outlined-select-currency"
-                select
-                label="Sắp xếp theo"
-                value={currency}
-                onChange={handleChange}
-              >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.value}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-          </Box>
-        </div>
-      </div>
-      <div className="container-student">
-        <TableContainer className="table" component={Paper}>
-          <Table sx={{ minWidth: 300 }}>
-            <TableHead>
-              <TableRow>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell>Bài tập</StyledTableCell>
-                <StyledTableCell>Điểm</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {stuGrades?.map((row) => (
-                <StyledTableRow key={row.name}>
-                  <StyledTableCell align="right"></StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.name}
-                  </StyledTableCell>
-                  <StyledTableCell>{row.grade}</StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <img src={pathImgFromIndex + "gradepeople.png"}></img>
-      </div>
-          </div>
-      ):(
-        <div>
-          <div className="inputFind">
-        <div className="function">
-          <div className="classname">{classInfo?.name}</div>
-          <Box
-            component="form"
-            sx={{
-              "& > :not(style)": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              id="outlined-basic"
-              label="Tìm kiếm học sinh"
-              variant="outlined"
-              text="hi"
-            />
-          </Box>
 
-          <Box
-            component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
+  const renderHeaderScoreClassroom = () => {
+    return (
+      <TableRow>
+        <StyledTableCell></StyledTableCell>
+        <StyledTableCell sx={{ minWidth: 150 }}>Họ tên</StyledTableCell>
+
+        {dataScoreClassroom?.arrayHomeworks.map((homework) => (
+          <StyledTableCell
+            key={homework._id}
+            align="right"
+            sx={{ minWidth: 150 }}
           >
-            <div>
-              <TextField
-                id="outlined-select-currency"
-                select
-                label="Sắp xếp theo"
-                value={currency}
-                onChange={handleChange}
-              >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.value}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-            <div></div>
-          </Box>
-        </div>
-      </div>
-      <div className="container-teacher">
-        <Paper sx={{ width: "100%", overflow: "hidden" }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <StyledTableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </StyledTableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.code}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+            <span className="homework-title">{homework.title}</span>
+          </StyledTableCell>
+        ))}
+      </TableRow>
+    );
+  };
+
+  const isMatch = (s, key) => {
+    return s.toLowerCase().indexOf(key.toLowerCase());
+  };
+
+  // role teacher
+  // filter data by keySearch
+  let dataScoreClassroomFilter = [];
+
+  if (dataScoreClassroom) {
+    if (keySearch !== "") {
+      dataScoreClassroomFilter = dataScoreClassroom.result.filter(
+        (student) => isMatch(student.fullName, keySearch) !== -1
+      );
+    } else {
+      dataScoreClassroomFilter = dataScoreClassroom.result;
+    }
+  }
+
+  const renderRowScoreClassroom = () => {
+    return dataScoreClassroomFilter
+      ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((data) => {
+        return <DataScoreClassroomCell data={data} key={data.studentId} />;
+      });
+  };
+
+  // role student
+
+  // parse data from BE
+  let dataParseScoreUser = [];
+
+  if (dataScoreUser) {
+    for (let i = 0; i < dataScoreUser.homeworks.length; i++) {
+      dataParseScoreUser.push({
+        _id: dataScoreUser.homeworks[i]._id,
+        title: dataScoreUser.homeworks[i].title,
+        score: dataScoreUser.result[i],
+      });
+    }
+  }
+
+  // filter data by keySearch
+  let dataScoreUserFilter = [];
+
+  if (keySearch !== "") {
+    dataScoreUserFilter = dataParseScoreUser?.filter(
+      (homework) => isMatch(homework.title, keySearch) !== -1
+    );
+  } else {
+    dataScoreUserFilter = dataParseScoreUser;
+  }
+
+  const renderRowScoreUser = () => {
+    return dataScoreUserFilter
+      ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((data) => {
+        return <DataScoreUserCell data={data} key={data._id} />;
+      });
+  };
+
+  if (loadingScoreClassroom || loadingScoreUser) {
+    return <Loading />;
+  }
+
+  if (errScoreClassroom) {
+    console.log(errScoreClassroom);
+  }
+
+  if (errScoreUser) {
+    console.log(errScoreUser);
+  }
+
+  return (
+    <div className="grade container">
+      <div className="header">
+        <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+          <div className="classroom-name">{classInfo.name}</div>
+        </Link>
+
+        <Box className="wrap-search">
+          <TextField
+            type="search"
+            id="input-with-sx"
+            label={
+              role === "student" ? "Tìm kiếm bài tập" : "Tìm kiếm học sinh"
+            }
+            placeholder={
+              role === "student" ? "Nhập tên bài tập" : "Nhập tên học sinh"
+            }
+            variant="outlined"
+            fullWidth
+            inputRef={searchInput}
+            onChange={(e) => setKeySearch(e.target.value)}
           />
-        </Paper>
+
+          <Button
+            variant="contained"
+            sx={{ marginLeft: "-2px", padding: "10px 0" }}
+            onClick={() => searchInput.current.focus()}
+          >
+            <SearchIcon fontSize="large" />
+          </Button>
+        </Box>
       </div>
+
+      <div className="header-line"></div>
+
+      {role === "student" ? (
+        <Grid container className="student" spacing={2}>
+          <Grid item xs={12} md={7}>
+            <Paper sx={{ width: "100%", overflow: "hidden" }}>
+              <TableContainer sx={{ maxHeight: 480 }}>
+                <Table
+                  stickyHeader
+                  aria-label="sticky table"
+                  // sx={{ minWidth: 500 }}
+                >
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>Bài tập</StyledTableCell>
+                      <StyledTableCell align="right">Điểm</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>{renderRowScoreUser()}</TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[10, 20, 30]}
+                component="div"
+                count={dataScoreUserFilter?.length}
+                rowsPerPage={rowsPerPage}
+                labelRowsPerPage="Số dòng:"
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12} md={5} sx={{ position: "relative" }}>
+            <img
+              src={pathImgFromIndex + "people_score.png"}
+              alt="score"
+              style={{
+                width: "100%",
+                maxHeight: "532px",
+                objectFit: "contain",
+              }}
+            />
+          </Grid>
+        </Grid>
+      ) : (
+        <div className="teacher">
+          <Paper sx={{ width: "100%", overflow: "hidden" }}>
+            <TableContainer sx={{ maxHeight: 480 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>{renderHeaderScoreClassroom()}</TableHead>
+                <TableBody>{renderRowScoreClassroom()}</TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 20, 30]}
+              component="div"
+              count={dataScoreClassroomFilter?.length}
+              rowsPerPage={rowsPerPage}
+              labelRowsPerPage="Số dòng:"
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
         </div>
       )}
-      
-
-      
     </div>
   );
 }

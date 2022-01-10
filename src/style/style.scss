@@ -15,12 +15,9 @@
 @import "./components/operation-homework";
 @import "./components/list-homework";
 @import "./components/vertical-list-homework";
-
 @import "./components/homework-card";
 @import "./components/document-card";
 @import "./components/classroom-card";
-
-@import "./components/grade";
 @import "./components/operation-stream";
 @import "./components/post";
 @import "./components/comment";
@@ -40,5 +37,5 @@
 @import "./containers/ClassroomTemplate/upload-document";
 @import "./containers/ClassroomTemplate/update-homework";
 @import "./containers/ClassroomTemplate/update-document";
-
 @import "./containers/HomeTemplate/home";
+@import "./containers/ClassroomTemplate/grade";

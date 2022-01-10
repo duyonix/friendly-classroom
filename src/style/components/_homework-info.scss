@@ -2,13 +2,13 @@
   margin-top: 20px;
   margin-bottom: 20px;
   .header {
-    @include flex(row, space-between, baseline, null);
+    @include flex(row, space-between, center, null);
     border-bottom: 2px solid black;
     padding-bottom: 10px;
 
     .classroom-name {
       @include button(white, #fc5421, white, #fa5320);
-      display: inline-block;
+      // display: inline-block;
       padding: 20px;
       font-size: $fs-lg;
       cursor: pointer;
