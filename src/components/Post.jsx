@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Comments1 from "./comment/Comments1.jsx";
+import Comments from "./comment/Comments.jsx";
 import {
   deletePost,
   fetchAllPost,
@@ -156,7 +156,7 @@ function Post(props) {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           {/* <Comments currentUserId="4" /> */}
           {/* TODO: load ID user to setup currentUserId*/}
-          <Comments1
+          <Comments
             classroomId={props.classroomId}
             id={props.id}
             rootComments={props.listComments}

@@ -10,7 +10,7 @@ import {
 } from "../../redux/modules/Stream/Comment/action";
 import { fetchAllPost } from "../../redux/modules/Stream/Post/action";
 
-function CommentForm1(props) {
+function CommentForm(props) {
   const [text, setText] = useState("");
   const isTextareaDisabled = text.length === 0;
   let avatar = null;
@@ -64,4 +64,4 @@ function CommentForm1(props) {
   );
 }
 
-export default CommentForm1;
+export default CommentForm;

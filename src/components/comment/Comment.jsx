@@ -4,7 +4,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
-import CommentForm1 from "./CommentForm1";
+import CommentForm from "./CommentForm";
 import {
   deleteComment,
   resetDeleteComment,
@@ -12,7 +12,7 @@ import {
   resetUpdateComment,
 } from "../../redux/modules/Stream/Comment/action";
 import { fetchAllPost } from "../../redux/modules/Stream/Post/action";
-function Comment1(props) {
+function Comment(props) {
   const dispatch = useDispatch();
   const isEditing =
     props.activeComment &&
@@ -55,7 +55,7 @@ function Comment1(props) {
         </div>
         {!isEditing && <div className="comment-text">{props.comment.body}</div>}
         {isEditing && (
-          <CommentForm1
+          <CommentForm
             submitLabel={<DoneIcon />}
             hasCancelButton
             initialText={props.comment.body}
@@ -101,4 +101,4 @@ function Comment1(props) {
   );
 }
 
-export default Comment1;
+export default Comment;
