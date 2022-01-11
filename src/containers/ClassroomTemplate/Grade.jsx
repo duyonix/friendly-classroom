@@ -138,7 +138,7 @@ function Grade() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  console.log(dataScoreClassroom);
   const renderHeaderScoreClassroom = () => {
     return (
       <TableRow>

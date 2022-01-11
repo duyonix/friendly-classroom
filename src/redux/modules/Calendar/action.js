@@ -1,5 +1,5 @@
 import axios from "axios";
-import { pathAPI } from "../../../../utils/constants";
+import { pathAPI } from "../../../utils/constants";
 import * as actionTypes from "./constants";
 
 // action Fetch All Task
@@ -11,7 +11,7 @@ export const fetchAllCalendar = (classroomId) => {
     return (dispatch) => {
         dispatch(fetchAllCalendarRequest());
         axios({
-            url: pathAPI + `/user/calendar`,
+            url: pathAPI + "user/calendar",
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + accessToken

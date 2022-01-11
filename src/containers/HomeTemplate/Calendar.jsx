@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -12,7 +14,9 @@ import startOfWeek from "date-fns/startOfWeek";
 import TimeTable from "react-timetable-events"
 
 import moment from "moment";
-
+import{
+  fetchAllCalendar,
+} from "../../redux/modules/Calendar/action.js";
 const CustomPickersDay = styled(PickersDay, {
   shouldForwardProp: (prop) =>
     prop !== "dayIsBetween" && prop !== "isFirstDay" && prop !== "isLastDay",
@@ -64,7 +68,7 @@ function Calendar() {
     monday: [
       {
         id: 1,
-        name: "Homework",
+        name: "BTVN",
         type: "custom",
         startTime: moment("2018-02-23T11:30:00"),
         endTime: moment("2018-02-23T13:30:00"),
@@ -75,14 +79,14 @@ function Calendar() {
     wednesday: [
       {
         id: 7,
-        name: "Classwork",
+        name: "Ôn tập",
         type: "custom",
         startTime: moment("2018-02-23T13:00:00"),
         endTime: moment("2018-02-23T14:30:00"),
       },
       {
         id: 4,
-        name: "Test",
+        name: "Kiểm tra",
         type: "custom",
         startTime: moment("2018-02-22T15:00:00"),
         endTime: moment("2018-02-22T16:30:00"),
@@ -94,14 +98,14 @@ function Calendar() {
     friday: [
       {
         id: 7,
-        name: "Classwork",
-        type: "custom",
+        name: "Ôn tập",
+        type: "error",
         startTime: moment("2018-02-23T11:30:00"),
         endTime: moment("2018-02-23T14:30:00"),
       },
       {
         id: 4,
-        name: "Test",
+        name: "Thi",
         type: "custom",
         startTime: moment("2018-02-22T14:30:00"),
         endTime: moment("2018-02-22T16:30:00"),
@@ -110,14 +114,14 @@ function Calendar() {
     saturday: [
       {
         id: 7,
-        name: "Classwork",
+        name: "Bài tập ngắn",
         type: "custom",
         startTime: moment("2018-02-23T07:00:00"),
         endTime: moment("2018-02-23T09:30:00"),
       },
       {
         id: 4,
-        name: "Test",
+        name: "Kiểm tra",
         type: "custom",
         startTime: moment("2018-02-22T16:00:00"),
         endTime: moment("2018-02-22T17:30:00"),
@@ -151,6 +155,16 @@ function Calendar() {
     );
    
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllCalendar());
+  //eslint-disable-next-line
+}, []);
+  const dataCalendar = useSelector(
+    (state) => state.fetchAllCalendarReducer?.data
+  );
+  console.log(dataCalendar);
+
   return (
     <div>
       <div className="calendar-container">
