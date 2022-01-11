@@ -9,11 +9,15 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-//import Comments from './comment/Comments.js';
+import { useDispatch, useSelector } from "react-redux";
 import { Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Comments1 from "./comment/Comments1.jsx";
-// import CommentForm1 from './comment/CommentForm1.jsx';
+import {
+  deletePost,
+  fetchAllPost,
+  resetDeletePost,
+} from "../redux/modules/Stream/Post/action";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -39,20 +43,24 @@ const convertDate = (date) => {
   return " " + dd + "/" + mm + "/" + yyyy + " " + hours + ":" + minutes;
 };
 function Post(props) {
-  //
+  let userId = null;
 
-  // const fiveMinutes = 300000;
-  // const timePassed = new Date() - new Date(props.post.createdAt) > fiveMinutes;
-  // const canDelete =props.currentUserId === props.post.userId && !timePassed;
-  // const canEdit = props.currentUserId === props.post.userId && !timePassed;
-
+  if (localStorage.getItem("User")) {
+    userId = JSON.parse(localStorage.getItem("User")).user._id;
+  }
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const OptionMenu = (props) => {
+  const dispatch = useDispatch();
+  const dataDeletePost = useSelector((state) => state.deletePostReducer?.data);
+  if (dataDeletePost) {
+    dispatch(fetchAllPost(props.classroomId));
+    dispatch(resetDeletePost());
+  }
+  const OptionMenu = () => {
     const options = [
-      { title: "Sửa" },
+      // { title: "Sửa" },
       // TODO: handleClickUpdate
       { title: "Xóa" },
       // TODO: handleClickDelete
@@ -62,8 +70,19 @@ function Post(props) {
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+    const handleClose = (e) => {
       setAnchorEl(null);
+    };
+    const handleClickOption = (e) => {
+      switch (e.target.innerText) {
+        case "Sửa":
+          break;
+        case "Xóa":
+          dispatch(deletePost(props.classroomId, props.id));
+
+          break;
+        default:
+      }
     };
     return (
       <div className="option-menu">
@@ -87,7 +106,7 @@ function Post(props) {
           onClose={handleClose}
         >
           {options.map((option, index) => (
-            <MenuItem key={index} onClick={option.handleClick}>
+            <MenuItem key={index} onClick={handleClickOption}>
               {option.title}
             </MenuItem>
           ))}
@@ -101,7 +120,7 @@ function Post(props) {
       <Card className="card-post" sx={{ maxWidth: 1400 }}>
         <div className="card-header-function">
           <CardHeader
-            key={props.id}
+            // key={props.id}
             sx={{ minWidth: 550 }}
             avatar={
               <Avatar
@@ -114,7 +133,7 @@ function Post(props) {
             title={<div className="post-author">{props.name}</div>}
             subheader={convertDate(props.time)}
           />
-          <OptionMenu />
+          {userId === props.idUserPost ? <OptionMenu /> : ""}
         </div>
         <CardContent>
           <Typography variant="body2" color="text.primary">
@@ -137,7 +156,11 @@ function Post(props) {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           {/* <Comments currentUserId="4" /> */}
           {/* TODO: load ID user to setup currentUserId*/}
-          <Comments1 rootComments={props.listComments} />
+          <Comments1
+            classroomId={props.classroomId}
+            id={props.id}
+            rootComments={props.listComments}
+          />
         </Collapse>
       </Card>
     </div>

@@ -2,38 +2,21 @@ import { useState, useEffect } from "react";
 import CommentForm1 from "./CommentForm1.jsx";
 import Comment1 from "./Comment1.jsx";
 import SendIcon from "@mui/icons-material/Send";
-import {
-  actFetchAllComments,
-  actCreateComment,
-  actUpdateComment,
-  actDeleteComment,
-} from "../../redux/modules/Stream/Comment/action";
 function Comments1(props) {
   const [activeComment, setActiveComment] = useState(null);
-  // let rootComments = [
-  //   {
-  //     id: "1",
-  //     body: "Bạn giỏi quá à",
-  //     username: "Duy",
-  //     userId: "1",
-  //     parentId: null,
-  //     createdAt: "2021-08-16T23:00:33.010+02:00",
-  //   },
-  //   {
-  //     id: "2",
-  //     body: "Dạ cô",
-  //     username: "Bảo",
-  //     userId: "2",
-  //     parentId: null,
-  //     createdAt: "2021-08-16T23:00:33.010+02:00",
-  //   },
-  // ];
+  let userId = null;
+
+  if (localStorage.getItem("User")) {
+    userId = JSON.parse(localStorage.getItem("User")).user._id;
+  }
   const rootComments = props.rootComments;
   return (
     <div className="comments">
       <div className="comments-container">
         {rootComments?.map((rootComment) => (
           <Comment1
+            classroomId={props.classroomId}
+            postId={props.id}
             className="comment-child"
             key={rootComment._id}
             comment={rootComment}
@@ -42,11 +25,13 @@ function Comments1(props) {
             // addComment={addComment}
             // deleteComment={deleteComment}
             // updateComment={updateComment}
-            // currentUserId={currentUserId}
+            currentUserId={userId}
           />
         ))}
       </div>
       <CommentForm1
+        classroomId={props.classroomId}
+        id={props.id}
         submitLabel={<SendIcon />}
         // handleSubmit={addComment}
       />

@@ -3,21 +3,39 @@ import SendIcon from "@mui/icons-material/Send";
 import DoneIcon from "@mui/icons-material/Done";
 import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
+import { useDispatch, useSelector } from "react-redux";
 import CommentForm1 from "./CommentForm1";
-
+import {
+  deleteComment,
+  resetDeleteComment,
+  updateComment,
+  resetUpdateComment,
+} from "../../redux/modules/Stream/Comment/action";
+import { fetchAllPost } from "../../redux/modules/Stream/Post/action";
 function Comment1(props) {
+  const dispatch = useDispatch();
   const isEditing =
     props.activeComment &&
     props.activeComment.id === props.comment.id &&
     props.activeComment.type === "editing";
 
-  const fiveMinutes = 300000;
+  const fiveMinutes = 1800000;
   const timePassed =
     new Date() - new Date(props.comment.createdAt) > fiveMinutes;
-  const canDelete = props.currentUserId === props.comment.userId && !timePassed;
-  const canEdit = props.currentUserId === props.comment.userId && !timePassed;
+  console.log(props.currentUserId);
+  console.log(props.comment);
+  const canDelete =
+    props.currentUserId === props.comment.commentedBy._id && !timePassed;
+  const canEdit =
+    props.currentUserId === props.comment.commentedBy._id && !timePassed;
   // const createdAt = new Date(props.comment.createdAt).toLocaleDateString();
-
+  const dataDeleteComment = useSelector(
+    (state) => state.deleteCommentReducer?.data
+  );
+  if (dataDeleteComment) {
+    dispatch(fetchAllPost(props.classroomId));
+    dispatch(resetDeleteComment());
+  }
   return (
     <div key={props.comment.id} className="comment">
       <div className="comment-image-container">
@@ -48,7 +66,7 @@ function Comment1(props) {
           />
         )}
         <div className="comment-actions">
-          {canEdit && (
+          {/* {canEdit && (
             <div
               className="comment-action"
               onClick={() =>
@@ -60,11 +78,19 @@ function Comment1(props) {
             >
               Sửa
             </div>
-          )}
+          )} */}
           {canDelete && (
             <div
               className="comment-action"
-              onClick={() => props.deleteComment(props.comment.id)}
+              onClick={() => {
+                dispatch(
+                  deleteComment(
+                    props.comment.classroomId,
+                    props.comment.postId,
+                    props.comment._id
+                  )
+                );
+              }}
             >
               Xóa
             </div>
