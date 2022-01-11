@@ -87,12 +87,12 @@ function TodoList() {
       },
     ],
   };
-  useEffect(() => {
-      dispatch(fetchAllTodo);
-    //eslint-disable-next-line
-  }, []);
+  
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    dispatch(fetchAllTodo());
+  //eslint-disable-next-line
+}, []);
   const dataTodo = useSelector(
     (state) => state.fetchAllTodoReducer?.data
   );
@@ -106,7 +106,7 @@ function TodoList() {
   console.log(dataTodo);
   return (
     <div>
-      {dataTodo}
+      <div>{dataTodo}</div>
       <div className="container-todolist">
         <div className="function-filter">
           <TextField

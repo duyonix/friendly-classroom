@@ -3,7 +3,7 @@ import { pathAPI } from "../../../utils/constants";
 import * as actionTypes from "./constants";
 
 // action Fetch All Task
-export const fetchAllTodo = (classroomId) => {
+export const fetchAllTodo = () => {
     let accessToken = "";
     if (localStorage.getItem("User"))
         accessToken = JSON.parse(localStorage.getItem("User")).token;

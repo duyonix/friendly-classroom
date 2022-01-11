@@ -176,7 +176,6 @@ function Calendar() {
               renderEvent={renderEvent}
               hoursInterval={[7, 24]}
               timeLabel=""
-              dayLabel={(day) => ("hi")}
             />
         </div>
       </div>
