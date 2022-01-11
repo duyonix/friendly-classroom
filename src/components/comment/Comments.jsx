@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import CommentForm1 from "./CommentForm1.jsx";
-import Comment1 from "./Comment1.jsx";
+import CommentForm from "./CommentForm.jsx";
+import Comment from "./Comment.jsx";
 import SendIcon from "@mui/icons-material/Send";
-function Comments1(props) {
+function Comments(props) {
   const [activeComment, setActiveComment] = useState(null);
   let userId = null;
 
@@ -14,7 +14,7 @@ function Comments1(props) {
     <div className="comments">
       <div className="comments-container">
         {rootComments?.map((rootComment) => (
-          <Comment1
+          <Comment
             classroomId={props.classroomId}
             postId={props.id}
             className="comment-child"
@@ -29,7 +29,7 @@ function Comments1(props) {
           />
         ))}
       </div>
-      <CommentForm1
+      <CommentForm
         classroomId={props.classroomId}
         id={props.id}
         submitLabel={<SendIcon />}
@@ -39,4 +39,4 @@ function Comments1(props) {
   );
 }
 
-export default Comments1;
+export default Comments;
