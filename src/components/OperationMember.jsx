@@ -133,7 +133,10 @@ function OperationMember() {
     >
       {/* <div className="classname">{className}</div> */}
 
-      <Link to={{ pathname: `/classroom/${classroomId}/stream` }}>
+      <Link
+        to={{ pathname: `/classroom/${classroomId}/stream` }}
+        style={{ textDecoration: "none" }}
+      >
         <div className="classname">{className}</div>
       </Link>
       <div className="input-group">
