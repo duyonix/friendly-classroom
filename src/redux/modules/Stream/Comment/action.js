@@ -14,7 +14,7 @@ export const createComment = (classroomId, postId, data) => {
         dispatch(createCommentRequest());
         axios({
             url: pathAPI + `classroom/${classroomId}/post/${postId}/comment`,
-            method: "COMMENT",
+            method: "POST",
             headers: {
                 "Authorization": "Bearer " + accessToken
             },
