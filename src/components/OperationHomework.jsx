@@ -118,6 +118,7 @@ const AddMenuButton = () => {
 
 export default function OperationHomework() {
   let role = null;
+  const { classroomId } = useParams();
 
   const [itemName, setItemName] = useState("");
   if (localStorage.getItem("role")) {
@@ -154,7 +155,12 @@ export default function OperationHomework() {
       }}
       className="operation-homework container"
     >
-      <div className="classname">{className}</div>
+      <Link
+        to={{ pathname: `/classroom/${classroomId}/stream` }}
+        style={{ textDecoration: "none" }}
+      >
+        <div className="classname">{className}</div>
+      </Link>
       <div className="input-group">
         <TextField
           label="Tìm kiếm bài tập hoặc tài liệu"

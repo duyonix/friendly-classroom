@@ -24,11 +24,11 @@ function Home() {
   const classStudent = user?.classStudent;
   const classTeacher = user?.classTeacher;
 
-  if (localStorage.getItem("role")) localStorage.removeItem("role");
-  if (localStorage.getItem("classInfo")) localStorage.removeItem("classInfo");
+  // if (localStorage.getItem("role")) localStorage.removeItem("role");
+  // if (localStorage.getItem("classInfo")) localStorage.removeItem("classInfo");
 
-  if (localStorage.getItem("classroomId"))
-    localStorage.removeItem("classroomId");
+  // if (localStorage.getItem("classroomId"))
+  //   localStorage.removeItem("classroomId");
 
   // console.log(classStudent);
 

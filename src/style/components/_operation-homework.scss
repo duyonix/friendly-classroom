@@ -1,11 +1,11 @@
 .operation-homework {
-  @include flex(row, space-between, baseline, null);
+  @include flex(row, space-between, center, null);
   padding: 25px 0px 10px !important;
   margin-left: -20px;
 
   .classname {
     @include button(white, #fc5421, white, #fa5320);
-    display: inline-block;
+    // display: inline-block;
     padding: 20px;
     font-size: $fs-lg;
     cursor: pointer;

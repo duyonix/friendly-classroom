@@ -16,7 +16,7 @@ import CreatableSelect from "react-select/creatable";
 import Files from "react-files";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { pathImgFromIndex } from "../../utils/constants";
-import { Redirect, useParams } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import {
   updateDocument,
   resetUpdateDocument,
@@ -87,11 +87,11 @@ function UpdateDocument() {
         title: dataFetch?.document?.title,
         description: dataFetch?.document?.description,
         file: {
-          name: dataFetch?.filename,
+          name: dataFetch?.document?.fileAttributes[0].name,
           // wait BE update the DB for file, now just default those both are null
-          sizeReadable: null,
-          extension: null,
-          lastModified: null,
+          sizeReadable: dataFetch?.document?.fileAttributes[0].size,
+          extension: dataFetch?.document?.fileAttributes[0].extension,
+          lastModified: dataFetch?.document?.updatedAt,
         },
         topic: dataFetch?.document?.topic,
       });
@@ -306,28 +306,48 @@ function UpdateDocument() {
   if (stateInfoChange && fileChange) {
     // change both info and file of document
     if (dataInfo && dataFile) {
-      alert("Chỉnh sửa thông tin và file đính kèm của tài liệu thành công!");
+      // alert("Chỉnh sửa thông tin và file đính kèm của tài liệu thành công!");
       setTimeout(handleReset, 1000);
       return (
-        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+        <Redirect
+          to={{
+            pathname: `/classroom/${classroomId}/homework`,
+            state: {
+              reason:
+                "Chỉnh sửa thông tin và file đính kèm của tài liệu thành công!",
+            },
+          }}
+        />
       );
     }
   } else if (stateInfoChange) {
     // just only change info of document without file
     if (dataInfo) {
-      alert("Chỉnh sửa thông tin của tài liệu thành công!");
+      // alert("Chỉnh sửa thông tin của tài liệu thành công!");
       setTimeout(handleReset, 1000);
       return (
-        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+        <Redirect
+          to={{
+            pathname: `/classroom/${classroomId}/homework`,
+            state: { reason: "Chỉnh sửa thông tin của tài liệu thành công!" },
+          }}
+        />
       );
     }
   } else if (fileChange) {
     // just only change file of document without info
     if (dataFile) {
-      alert("Chỉnh sửa file đính kèm của tài liệu thành công!");
+      // alert("Chỉnh sửa file đính kèm của tài liệu thành công!");
       setTimeout(handleReset, 1000);
       return (
-        <Redirect to={{ pathname: `/classroom/${classroomId}/homework` }} />
+        <Redirect
+          to={{
+            pathname: `/classroom/${classroomId}/homework`,
+            state: {
+              reason: "Chỉnh sửa file đính kèm của tài liệu thành công!",
+            },
+          }}
+        />
       );
     }
   }
@@ -335,7 +355,12 @@ function UpdateDocument() {
   return (
     <section className="update-document container">
       <div className="header">
-        <div className="classroom-name">{classInfo.name}</div>
+        <Link
+          to={{ pathname: `/classroom/${classroomId}/stream` }}
+          style={{ textDecoration: "none" }}
+        >
+          <div className="classroom-name">{classInfo.name}</div>
+        </Link>
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"
