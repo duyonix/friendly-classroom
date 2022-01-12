@@ -2,23 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "./Post";
 import { pathImgFromIndex } from "../utils/constants";
-import { Avatar } from "@mui/material";
-import Posts from "./post/Posts.js";
-import PostForm from "./post/PostForm.js";
+import { Avatar, CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
 import {
-  actFetchAllPost,
-  actFetchSinglePost,
-  actCreatePost,
-  actUpdatePost,
-  deletePost,
   fetchAllPost,
+  createPost,
+  resetCreatePost,
 } from "../redux/modules/Stream/Post/action";
+
+import { Box } from "@mui/material/node_modules/@mui/system";
 // TODO: action call API
 function OperationStream() {
   let className = null;
   if (localStorage.getItem("classInfo")) {
     className = JSON.parse(localStorage.getItem("classInfo")).name;
+  }
+  let avatar = null;
+  if (localStorage.getItem("avatar")) {
+    avatar = localStorage.getItem("avatar");
   }
   const { classroomId } = useParams();
   const dispatch = useDispatch();
@@ -27,46 +28,37 @@ function OperationStream() {
     dispatch(fetchAllPost(classroomId));
     // eslint-disable-next-line
   }, []);
-  const errAllPost = useSelector((state) => state.fetchAllPostReducer?.err);
-  const keyAllPost = useSelector((state) => state.fetchAllPostReducer?.key);
+  //const errAllPost = useSelector((state) => state.fetchAllPostReducer?.err);
+  const loadingAllPost = useSelector(
+    (state) => state.fetchAllPostReducer?.loading
+  );
+
   const dataAllPost = useSelector((state) => state.fetchAllPostReducer?.data);
   const initialPost = dataAllPost?.posts;
-  //console.log(dataAllPost);
-  // const initialPost = [
-  //   {
-  //     id: 1,
-  //     name: "Võ Hoàng Vũ",
-  //     avatar: "hoang_vu.jpg",
-  //     time: "22 th 11",
-  //     title: " Ahihi",
-  //     body: "Cô thông báo bài 1 không làm bị trừ điểm",
-  //     postedBy: 1,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Võ Vũ",
-  //     avatar: "student_icon.png",
-  //     time: "22 th 11",
-  //     body: "Hôm nay nghỉ nhé các em",
-  //     postedBy: 1,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Võ Vũ",
-  //     avatar: "teacher_icon.png",
-  //     time: "22 th 11",
-  //     body: "Rét dữ dội. Tuyết rơi. Trời đã tối hẳn. Đêm nay là đêm giao thừa. Giữa trời đông giá rét, một em gái nhỏ đầu trần, chân đi đất, đang dò dẫm trong đêm tối.Lúc ra khỏi nhà em có đi giày vải, nhưng giày vải phỏng có tác dụng gì kia chứ !Giày ấy của mẹ em để lại, rộng quá, em đã liên tiếp làm văng mất cả hai chiếc khi em chạy qua đường, vào lúc hai chiếc xe ngựa đang phóng nước đại.",
-  //     postedBy: 2,
-  //   },
-  // ];
-  const [posts, setPosts] = useState(initialPost);
-  // const addPost = (text) => {
-  //   setPosts([...posts, { body: {}, id: 1 }]);
-  // };
-  //TODO: addPost --> createPost
-  //TODO: fetch singlePost, allPosts
+  //createPostReducer
+  const [postBody, setPostBody] = useState(null);
+  const handleInputPost = (e) => {
+    setPostBody(e.target.value);
+  };
+  const renderLoading = () => {
+    if (loadingAllPost) {
+      return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+  };
+  const handleCreatePost = () => {
+    dispatch(createPost(classroomId, { body: postBody }));
+  };
+  const dataCreatePost = useSelector((state) => state.createPostReducer?.data);
+  if (dataCreatePost) {
+    dispatch(fetchAllPost(classroomId));
+    dispatch(resetCreatePost());
+    document.getElementById("inputPost").value = "";
+  }
 
-  //load user info
   return (
     <div>
       <div className="operation-stream container">
@@ -76,20 +68,29 @@ function OperationStream() {
             <div className="shareTop">
               <Avatar
                 // TODO: load avt of this user
-                src={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
+                src={avatar}
                 alt="avatar"
                 sx={{ width: 40, height: 40 }}
               />
-              <input placeholder="Nhập nội dung ..." className="shareInput" />
+              <input
+                id="inputPost"
+                placeholder="Nhập nội dung ..."
+                className="shareInput"
+                onChange={handleInputPost}
+              />
             </div>
             <hr className="shareHr" />
             <div className="shareBottom">
-              <button className="shareButton"> Đăng </button>
+              <button className="shareButton" onClick={handleCreatePost}>
+                {" "}
+                Đăng{" "}
+              </button>
               {/* <button className="cancelButton">Hủy</button> */}
             </div>
           </div>
         </div>
       </div>
+      {renderLoading()}
       <div className="posts-container ">
         <div className="posts-poster">
           <img alt="post" src={pathImgFromIndex + "post.png"}></img>
@@ -98,12 +99,15 @@ function OperationStream() {
         <div className="posts-list">
           {initialPost?.map((post) => (
             <Post
+              classroomId={classroomId}
+              id={post._id}
               key={post._id}
               name={post.postedBy.username}
               avatar={post.postedBy.avatarUrl}
               body={post.body}
               time={post.updatedAt}
               listComments={post.listComment}
+              idUserPost={post.postedBy._id}
             />
           ))}
         </div>

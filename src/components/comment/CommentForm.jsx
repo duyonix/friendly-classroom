@@ -1,29 +1,47 @@
 import React from "react";
 import { useState } from "react";
-import { pathImgFromIndex } from "../../utils/constants";
 import { Avatar } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
-function CommentForm1(props) {
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  createComment,
+  resetCreateComment,
+} from "../../redux/modules/Stream/Comment/action";
+import { fetchAllPost } from "../../redux/modules/Stream/Post/action";
+
+function CommentForm(props) {
   const [text, setText] = useState("");
   const isTextareaDisabled = text.length === 0;
+  let avatar = null;
+  if (localStorage.getItem("avatar")) {
+    avatar = localStorage.getItem("avatar");
+  }
+  const dispatch = useDispatch();
   const onSubmit = (event) => {
     event.preventDefault();
-    props.handleSubmit(text);
+    dispatch(createComment(props.classroomId, props.id, { body: text }));
     setText("");
   };
+  const dataCreateComment = useSelector(
+    (state) => state.createCommentReducer?.data
+  );
+  if (dataCreateComment) {
+    dispatch(fetchAllPost(props.classroomId));
+    dispatch(resetCreateComment());
+  }
   return (
     <div>
       <form onSubmit={onSubmit}>
         <div className="comment-form-display">
           <Avatar
-            src={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
+            src={avatar}
             //TODO: load avatar user
             alt="avatar"
             sx={{ width: 40, height: 40 }}
           />
           <textarea
-            className="form-control"
-            className="comment-form-textarea"
+            className="form-control comment-form-textarea"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
@@ -46,4 +64,4 @@ function CommentForm1(props) {
   );
 }
 
-export default CommentForm1;
+export default CommentForm;
