@@ -1,89 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { pathImgFromIndex } from "../../utils/constants";
 import NavbarHome from "../../components/NavbarHome";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserInfo } from "../../redux/modules/Home/action";
+import Loading from "../../components/Loading";
 
 function UserAccount() {
-  const initialInfo = {
-    username: "ngngan212",
-    name: "Nguyễn Ngạn",
-    email: "nganguyen212@gmail.com",
-    birth: "01/06/2008",
-    pass: "********",
-    province: "Quảng Nam",
-    school: "Đo Đo",
-    class: "6/2",
-  };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserInfo());
+    //eslint-disable-next-line
+  }, []);
   const initialField = {
-    username: "",
+    username: "Username",
     name: "Họ tên",
     email: "Email",
-    birth: "Ngày sinh",
-    pass: "Mật khẩu",
-    province: "Tỉnh/ thành phố",
-    school: "Trường học",
-    class: "Lớp",
+    phone: "Số điện thoại",
+    dayCreated: "Ngày tạo",
+    numsClass: "Tổng số lớp học tham gia",
+    numsTeacher: "Vai trò giáo viên",
+    numsStudent: "Vai trò học sinh",
   };
 
-  const [buttonText, setButtonText] = useState(initialInfo.name);
-  const changeText = (text) => setButtonText(text);
+  const user = useSelector((state) => state.fetchUserInfoReducer?.data?.user);
+  const loading = useSelector((state) => state.fetchUserInfoReducer.loading);
+  const err = useSelector((state) => state.fetchUserInfoReducer.err);
+  const convertDate = (date) => {
+    date = new Date(date);
+    var dd = String(date.getDate()).padStart(2, "0");
+    var mm = String(date.getMonth() + 1).padStart(2, "0");
+    var yyyy = date.getFullYear();
+    return dd + "/" + mm + "/" + yyyy;
+  };
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <div>
+    <div className="container">
       {/* <NavbarHome /> */}
-      <div className="user-account">
+
+      <div className="user-account ">
         <img
           src={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
-          alt=""
-          width="200"
-          height="200"
+          alt="avatar"
+          width="150"
+          height="150"
+          className="avatar"
         ></img>
         <div className="info">
-          <h2 className="username">{initialInfo.username}</h2>
+          <h2 className="username">{user?.username}</h2>
           <hr className="shareHr" />
           <div className="infoline">
             <div className="field-container">
               <h4 className="field">{initialField.name}</h4>
               <h4 className="field">{initialField.birth}</h4>
               <h4 className="field">{initialField.email}</h4>
-              <h4 className="field">{initialField.pass}</h4>
-              <h4 className="field">{initialField.province}</h4>
-              <h4 className="field">{initialField.school}</h4>
-              <h4 className="field">{initialField.class}</h4>
+              <h4 className="field">{initialField.phone}</h4>
+              <h4 className="field">{initialField.dayCreated}</h4>
+              <h4 className="field">{initialField.numsClass}</h4>
             </div>
             <div className="value-container">
-              <h4 className="value-field">{initialInfo.name}</h4>
-              <h4 className="value-field">{initialInfo.birth}</h4>
-              <h4 className="value-field">{initialInfo.email}</h4>
-              <h4 className="value-field">{initialInfo.pass}</h4>
-              <h4 className="value-field">{initialInfo.province}</h4>
-              <h4 className="value-field">{initialInfo.school}</h4>
-              <h4 className="value-field">{initialInfo.class}</h4>
+              <h4 className="value-field">{user?.fullName}</h4>
+              <h4 className="value-field">{user?.birth}</h4>
+              <h4 className="value-field">{user?.email}</h4>
+              <h4 className="value-field">{user?.phoneNumber}</h4>
+              <h4 className="value-field">{convertDate(user?.createdAt)}</h4>
+              <h4 className="value-field">
+                {user?.classStudent.length + user?.classTeacher.length}
+              </h4>
+              <h4 className="value-field">{user?.classTeacher.length}</h4>
+              <h4 className="value-field">{user?.classStudent.length}</h4>
             </div>
             <div className="button-edit-info">
               <div>
                 <IconButton id="nameButton">
-                  <EditIcon />
-                </IconButton>
-              </div>
-              <div>
-                <IconButton id="nameButton">
-                  <EditIcon />
-                </IconButton>
-              </div>
-              <div>
-                <IconButton id="nameButton">
-                  <EditIcon />
-                </IconButton>
-              </div>
-              <div>
-                <IconButton id="nameButton">
-                  <EditIcon />
-                </IconButton>
-              </div>
-              <div>
-                <IconButton id="nameButton">
-                  <EditIcon />
+                  <EditIcon fontSize="small" />
                 </IconButton>
               </div>
               <div>
