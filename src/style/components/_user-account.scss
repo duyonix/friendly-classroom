@@ -1,42 +1,56 @@
-.user-account{
-    margin:  50px;
-    display: flex;
-    img {
-        border-radius: 8px;
+.user-account {
+  margin: 50px auto;
+  display: flex;
+  justify-content: center;
+  #change-avatar {
+    height: fit-content;
+    border-radius: 30%;
+    label {
+      margin-bottom: 0;
     }
-    .info
-    {
-        margin-left:  100px  ;
-        .line{
-            stroke:rgb(105,105,105);
-            stroke-width:1
-        }
-        .username{
-            font-style:bold;
-            color:dodgerblue;
-        }
-        .infoline{
-            display: flex;
-            .button-edit-info{
-                display: block;
-            }
-            .field-container,
-            .value-container{
-                margin-top: 10px;
-            }
-            .field{
-                color: rgb(136, 133, 133);
-                margin-top: 10px;
-            }
-            .value-field{
-                padding-left: 40px;
-                margin-right: 100px;
-                margin-top: 10px;
-            }
-            .iconedit{
-                
-            }
-        }
+    &:hover {
+      background: rgb(83, 82, 82);
+      img {
+        opacity: 0.5;
+      }
     }
+  }
 
+  .info {
+    margin-left: 100px;
+
+    .line {
+      stroke: rgb(105, 105, 105);
+      stroke-width: 1;
+    }
+    .username {
+      font-style: bold;
+      color: dodgerblue;
+    }
+    .infoline {
+      display: flex;
+      .button-edit-info {
+        display: block;
+      }
+      .field-container,
+      .value-container {
+        margin-top: 10px;
+      }
+      .field-container h4,
+      .value-container h4 {
+        font-size: 1.2rem;
+      }
+      .field {
+        color: rgb(136, 133, 133);
+        margin-top: 10px;
+      }
+      .value-field {
+        padding-left: 40px;
+        margin-right: 100px;
+        margin-top: 10px;
+      }
+      .iconedit {
+      }
+    }
+  }
 }
