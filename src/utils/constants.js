@@ -1,2 +1,2 @@
-export const pathImgFromIndex = "/assets/img/";
-export const pathAPI = "http://localhost:5000/api/";
+export const pathImgFromIndex = '/assets/img/';
+export const pathAPI = 'https://friendlyclassroom-server.herokuapp.com/api/';
