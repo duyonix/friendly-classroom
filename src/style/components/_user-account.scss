@@ -2,9 +2,20 @@
   margin: 50px auto;
   display: flex;
   justify-content: center;
-  img {
+  #change-avatar {
+    height: fit-content;
     border-radius: 30%;
+    label {
+      margin-bottom: 0;
+    }
+    &:hover {
+      background: rgb(83, 82, 82);
+      img {
+        opacity: 0.5;
+      }
+    }
   }
+
   .info {
     margin-left: 100px;
 
