@@ -16,12 +16,12 @@ function UserAccount() {
   const [avatar, setAvatar] = useState(null);
   const [preview, setPreview] = useState(null);
   const [submit, setSubmit] = useState(false);
-
+  const [submitting, setSubmitting] = useState(false);
   useEffect(() => {
     if (submit === true) {
+      setSubmitting(true);
       setSubmit(false);
       setPreview(null);
-      setAvatar(null);
       dispatch(changeAvatar(avatar));
     }
     //eslint-disable-next-line
@@ -29,9 +29,6 @@ function UserAccount() {
   const changeAvaSuccess = useSelector(
     (state) => state.changeAvatarReducer?.data
   );
-  // const changeAvaLoading = useSelector(
-  //   (state) => state.changeAvatarReducer?.loading
-  // );
   useEffect(() => {
     if (avatar !== null) {
       const objectUrl = URL.createObjectURL(avatar);
@@ -59,13 +56,15 @@ function UserAccount() {
   const user = data?.user;
   const loading = useSelector((state) => state.fetchUserInfoReducer.loading);
   //const err = useSelector((state) => state.fetchUserInfoReducer.err);
-  if (user) {
-    localStorage.setItem("avatar", user.avatarUrl);
-  }
 
   if (changeAvaSuccess) {
     dispatch(resetAvatar());
     dispatch(fetchUserInfo());
+    localStorage.removeItem("avatar");
+    //localStorage.setItem("avatar", user.avatarUrl);
+    setSubmitting(false);
+    setAvatar(null);
+    window.location.reload(false);
   }
   const convertDate = (date) => {
     date = new Date(date);
@@ -74,7 +73,7 @@ function UserAccount() {
     var yyyy = date.getFullYear();
     return dd + "/" + mm + "/" + yyyy;
   };
-  if (loading) {
+  if (loading || submitting) {
     return <Loading />;
   }
   const onFilesChange = (event) => {
@@ -142,7 +141,7 @@ function UserAccount() {
           <div className="infoline">
             <div className="field-container">
               <h4 className="field">{initialField.name}</h4>
-              <h4 className="field">{initialField.birth}</h4>
+
               <h4 className="field">{initialField.email}</h4>
               <h4 className="field">{initialField.phone}</h4>
               <h4 className="field">{initialField.dayCreated}</h4>
@@ -152,7 +151,7 @@ function UserAccount() {
             </div>
             <div className="value-container">
               <h4 className="value-field">{user?.fullName}</h4>
-              <h4 className="value-field">{user?.birth}</h4>
+
               <h4 className="value-field">{user?.email}</h4>
               <h4 className="value-field">{user?.phoneNumber}</h4>
               <h4 className="value-field">{convertDate(user?.createdAt)}</h4>

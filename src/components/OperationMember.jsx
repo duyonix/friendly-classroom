@@ -7,7 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Alert } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 import {
   actInviteStudent,
   resetInviteStudent,
@@ -15,6 +15,7 @@ import {
   actPeopleSearch,
 } from "../redux/modules/People/action";
 import { Link, useParams } from "react-router-dom";
+import { Box } from "@mui/material/node_modules/@mui/system";
 function OperationMember() {
   const { classroomId } = useParams();
 
@@ -29,14 +30,16 @@ function OperationMember() {
     dispatch(actPeopleSearch(fullName));
   };
   useEffect(() => {
-    passDataSearch();
+    if (fullName.length > 0) {
+      passDataSearch();
+    }
     // eslint-disable-next-line
   }, [fullName]);
 
   const dataInvite = useSelector((state) => state.inviteStudentReducer?.data);
-  // const loadingInvite = useSelector(
-  //   (state) => state.inviteStudentReducer?.loading
-  // );
+  const loadingInvite = useSelector(
+    (state) => state.inviteStudentReducer?.loading
+  );
   const errInvite = useSelector((state) => state.inviteStudentReducer?.err);
   const dispatch = useDispatch();
   if (localStorage.getItem("classroomId")) {
@@ -49,9 +52,18 @@ function OperationMember() {
   if (localStorage.getItem("classInfo")) {
     className = JSON.parse(localStorage.getItem("classInfo")).name;
   }
+  const renderLoading = () => {
+    if (loadingInvite) {
+      return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+  };
   const handleClickOpen = () => {
     setOpen(true);
-    setUsername(""); // test được nè
+    setUsername("");
   };
   const handleClose = () => {
     setOpen(false);
@@ -83,6 +95,7 @@ function OperationMember() {
       setFullName(value);
     }
   };
+
   const handleSubmit = (event) => {
     event.preventDefault(); // That ra onSubmit moi can preventDefault
 
@@ -93,13 +106,13 @@ function OperationMember() {
 
     dispatch(actInviteStudent(id, username));
 
-    if (!emptyNotice && dataInvite) {
-      setTimeout(() => {
-        setOpen(false);
-      }, 1200);
-      handleReset();
-      dispatch(actPeopleChange());
-    }
+    // if (!emptyNotice && dataInvite) {
+    //   setTimeout(() => {
+    //     setOpen(false);
+    //   }, 1200);
+    //   handleReset();
+    //   dispatch(actPeopleChange());
+    // }
   };
 
   const handleReset = () => {
@@ -117,7 +130,7 @@ function OperationMember() {
       return <Alert severity="success">{dataInvite.message}</Alert>;
     }
   };
-  if (dataInvite) {
+  if (!emptyNotice && dataInvite) {
     setTimeout(() => {
       setOpen(false);
       handleReset();
@@ -166,6 +179,7 @@ function OperationMember() {
             Nhập username của thành viên muốn thêm vào lớp
           </DialogContentText>
           {renderNotice()}
+          {renderLoading()}
           <TextField
             autoFocus
             margin="dense"
