@@ -29,9 +29,9 @@ function UserAccount() {
   const changeAvaSuccess = useSelector(
     (state) => state.changeAvatarReducer?.data
   );
-  const changeAvaLoading = useSelector(
-    (state) => state.changeAvatarReducer?.loading
-  );
+  // const changeAvaLoading = useSelector(
+  //   (state) => state.changeAvatarReducer?.loading
+  // );
   useEffect(() => {
     if (avatar !== null) {
       const objectUrl = URL.createObjectURL(avatar);
