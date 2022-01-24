@@ -1,15 +1,11 @@
 import React from "react";
-import SendIcon from "@mui/icons-material/Send";
 import DoneIcon from "@mui/icons-material/Done";
 import Avatar from "@mui/material/Avatar";
-import { red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import CommentForm from "./CommentForm";
 import {
   deleteComment,
   resetDeleteComment,
-  updateComment,
-  resetUpdateComment,
 } from "../../redux/modules/Stream/Comment/action";
 import { fetchAllPost } from "../../redux/modules/Stream/Post/action";
 function Comment(props) {
@@ -26,8 +22,8 @@ function Comment(props) {
   console.log(props.comment);
   const canDelete =
     props.currentUserId === props.comment.commentedBy._id && !timePassed;
-  const canEdit =
-    props.currentUserId === props.comment.commentedBy._id && !timePassed;
+  // const canEdit =
+  //   props.currentUserId === props.comment.commentedBy._id && !timePassed;
   // const createdAt = new Date(props.comment.createdAt).toLocaleDateString();
   const dataDeleteComment = useSelector(
     (state) => state.deleteCommentReducer?.data
