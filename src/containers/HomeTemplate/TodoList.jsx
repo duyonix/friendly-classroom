@@ -145,7 +145,7 @@ function TodoList() {
                 {ex?.homeworkId?(<div>
                   {ex?.markDone?(""):(
                 <Button
-                  className="btn-card"
+                  className="btn-card-first"
                   variant="contained"
                   color="primary"
                   sx={{ minWidth: 300 }}
