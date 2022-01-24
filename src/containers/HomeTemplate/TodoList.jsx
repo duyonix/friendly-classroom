@@ -148,12 +148,14 @@ function TodoList() {
               <div className="card-content-exercise-button">
                 {ex?.markDone?(""):(
                 <Button
+                  className="btn-card"
                   variant="contained"
                   color="primary"
                   sx={{ minWidth: 300 }}
                   key={ex?._id}
                 >
                   <div>
+                    
                     <Typography>{ex?.homeworkId?.classroomId?.name}</Typography>
                     <h6>{ex?.homeworkId?.title}</h6>
                   </div>
@@ -166,6 +168,8 @@ function TodoList() {
               <div className="card-content-exercise-button">
                 {ex?.markDone?(
                 <Button
+                
+                className="btn-card"
                   variant="contained"
                   color="success"
                   sx={{ minWidth: 300 }}
@@ -187,6 +191,8 @@ function TodoList() {
                 {(now>(ex?.homeworkId?.deadline) && ex)?.markDone?(
                   
                 <Button
+                
+                  className="btn-card"
                   variant="contained"
                   color="error"
                   sx={{ minWidth: 300 }}
