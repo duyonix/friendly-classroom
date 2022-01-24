@@ -61,7 +61,7 @@ function ListMember() {
   const [open, setOpen] = React.useState(false);
 
   const [studentDelete, setStudentDelete] = React.useState(null);
-  
+
   const [render, setRender] = React.useState(false);
 
   useEffect(() => {
@@ -77,20 +77,20 @@ function ListMember() {
   const change = useSelector((state) => state.peopleReducer?.change);
 
   const isMatch = (s, key) => {
-    return s.toLowerCase().indexOf(key.toLowerCase());
+    if (s === undefined || key === undefined) return 1;
+    else return s.toLowerCase().indexOf(key.toLowerCase());
   };
 
   const renderMemberTeacher = (key, member) => {
-    if (key == null || isMatch(member?.fullName, key) !== -1) {
+    if (
+      key == null ||
+      (key !== null && isMatch(member?.fullName, key) !== -1)
+    ) {
       return (
         <StyledTableRow>
           <StyledTableCell align="left">
             <Avatar
-              src={
-                pathImgFromIndex + member?.avatarUrl !== undefined
-                  ? member?.avatarUrl
-                  : "xuan_y.jpg"
-              }
+              src={pathImgFromIndex + "avatar.png"}
               alt="avatar"
               sx={{ width: 64, height: 64 }}
             />
@@ -240,13 +240,11 @@ function ListMember() {
                   <StyledTableCell align="right">Số điện thoại</StyledTableCell>
                   {role === "teacher" ? (
                     <StyledTableCell align="right"></StyledTableCell>
-                  ) : (
-                    ""
-                  )}
+                  ) : null}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {members.students
+                {members?.students
                   ?.filter((student) => {
                     return isMatch(student?.fullName, keySearch) !== -1;
                   })
@@ -254,12 +252,7 @@ function ListMember() {
                     <StyledTableRow key={row.username}>
                       <StyledTableCell align="left">
                         <Avatar
-                          src={
-                            pathImgFromIndex + row.username.avatarUrl !==
-                            undefined
-                              ? members.teacher?.avatarUrl
-                              : "xuan_y.jpg"
-                          }
+                          src={pathImgFromIndex + "avatar.png"}
                           alt="avatar"
                           sx={{ width: 64, height: 64 }}
                         />
@@ -287,9 +280,7 @@ function ListMember() {
                             Xoá
                           </div>
                         </StyledTableCell>
-                      ) : (
-                        ""
-                      )}
+                      ) : null}
                     </StyledTableRow>
                   ))}
               </TableBody>
@@ -311,7 +302,7 @@ function ListMember() {
               {renderSuccess()}
               <DialogContentText id="alert-dialog-description">
                 Thao tác này sẽ không thể hoàn tác. Bạn vẫn muốn xoá
-                {studentDelete?.fullName} ra khỏi lớp chứ?
+                {" " + studentDelete?.fullName} ra khỏi lớp chứ?
               </DialogContentText>
             </DialogContent>
             <DialogActions>

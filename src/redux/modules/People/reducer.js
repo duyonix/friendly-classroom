@@ -5,7 +5,7 @@ const peopleState = {
     data: null,
     err: null,
     change: false,
-    key: null,
+    key: "",
 }
 
 export const peopleReducer = (state = peopleState, { type, payload }) => {
@@ -41,7 +41,7 @@ export const peopleReducer = (state = peopleState, { type, payload }) => {
             state.key = payload;
             return { ...state };
         case actionTypes.PEOPLE_SEARCH_RESET:
-            state.key = null;
+            state.key = "";
             return { ...state };
         default:
             return { ...state };
