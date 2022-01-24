@@ -28,11 +28,13 @@
     margin-left: -5px;
     z-index: 9;
   }
-  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,
+  .MuiInputBase-input.css-1x5jdmq {
     //padding-top: 10px;
     padding-bottom: 10px;
   }
-  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  .css-1u3bzj6-MuiFormControl-root-MuiTextField-root,
+  .MuiFormControl-root.MuiTextField-root.css-i44wyl {
     width: 93.5%;
   }
   .btn-add {
@@ -46,7 +48,8 @@
   @media only screen and (max-width: 1200px) {
   }
   @media only screen and (max-width: 992px) {
-    .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    .css-1u3bzj6-MuiFormControl-root-MuiTextField-root,
+    .MuiFormControl-root.MuiTextField-root.css-i44wyl {
       width: 80.5%;
     }
     #idFind {
@@ -91,7 +94,8 @@
     .MuiSvgIcon-fontSizeMedium {
       width: 16px;
     }
-    .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    .css-1u3bzj6-MuiFormControl-root-MuiTextField-root,
+    .MuiFormControl-root.MuiTextField-root.css-i44wyl {
       width: 70.5%;
     }
   }
