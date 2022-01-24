@@ -144,10 +144,13 @@ function TodoList() {
         </div>
         <div className="data-groups">
           <div className="card-content-exercise">
-            {dataTodo?.submissions.map((ex) => (
+            {dataTodo?.submissions.map((ex) =>
+             (
               <div className="card-content-exercise-button">
-                {ex?.markDone?(""):(
+                {ex?.homeworkId?(<div>
+                  {ex?.markDone?(""):(
                 <Button
+                  className="btn-card"
                   variant="contained"
                   color="primary"
                   sx={{ minWidth: 300 }}
@@ -156,16 +159,22 @@ function TodoList() {
                   <div>
                     <Typography>{ex?.homeworkId?.classroomId?.name}</Typography>
                     <h6>{ex?.homeworkId?.title}</h6>
+                    
                   </div>
                 </Button>)}
+                </div>):("")}
+                
               </div>
             ))}
           </div>
           <div className="card-content-exercise">
           {dataTodo?.submissions.map((ex) => (
               <div className="card-content-exercise-button">
-                {ex?.markDone?(
+                 {ex?.homeworkId?(<div>
+                  {ex?.markDone?(
                 <Button
+                
+                className="btn-card"
                   variant="contained"
                   color="success"
                   sx={{ minWidth: 300 }}
@@ -176,27 +185,35 @@ function TodoList() {
                     <h6>{ex?.homeworkId?.title}</h6>
                   </div>
                 </Button>):("")}
+
+                 </div>):("")}
+                
               </div>
             ))}
             
           </div>
           <div className="card-content-exercise">
-            {dataTodo?.submissions.map((ex) => (
+          {dataTodo?.submissions.map((ex) => (
               <div className="card-content-exercise-button">
-               
-                {(now>(ex?.homeworkId?.deadline) && ex)?.markDone?(
+                 {ex?.homeworkId?(<div>
+                  {(now>(ex?.homeworkId?.deadline) && ex)?.markDone?(
                   
-                <Button
-                  variant="contained"
-                  color="error"
-                  sx={{ minWidth: 300 }}
-                  key={ex?._id}
-                >
-                  <div>
-                    <Typography>{ex?.homeworkId?.classroomId?.name}</Typography>
-                    <h6>{ex?.homeworkId?.title}</h6>
-                  </div>
-                </Button>):("")}
+                  <Button
+                  
+                    className="btn-card"
+                    variant="contained"
+                    color="error"
+                    sx={{ minWidth: 300 }}
+                    key={ex?._id}
+                  >
+                    <div>
+                      <Typography>{ex?.homeworkId?.classroomId?.name}</Typography>
+                      <h6>{ex?.homeworkId?.title}</h6>
+                    </div>
+                  </Button>):("")}
+
+                 </div>):("")}
+                
               </div>
             ))}
           </div>
