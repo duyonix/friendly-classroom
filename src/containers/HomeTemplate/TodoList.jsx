@@ -54,39 +54,6 @@ function TodoList() {
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
-  //TODO: load list task
-  const todoList = {
-    duocgiao: [
-      {
-        object: "Toán 6",
-        title: "Nhân biểu thức",
-      },
-      {
-        object: "Tin 6",
-        title: "Vòng lặp",
-      },
-      {
-        object: "Anh 6",
-        title: "Greeting",
-      },
-    ],
-    hoanthanh: [
-      {
-        object: "Anh 6",
-        title: "Nhân biểu thức",
-      },
-      {
-        object: "Toán 6",
-        title: "Nhân biểu thức",
-      },
-    ],
-    quahan: [
-      {
-        object: "BD Toán 6",
-        title: "Cộng biểu thức",
-      },
-    ],
-  };
   
   const dispatch = useDispatch();
   useEffect(() => {
