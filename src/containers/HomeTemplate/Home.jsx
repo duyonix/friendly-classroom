@@ -94,7 +94,7 @@ function Home() {
             <div className="header">
               <img
                 className="img-header"
-                src={pathImgFromIndex + "Student_icon.png"}
+                src={pathImgFromIndex + "student_icon.png"}
                 alt="student"
               />
               <span className="header-name">Học sinh</span>

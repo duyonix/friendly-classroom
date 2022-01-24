@@ -61,7 +61,7 @@ function ListMember() {
   const [open, setOpen] = React.useState(false);
 
   const [studentDelete, setStudentDelete] = React.useState(null);
-  
+
   const [render, setRender] = React.useState(false);
 
   useEffect(() => {
@@ -221,7 +221,7 @@ function ListMember() {
             <div className="header">
               <img
                 className="img-header"
-                src={pathImgFromIndex + "Student_icon.png"}
+                src={pathImgFromIndex + "student_icon.png"}
                 alt="student"
               />
               <span className="header-name">Học sinh</span>

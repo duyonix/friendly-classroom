@@ -12,7 +12,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import TopicIcon from "@mui/icons-material/Topic";
 import { Link, useParams } from "react-router-dom";
 
 const StyledMenu = styled((props) => (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CommentForm from "./CommentForm.jsx";
 import Comment from "./Comment.jsx";
 import SendIcon from "@mui/icons-material/Send";
