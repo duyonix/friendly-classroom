@@ -17,12 +17,6 @@ export default function CardMember(props) {
           src={pathImgFromIndex + student.img}
           sx={{ width: 100, height: 100 }}
         />
-        {/* <CardMedia
-          component="img"
-          height="140"
-          image={pathImgFromIndex + student.img}
-          alt="green iguana"
-        /> */}
         <CardContent className="content">
           <Typography
             gutterBottom
