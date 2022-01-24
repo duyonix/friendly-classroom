@@ -57,4 +57,39 @@
       }
     }
   }
+  @media only screen and (max-width: 850px) {
+    display: block;
+    margin: 15px auto;
+    .info {
+      margin-left: 30px;
+      h2 {
+        text-align: center;
+      }
+      .infoline {
+        width: 100%;
+        overflow: hidden;
+        justify-content: center;
+        .field-container h4,
+        .value-container h4 {
+          font-size: 0.9rem;
+        }
+        .value-field {
+          padding-left: 20px;
+          margin-right: 30px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 430px) {
+    .info {
+      .infoline {
+        .value-field {
+          padding-left: 10px;
+          margin-right: 10px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
 }

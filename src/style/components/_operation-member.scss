@@ -53,13 +53,21 @@
       width: 50px;
     }
     .input-group {
-      margin-left: 0;
+      margin-left: -10px;
+    }
+    .classname {
+      margin-right: 5px;
+    }
+    .btn-add {
+      margin-right: 0px;
     }
   }
   @media only screen and (max-width: 768px) {
     justify-content: space-between !important;
     .input-group {
       justify-content: flex-end;
+      width: 50%;
+      margin-right: 10px;
     }
   }
   @media only screen and (max-width: 550px) {
