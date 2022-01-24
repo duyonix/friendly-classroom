@@ -1,17 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { pathImgFromIndex } from "../../utils/constants";
-import NavbarHome from "../../components/NavbarHome";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserInfo } from "../../redux/modules/Home/action";
+import {
+  changeAvatar,
+  resetAvatar,
+} from "../../redux/modules/UserAccount/action";
+
 import Loading from "../../components/Loading";
-import { Input } from "@mui/material";
 
 function UserAccount() {
   const dispatch = useDispatch();
-  const [render, setRender] = useState(false);
+  const [avatar, setAvatar] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [submit, setSubmit] = useState(false);
 
+  useEffect(() => {
+    if (submit === true) {
+      setSubmit(false);
+      setPreview(null);
+      setAvatar(null);
+      dispatch(changeAvatar(avatar));
+    }
+    //eslint-disable-next-line
+  }, [submit]);
+  const changeAvaSuccess = useSelector(
+    (state) => state.changeAvatarReducer?.data
+  );
+  const changeAvaLoading = useSelector(
+    (state) => state.changeAvatarReducer?.loading
+  );
+  useEffect(() => {
+    if (avatar !== null) {
+      const objectUrl = URL.createObjectURL(avatar);
+      setPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+    //eslint-disable-next-line
+  }, [avatar]);
   useEffect(() => {
     dispatch(fetchUserInfo());
     //eslint-disable-next-line
@@ -27,14 +55,18 @@ function UserAccount() {
     numsStudent: "Vai trò học sinh",
   };
 
-  const user = useSelector((state) => state.fetchUserInfoReducer?.data?.user);
+  const data = useSelector((state) => state.fetchUserInfoReducer?.data);
+  const user = data?.user;
   const loading = useSelector((state) => state.fetchUserInfoReducer.loading);
   //const err = useSelector((state) => state.fetchUserInfoReducer.err);
-  let avatar;
-  if (localStorage.getItem("avatar")) {
-    avatar = localStorage.getItem("avatar");
+  if (user) {
+    localStorage.setItem("avatar", user.avatarUrl);
   }
 
+  if (changeAvaSuccess) {
+    dispatch(resetAvatar());
+    dispatch(fetchUserInfo());
+  }
   const convertDate = (date) => {
     date = new Date(date);
     var dd = String(date.getDate()).padStart(2, "0");
@@ -45,39 +77,65 @@ function UserAccount() {
   if (loading) {
     return <Loading />;
   }
-  const onFilesChange = (files) => {};
-
+  const onFilesChange = (event) => {
+    if (event.target.files[0] !== undefined) {
+      setAvatar(event.target.files[0]);
+    }
+  };
+  const handleChangeAvatar = () => {
+    setSubmit(true);
+  };
   return (
     <div className="container">
       {/* <NavbarHome /> */}
 
       <div className="user-account ">
-        <div className="avatar" title="Change Avatar" id="change-avatar">
-          <input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
-            style={{ display: "none" }}
-            onChange={onFilesChange}
-          />
-          <label
-            htmlFor="contained-button-file"
-            style={{
-              cursor: "pointer",
-            }}
-          >
-            <img
-              src={
-                avatar !== null ? avatar : pathImgFromIndex + "meo_ngu_ngoc.jpg"
-              }
-              alt="avatar"
-              width="150"
-              height="150"
-              className="avatar"
-            ></img>
-          </label>
+        <div className="avatar-area">
+          <div className="avatar" title="Change Avatar" id="change-avatar">
+            <input
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+              style={{ display: "none" }}
+              onChange={onFilesChange}
+              onClick={(event) => {
+                event.currentTarget.value = null;
+              }}
+            />
+            <label
+              htmlFor="contained-button-file"
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              <img
+                src={
+                  preview !== null
+                    ? preview
+                    : user?.avatarUrl !== null
+                    ? user?.avatarUrl
+                    : pathImgFromIndex + "meo_ngu_ngoc.jpg"
+                }
+                alt="avatar"
+                width="150"
+                height="150"
+                className="avatar"
+              ></img>
+            </label>
+          </div>
+          {preview ? (
+            <button
+              className="btn btn-primary btn-changeAvatar"
+              onClick={handleChangeAvatar}
+            >
+              Change
+            </button>
+          ) : (
+            ""
+          )}
         </div>
+
         <div className="info">
           <h2 className="username">{user?.username}</h2>
           <hr className="shareHr" />
@@ -99,7 +157,10 @@ function UserAccount() {
               <h4 className="value-field">{user?.phoneNumber}</h4>
               <h4 className="value-field">{convertDate(user?.createdAt)}</h4>
               <h4 className="value-field">
-                {user?.classStudent.length + user?.classTeacher.length}
+                {user &&
+                  Number(
+                    user?.classStudent?.length + user?.classTeacher?.length
+                  )}
               </h4>
               <h4 className="value-field">{user?.classTeacher.length}</h4>
               <h4 className="value-field">{user?.classStudent.length}</h4>
@@ -111,12 +172,12 @@ function UserAccount() {
                 </IconButton>
               </div>
               <div>
-                <IconButton id="nameButton">
+                <IconButton id="nameButton2">
                   <EditIcon />
                 </IconButton>
               </div>
               <div>
-                <IconButton id="nameButton">
+                <IconButton id="nameButton3">
                   <EditIcon />
                 </IconButton>
               </div>
