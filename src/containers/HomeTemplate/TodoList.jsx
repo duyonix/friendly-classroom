@@ -97,12 +97,10 @@ function TodoList() {
                   sx={{ maxWidth: 130 }}
                   component="img"
                   height="130"
-                  image={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
+                  image={pathImgFromIndex + "list.png"}
                 />
                 <CardContent>
-                  <Typography variant="body1" color="text.secondary">
-                    Việc được giao
-                  </Typography>
+                  <h5>Việc được giao</h5>
                 </CardContent>
               </Card>
             </ThemeProvider>
@@ -114,12 +112,11 @@ function TodoList() {
                   sx={{ maxWidth: 130 }}
                   component="img"
                   height="130"
-                  image={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
+                  image={pathImgFromIndex + "done.png"}
                 />
                 <CardContent>
-                  <Typography variant="body1" color="text.secondary">
-                    Việc hoàn thành
-                  </Typography>
+                  
+                  <h5> Việc hoàn thành</h5>
                 </CardContent>
               </Card>
             </ThemeProvider>
@@ -131,12 +128,10 @@ function TodoList() {
                   sx={{ maxWidth: 130 }}
                   component="img"
                   height="130"
-                  image={pathImgFromIndex + "meo_ngu_ngoc.jpg"}
+                  image={pathImgFromIndex + "fail.png"}
                 />
                 <CardContent>
-                  <Typography variant="body1" color="text.secondary">
-                    Việc quá hạn
-                  </Typography>
+                  <h5>Việc quá hạn</h5>
                 </CardContent>
               </Card>
             </ThemeProvider>
@@ -170,11 +165,11 @@ function TodoList() {
           <div className="card-content-exercise">
           {dataTodo?.submissions.map((ex) => (
               <div className="card-content-exercise-button">
-                 {ex?.homeworkId?(<div>
-                  {ex?.markDone?(
-                <Button
+                 {ex?.homeworkId &&ex?.markDone ?(
+                 <div>
+                  <Button
                 
-                className="btn-card"
+                  className="btn-card"
                   variant="contained"
                   color="success"
                   sx={{ minWidth: 300 }}
@@ -184,7 +179,7 @@ function TodoList() {
                     <Typography>{ex?.homeworkId?.classroomId?.name}</Typography>
                     <h6>{ex?.homeworkId?.title}</h6>
                   </div>
-                </Button>):("")}
+                </Button>
 
                  </div>):("")}
                 
@@ -192,6 +187,7 @@ function TodoList() {
             ))}
             
           </div>
+          
           <div className="card-content-exercise">
           {dataTodo?.submissions.map((ex) => (
               <div className="card-content-exercise-button">
