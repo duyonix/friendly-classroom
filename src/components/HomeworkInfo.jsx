@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Box, TextField, Typography, Stack } from "@mui/material";
 import TitleIcon from "@mui/icons-material/Title";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-// import DateTimePicker from "@mui/lab/DateTimePicker";
 import { useDispatch, useSelector } from "react-redux";
-// import CreatableSelect from "react-select/creatable";
-// import Files from "react-files";
 import { pathImgFromIndex } from "../utils/constants";
 import { Link, useParams } from "react-router-dom";
 import { actFetchHomeworkDetailList } from "../redux/modules/Homework/action";

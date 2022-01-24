@@ -116,7 +116,6 @@ function Grade() {
   const errScoreClassroom = useSelector(
     (state) => state.fetchAllScoreClassroomReducer?.err
   );
-
   // student role
   const dataScoreUser = useSelector(
     (state) => state.fetchAllScoreUserReducer?.data
@@ -139,7 +138,7 @@ function Grade() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  console.log(dataScoreClassroom);
   const renderHeaderScoreClassroom = () => {
     return (
       <TableRow>
@@ -166,7 +165,7 @@ function Grade() {
   // role teacher
   // filter data by keySearch
   let dataScoreClassroomFilter = [];
-
+  console.log(dataScoreClassroomFilter)
   if (dataScoreClassroom) {
     if (keySearch !== "") {
       dataScoreClassroomFilter = dataScoreClassroom.result.filter(

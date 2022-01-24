@@ -29,7 +29,6 @@ function UserAccount() {
   const changeAvaSuccess = useSelector(
     (state) => state.changeAvatarReducer?.data
   );
-
   useEffect(() => {
     if (avatar !== null) {
       const objectUrl = URL.createObjectURL(avatar);
