@@ -21,20 +21,20 @@ export default function NavbarIntro() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              <li className="nav-item active">
-                <NavLink className="nav-link" to="#">
+              <li className="nav-item">
+                <a className="nav-link active" href="#IntroMain">
                   Giới thiệu
-                </NavLink>
+                </a>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="#">
+                <a className="nav-link active" href="#intro-feature">
                   Tính năng
-                </NavLink>
+                </a>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="#">
+                <a className="nav-link active" href="#about-us">
                   Thành viên
-                </NavLink>
+                </a>
               </li>
             </ul>
           </div>

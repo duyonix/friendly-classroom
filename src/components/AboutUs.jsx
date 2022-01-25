@@ -50,7 +50,7 @@ export default function AboutUs() {
     });
   };
   return (
-    <section className="about-us container">
+    <section id="about-us" className="about-us container">
       <div className="about-title">
         <h1>
           Nhóm <span className="group-name">HiFive</span>
