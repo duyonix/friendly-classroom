@@ -90,7 +90,11 @@ function ListMember() {
         <StyledTableRow>
           <StyledTableCell align="left">
             <Avatar
-              src={pathImgFromIndex + "avatar.png"}
+              src={
+                member?.avatarUrl !== null
+                  ? member?.avatarUrl
+                  : pathImgFromIndex + "avatar.png"
+              }
               alt="avatar"
               sx={{ width: 64, height: 64 }}
             />
@@ -252,7 +256,11 @@ function ListMember() {
                     <StyledTableRow key={row.username}>
                       <StyledTableCell align="left">
                         <Avatar
-                          src={pathImgFromIndex + "avatar.png"}
+                          src={
+                            row?.avatarUrl !== null
+                              ? row?.avatarUrl
+                              : pathImgFromIndex + "avatar.png"
+                          }
                           alt="avatar"
                           sx={{ width: 64, height: 64 }}
                         />
