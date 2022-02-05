@@ -30,22 +30,22 @@ export default function Footer() {
             <h3>Liên hệ</h3>
             <ul className="contact-list">
               <li>
-                <a href="https://www.facebook.com/vhvu99">
+                <a href="https://www.facebook.com/duy.onix/">
                   <FacebookIcon fontSize="large" color="primary" />
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/_hoangvu9/">
+                <a href="https://www.instagram.com/duyonix/">
                   <InstagramIcon fontSize="large" color="error" />
                 </a>
               </li>
               <li>
-                <a href="https://www.facebook.com/vhvu99">
+                <a href="https://twitter.com/duyonix">
                   <TwitterIcon fontSize="large" color="primary" />
                 </a>
               </li>
               <li>
-                <a href="https://www.facebook.com/vhvu99">
+                <a href="https://www.facebook.com/duy.onix/">
                   <TelegramIcon fontSize="large" color={red[50]} />
                 </a>
               </li>
