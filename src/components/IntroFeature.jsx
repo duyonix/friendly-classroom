@@ -2,7 +2,7 @@ import React from "react";
 
 export default function IntroFeature() {
   return (
-    <section className="intro-feature">
+    <section id="intro-feature" className="intro-feature">
       <div className="content container">
         <h1 className="title">Tính năng chính</h1>
         <div className="row">

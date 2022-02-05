@@ -30,9 +30,8 @@ function OperationMember() {
     dispatch(actPeopleSearch(fullName));
   };
   useEffect(() => {
-    if (fullName.length > 0) {
-      passDataSearch();
-    }
+    passDataSearch();
+
     // eslint-disable-next-line
   }, [fullName]);
 
