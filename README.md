@@ -7,6 +7,7 @@
 # Run project
 - Phía Front End cài đặt mã nguồn theo framework là ReactJS
 - Sau khi clone project về xong thì gõ lệnh npm start, trang web sẽ hiển thị trên http://localhost:3000/
+- Acount để test: account: onixtesting - password: onixtesting
 
 # Group 07 - HiFive
 - Đặng Thái Duy 
