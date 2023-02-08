@@ -4,6 +4,10 @@
 - Trang web deploy để tham khảo: https://friendlyclassroom.vercel.app/
 - Video demo: https://www.youtube.com/watch?v=9VLlIG70fec
 
+# Account test
+- Username: yass
+- Password: yass
+
 # Run project
 - Phía Front End cài đặt mã nguồn theo framework là ReactJS
 - Sau khi clone project về xong thì gõ lệnh npm start, trang web sẽ hiển thị trên http://localhost:3000/
